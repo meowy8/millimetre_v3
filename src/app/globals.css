@@ -31,4 +31,10 @@
 
 input {
   border-color: #fbf7f4;
+  outline: none;
+}
+
+textarea {
+  border-color: #fbf7f4;
+  outline: none;
 }

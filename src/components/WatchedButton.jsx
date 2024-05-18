@@ -1,9 +1,12 @@
 import React from "react";
 import ClosedEye from "./icons/ClosedEyeIcon";
 
-const WatchedButton = () => {
+const WatchedButton = ({ toggleModal }) => {
   return (
-    <button className="border border-[#01442C] rounded-lg py-4 px-10 hover:bg-[#093425]">
+    <button
+      onClick={toggleModal}
+      className="border border-[#01442C] rounded-lg py-4 px-10 hover:bg-[#093425]"
+    >
       <ClosedEye />
     </button>
   );

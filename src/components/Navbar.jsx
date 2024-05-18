@@ -6,7 +6,7 @@ import Sidebar from "./sidebar/Sidebar";
 
 const Navbar = () => {
   return (
-    <nav className="bg-[#0B0618] flex justify-between items-center px-6 py-4 rounded-b-md shadow-xl fixed top-0 left-0 right-0">
+    <nav className="bg-[#0B0618] flex justify-between items-end px-6 py-4 rounded-b-md shadow-xl fixed top-0 left-0 right-0">
       <Link href={"/"} className="oranienbaumRegular text-4xl">
         mm
       </Link>
