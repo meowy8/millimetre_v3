@@ -8,24 +8,24 @@
 }
 
 @font-face {
-  font-family: OutfitLight;
-  src: url("/fonts/Outfit/static/Outfit-Light.ttf");
+  font-family: Outfit;
+  src: url("/fonts/Outfit/Outfit-VariableFont_wght.ttf");
 }
 
 @font-face {
   font-family: KarlaRegular;
-  src: url("/fonts/Karla/static/Karla-Regular.ttf");
+  src: url("/fonts/Karla/Karla-VariableFont_wght.ttf");
 }
 
 .oranienbaumRegular {
   font-family: OranienbaumRegular;
 }
 
-.outfitLight {
-  font-family: OutfitLight;
+.outfit {
+  font-family: Outfit;
 }
 
-.karlaRegular {
+.karla {
   font-family: KarlaRegular;
 }
 

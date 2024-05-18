@@ -13,7 +13,7 @@ const HomeInfoSection = () => {
           className="rounded-2xl"
         />
       </div>
-      <p className="flex flex-col gap-2 karlaRegular">
+      <p className="flex flex-col gap-2 karla">
         <span className="block">
           The focus of Millimetre is to discover new and lesser seen films.
         </span>

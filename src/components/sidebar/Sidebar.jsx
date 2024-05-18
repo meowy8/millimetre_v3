@@ -29,7 +29,7 @@ const Sidebar = () => {
         showSidebar={showSidebar}
       />
       <nav
-        className={`bg-[#0B0618] w-64 h-screen absolute right-0 top-0 border-l-[0.5px] border-[#137150] karlaRegular flex flex-col gap-10 z-50 ${
+        className={`bg-[#0B0618] w-64 h-screen fixed right-0 top-0 border-l-[0.5px] border-[#137150] karlaRegular flex flex-col gap-10 z-50 ${
           showSidebar ? "translate-x-0" : "translate-x-full"
         } transition-all duration-500`}
       >

@@ -1,6 +1,6 @@
-import FilmBackdrop from "@/components/FilmBackdrop";
+import FilmBackdrop from "@/components/film/FilmBackdrop";
 import CreateAccountButton from "@/components/CreateAccount";
-import FilmCard from "@/components/FilmCard";
+import FilmCard from "@/components/film/FilmCard";
 import HomeInfoSection from "@/components/HomeInfoSection";
 
 export default function Home() {
@@ -17,7 +17,7 @@ export default function Home() {
           </span>
         </h1>
       </section>
-      <section className="flex flex-col items-center mt-32 gap-14">
+      <section className="flex flex-col items-center mt-28 gap-14">
         <CreateAccountButton />
         <span className="oranienbaumRegular text-xl text-center">
           or discover something new...
@@ -29,7 +29,7 @@ export default function Home() {
         <FilmCard />
         <FilmCard />
       </section>
-      <section className="flex my-14">
+      <section className="flex my-14 justify-center">
         <HomeInfoSection />
       </section>
     </section>
