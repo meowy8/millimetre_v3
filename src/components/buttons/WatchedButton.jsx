@@ -1,5 +1,5 @@
 import React from "react";
-import ClosedEye from "./icons/ClosedEyeIcon";
+import ClosedEye from "../icons/ClosedEyeIcon";
 
 const WatchedButton = ({ toggleModal }) => {
   return (

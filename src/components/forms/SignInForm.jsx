@@ -1,6 +1,6 @@
 import React from "react";
-import GeneralBtn from "./GeneralBtn";
-import GeneralInput from "./GeneralInput";
+import GeneralBtn from "../buttons/GeneralBtn";
+import GeneralInput from "../GeneralInput";
 
 const SignInForm = () => {
   return (

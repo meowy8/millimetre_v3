@@ -1,5 +1,5 @@
 import FilmBackdrop from "@/components/film/FilmBackdrop";
-import CreateAccountButton from "@/components/CreateAccount";
+import CreateAccountBtn from "@/components/buttons/CreateAccountBtn";
 import FilmCard from "@/components/film/FilmCard";
 import HomeInfoSection from "@/components/HomeInfoSection";
 
@@ -18,7 +18,7 @@ export default function Home() {
         </h1>
       </section>
       <section className="flex flex-col items-center mt-28 gap-14">
-        <CreateAccountButton />
+        <CreateAccountBtn />
         <span className="oranienbaumRegular text-xl text-center">
           or discover something new...
         </span>

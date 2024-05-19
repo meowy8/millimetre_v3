@@ -1,6 +1,6 @@
 import FilmBackdrop from "@/components/film/FilmBackdrop";
 import React from "react";
-import LargeUserAvatar from "@/components/LargeUserAvatar";
+import LargeUserAvatar from "@/components/user/LargeUserAvatar";
 import Link from "next/link";
 import FilmNotesList from "@/components/film/FilmNotesList";
 import SmallFilmPoster from "@/components/film/SmallFilmPoster";

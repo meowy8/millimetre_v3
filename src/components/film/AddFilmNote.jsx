@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import CloseModalBtn from "../CloseModalBtn";
+import CloseModalBtn from "../buttons/CloseModalBtn";
 
 const AddFilmNote = ({ toggleModal }) => {
   const [enableDate, setEnableDate] = React.useState(false);

@@ -1,5 +1,5 @@
 import FilmNotesList from "@/components/film/FilmNotesList";
-import GeneralBtn from "@/components/GeneralBtn";
+import GeneralBtn from "@/components/buttons/GeneralBtn";
 import SmallFilmPoster from "@/components/film/SmallFilmPoster";
 import React from "react";
 import Link from "next/link";

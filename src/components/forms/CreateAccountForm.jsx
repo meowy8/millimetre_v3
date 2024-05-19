@@ -1,7 +1,7 @@
 import React from "react";
-import GeneralBtn from "./GeneralBtn";
-import GeneralInput from "./GeneralInput";
-import CloseModalBtn from "./CloseModalBtn";
+import GeneralBtn from "../buttons/GeneralBtn";
+import GeneralInput from "../GeneralInput";
+import CloseModalBtn from "../buttons/CloseModalBtn";
 import Image from "next/image";
 
 const CreateAccountForm = ({ toggleModal }) => {

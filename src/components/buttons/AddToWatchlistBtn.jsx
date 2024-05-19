@@ -1,5 +1,5 @@
 import React from "react";
-import AddToWatchlistIcon from "./icons/AddToWatchlistIcon";
+import AddToWatchlistIcon from "../icons/AddToWatchlistIcon";
 
 const AddToWatchlistBtn = () => {
   return (

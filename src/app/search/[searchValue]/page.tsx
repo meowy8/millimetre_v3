@@ -4,7 +4,7 @@ import SearchInput from "@/components/SearchInput";
 import { useParams } from "next/navigation";
 import MediumFilmPoster from "@/components/film/MediumFilmPoster";
 import Link from "next/link";
-import GeneralBtn from "@/components/GeneralBtn";
+import GeneralBtn from "@/components/buttons/GeneralBtn";
 
 const FilmSearch = () => {
   const params = useParams();

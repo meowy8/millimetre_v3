@@ -1,7 +1,6 @@
 import React from "react";
-import GeneralBtn from "./GeneralBtn";
-import GeneralInput from "./GeneralInput";
-import CreateAccount from "./CreateAccount";
+import GeneralBtn from "../buttons/GeneralBtn";
+import GeneralInput from "../GeneralInput";
 
 const SignUpForm = ({ setSignedUp, signedUp }) => {
   return (

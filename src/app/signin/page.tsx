@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
-import SignInToggle from "@/components/SignInToggle";
-import SignUpForm from "@/components/SignUpForm";
-import SignInForm from "@/components/SignInForm";
-import CreateAccountForm from "@/components/CreateAccountForm";
+import SignInToggle from "@/components/buttons/SignInToggle";
+import SignUpForm from "@/components/forms/SignUpForm";
+import SignInForm from "@/components/forms/SignInForm";
+import CreateAccountForm from "@/components/forms/CreateAccountForm";
 import Modal from "@/components/Modal";
 
 const SignIn = () => {

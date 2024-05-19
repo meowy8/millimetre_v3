@@ -1,7 +1,5 @@
 import React from "react";
-import GeneralInput from "@/components/GeneralInput";
-import MediumUserAvatar from "@/components/MediumUserAvatar";
-import UserSearchResult from "@/components/UserSearchResult";
+import UserSearchResult from "@/components/user/UserSearchResult";
 import SearchInput from "@/components/SearchInput";
 
 const Members = () => {

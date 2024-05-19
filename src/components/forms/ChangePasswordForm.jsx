@@ -1,6 +1,6 @@
 import React from "react";
-import GeneralInput from "./GeneralInput";
-import GeneralBtn from "./GeneralBtn";
+import GeneralInput from "../GeneralInput";
+import GeneralBtn from "../buttons/GeneralBtn";
 
 const ChangePasswordForm = () => {
   return (

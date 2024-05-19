@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
-import SettingsToggle from "@/components/SettingsToggle";
-import ChangePasswordForm from "@/components/ChangePasswordForm";
-import AccountSettingsForm from "@/components/AccountSettingsForm";
+import SettingsToggle from "@/components/buttons/SettingsToggle";
+import ChangePasswordForm from "@/components/forms/ChangePasswordForm";
+import AccountSettingsForm from "@/components/forms/AccountSettingsForm";
 
 const Settings = () => {
   const [section, setSection] = React.useState("account-settings");
