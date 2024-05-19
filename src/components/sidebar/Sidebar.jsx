@@ -22,7 +22,14 @@ const Sidebar = () => {
   };
 
   return (
-    <aside>
+    <aside className="z-10">
+      {showSidebar && (
+        <div
+          id="sidebarBackdrop"
+          className="fixed top-0 right-0 w-screen min-h-screen backdrop-blur-md lg:hidden"
+          onClick={closeSidebar}
+        ></div>
+      )}
       <OpenSidebarBtn
         openSidebar={openSidebar}
         closeSidebar={closeSidebar}

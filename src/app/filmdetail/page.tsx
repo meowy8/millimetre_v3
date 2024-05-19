@@ -9,6 +9,8 @@ import FilmProductionDetails from "@/components/film/FilmProductionDetails";
 import FilmImagesDisplay from "@/components/film/FilmImagesDisplay";
 import FilmNotesList from "@/components/film/FilmNotesList";
 import Modal from "@/components/Modal";
+import Link from "next/link";
+import AddFilmNote from "@/components/film/AddFilmNote";
 
 const FilmDetail = () => {
   const [showModal, setShowModal] = React.useState(false);
@@ -19,7 +21,9 @@ const FilmDetail = () => {
 
   return (
     <section className="overflow-x-hidden">
-      <Modal showModal={showModal} toggleModal={toggleModal} />
+      <Modal showModal={showModal}>
+        <AddFilmNote toggleModal={toggleModal} />
+      </Modal>
       <FilmBackdrop backdropImage={"/images/filmDetailBackdrop.jpeg"} />
       <div className="relative bottom-20 m-6">
         <LargeFilmPoster />
@@ -36,7 +40,14 @@ const FilmDetail = () => {
       <div className="overflow-x-auto">
         <FilmImagesDisplay />
       </div>
-      <FilmNotesList />
+      <div className="flex flex-col gap-2 my-8">
+        <div className="flex justify-end">
+          <Link href={"/filmnotes"} className="karla font-bold text-lg">
+            View All Notes
+          </Link>
+        </div>
+        <FilmNotesList />
+      </div>
     </section>
   );
 };

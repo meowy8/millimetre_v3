@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+import SmallUserAvatar from "../SmallUserAvatar";
 import Link from "next/link";
 
 const FilmNote = () => {
@@ -8,13 +8,7 @@ const FilmNote = () => {
       <div className="flex justify-between">
         <div className="flex gap-2 items-end">
           <Link href={"#"}>
-            <Image
-              src={"/images/profilePicture.jpg"}
-              alt="note"
-              width={50}
-              height={50}
-              className="rounded-full"
-            />
+            <SmallUserAvatar />
           </Link>
           <Link href={"#"} className="text-white outfit font-semibold">
             cadaverinbloom
