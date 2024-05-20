@@ -17,9 +17,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className + " bg-[#0B0618] text-[#FBF7F4]"}>
+      <body
+        className={
+          inter.className +
+          " bg-[#0B0618] text-[#FBF7F4] max-w-[1920px] mx-auto"
+        }
+      >
         <Navbar />
-        <main className="container mx-auto px-4">{children}</main>
+        <main className="max-w-[1000px] mx-auto px-4">{children}</main>
       </body>
     </html>
   );

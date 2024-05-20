@@ -22,11 +22,11 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="z-10">
+    <aside>
       {showSidebar && (
         <div
           id="sidebarBackdrop"
-          className="fixed top-0 right-0 w-screen min-h-screen backdrop-blur-md lg:hidden"
+          className="fixed top-0 right-0 w-screen min-h-screen bg-black/50 lg:hidden"
           onClick={closeSidebar}
         ></div>
       )}

@@ -3,16 +3,18 @@ import React from "react";
 
 const FilmBackdrop = ({ backdropImage }) => {
   return (
-    <div className="relative -z-10">
-      <div className="bg-[#0B0618] w-[10%] h-full absolute -left-4 blur-md"></div>
-      <div className="bg-[#0B0618] w-[10%] h-full absolute -right-4 blur-md"></div>
-      <div className="bg-[#0B0618] w-full h-16 absolute -bottom-8 blur-md"></div>
+    <div className="relative max-w-[1000px] mx-auto -z-10">
+      <div className="bg-[#0B0618] w-[10%] h-[700px] absolute bottom-0 -left-10 blur-lg"></div>
+      <div className="bg-[#0B0618] w-[10%] h-[700px] absolute bottom-0 -right-10 blur-lg"></div>
       <Image
         src={backdropImage}
         alt="film backdrop"
         width={1920}
         height={1080}
       />
+      <div className="flex w-full justify-center">
+        <div className="bg-[#0B0618] w-screen lg:w-[1000px] h-[30%] absolute -bottom-10 blur-lg"></div>
+      </div>
     </div>
   );
 };

@@ -1,30 +1,28 @@
 import React from "react";
-import Image from "next/image";
 import CloseModalBtn from "../buttons/CloseModalBtn";
+import SmallFilmPoster from "./SmallFilmPoster";
 
-const AddFilmNote = ({ toggleModal }) => {
+const AddFilmNote = ({ toggleModal, toggleNotesModal, poster_path, title }) => {
   const [enableDate, setEnableDate] = React.useState(false);
   const handleChange = () => {
     setEnableDate(!enableDate);
   };
+
+  const handleClick = () => {
+    toggleNotesModal();
+    toggleModal();
+  };
+
   return (
-    <div className="bg-[#001F24] w-full p-4 m-2 border border-[#137150] rounded-lg flex flex-col justify-center items-center gap-4">
-      <div className="flex gap-4">
-        <div className="w-[100px] h-[150px]">
-          <Image
-            src={"/images/filmDetailPoster.jpg"}
-            alt="film backdrop"
-            width={100}
-            height={150}
-            className="rounded-md object-cover w-full h-full"
-          />
+    <div className="bg-[#001F24] p-4 m-2 border border-[#137150] rounded-lg flex flex-col justify-center items-center gap-4 md:w-[700px] w-full">
+      <div className="flex gap-4 lg:w-4/5 justify-between">
+        <div>
+          <SmallFilmPoster poster_path={poster_path} />
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 lg:w-full">
           <div className="flex justify-between">
-            <span className="outfit text-2xl line-clamp-1">
-              Millennium Mambo
-            </span>
-            <CloseModalBtn toggleModal={toggleModal} />
+            <span className="outfit text-2xl line-clamp-1">{title}</span>
+            <CloseModalBtn handleClick={handleClick} />
           </div>
           <label htmlFor="note" className="flex flex-col karla">
             Note
@@ -39,7 +37,7 @@ const AddFilmNote = ({ toggleModal }) => {
           </label>
         </div>
       </div>
-      <div className="flex justify-between w-full px-4">
+      <div className="flex justify-between md:w-2/3 w-full px-4">
         <div className="flex gap-2">
           <input
             type="checkbox"

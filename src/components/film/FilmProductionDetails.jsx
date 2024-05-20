@@ -4,7 +4,7 @@ import UpArrow from "../icons/UpArrow";
 import DownArrow from "../icons/DownArrow";
 import CreditsList from "./CreditsList";
 
-const FilmProductionDetails = ({ sectionName }) => {
+const FilmProductionDetails = ({ sectionName, creditsType }) => {
   const [showDetails, setShowDetails] = React.useState(false);
 
   const toggleDetails = () => {
@@ -21,7 +21,7 @@ const FilmProductionDetails = ({ sectionName }) => {
         <span>{showDetails ? <DownArrow /> : <UpArrow />}</span>
       </button>
       <hr />
-      <CreditsList showDetails={showDetails} />
+      <CreditsList showDetails={showDetails} credits={creditsType} />
     </div>
   );
 };

@@ -11,7 +11,9 @@ const SignInForm = () => {
       <form action="" className="flex flex-col gap-6 items-center w-96">
         <GeneralInput placeholder="Enter your email address" type="email" />
         <GeneralInput placeholder="Enter your password" type={"password"} />
-        <GeneralBtn text="Sign in" />
+        <div className="flex justify-center w-32">
+          <GeneralBtn text="Sign In" />
+        </div>
       </form>
     </div>
   );

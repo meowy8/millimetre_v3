@@ -4,7 +4,7 @@ import GeneralInput from "../GeneralInput";
 import CloseModalBtn from "../buttons/CloseModalBtn";
 import Image from "next/image";
 
-const CreateAccountForm = ({ toggleModal }) => {
+const CreateAccountForm = ({ toggleModal, toggleCreateAccountModal }) => {
   const [avatarImage, setAvatarImage] = React.useState(null);
 
   const handleAvatarChange = (e) => {
@@ -14,10 +14,15 @@ const CreateAccountForm = ({ toggleModal }) => {
     setAvatarImage(URL.createObjectURL(file));
   };
 
+  const handleClick = () => {
+    toggleCreateAccountModal();
+    toggleModal();
+  };
+
   return (
-    <div className="bg-[#0B0618] rounded-lg p-8 border border-[#FBF7F4]">
+    <div className="bg-[#0B0618] rounded-lg p-8 border border-[#FBF7F4] max-w-[500px]">
       <div className="flex justify-end">
-        <CloseModalBtn toggleModal={toggleModal} />
+        <CloseModalBtn handleClick={handleClick} />
       </div>
       <div className="flex flex-col">
         <h1 className="karla text-3xl m-10">Create your account</h1>
@@ -40,7 +45,7 @@ const CreateAccountForm = ({ toggleModal }) => {
                 <Image
                   src={avatarImage}
                   alt="avatar"
-                  className="w-36 h-36 border border-[#FBF7F4] rounded-full flex justify-center items-center hover:bg-white/10 object-cover "
+                  className="w-36 h-36 border border-[#FBF7F4] rounded-full flex justify-center items-center hover:opacity-70 object-cover "
                   width={100}
                   height={100}
                 />

@@ -17,14 +17,26 @@ const SignIn = () => {
   return (
     <section className="mt-28">
       <Modal showModal={signedUp}>
-        <CreateAccountForm toggleModal={() => setSignedUp(false)} />
+        <CreateAccountForm
+          toggleModal={() => setSignedUp(false)}
+          toggleCreateAccountModal={() => setSignedUp(false)}
+        />
       </Modal>
-      <SignInToggle section={section} changeSection={changeSection} />
-      {section === "signin" ? (
-        <SignInForm />
-      ) : (
+      <div className="lg:hidden">
+        <SignInToggle section={section} changeSection={changeSection} />
+      </div>
+      <div className="lg:hidden">
+        {section === "signin" ? (
+          <SignInForm />
+        ) : (
+          <SignUpForm setSignedUp={setSignedUp} signedUp={signedUp} />
+        )}
+      </div>
+      <div className="hidden lg:flex justify-between">
         <SignUpForm setSignedUp={setSignedUp} signedUp={signedUp} />
-      )}
+        <div className="border-r border-[#FBF7F4]"></div>
+        <SignInForm />
+      </div>
     </section>
   );
 };

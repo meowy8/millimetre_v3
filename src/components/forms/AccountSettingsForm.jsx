@@ -42,6 +42,19 @@ const AccountSettingsForm = () => {
               onChange={(e) => handleAvatarChange(e)}
             />
           </label>
+          <label
+            htmlFor="change-profile-backdrop"
+            className="flex flex-col gap-2"
+          >
+            Change Profile Backdrop
+            <input
+              type="text"
+              name="change-profile-backdrop"
+              id="change-profile-backdrop"
+              placeholder="Film backdrop"
+              className="border border-[#FBF7F4] bg-transparent rounded-lg px-4 py-2 outline-none hover:bg-white/10 focus:bg-white/20 w-full"
+            />
+          </label>
           <label htmlFor="change-username" className="flex flex-col gap-2">
             Change Username
             <GeneralInput placeholder="Username" type="text" />

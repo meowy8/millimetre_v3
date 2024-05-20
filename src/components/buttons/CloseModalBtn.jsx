@@ -1,10 +1,7 @@
 import React from "react";
 import XIcon from "../icons/XIcon";
 
-const CloseModalBtn = ({ toggleModal }) => {
-  const handleClick = () => {
-    toggleModal();
-  };
+const CloseModalBtn = ({ handleClick }) => {
   return (
     <button onClick={handleClick}>
       <XIcon />

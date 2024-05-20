@@ -1,20 +1,17 @@
 import React from "react";
 
-const CreditsList = ({ showDetails }) => {
+const CreditsList = ({ showDetails, credits }) => {
   return (
     <div className={` flex-col gap-2 mt-2 ${showDetails ? "flex" : "hidden"}`}>
-      <div className="flex justify-between">
-        <span>Vicky</span>
-        <span className="font-bold">Shu Qi</span>
-      </div>
-      <div className="flex justify-between">
-        <span>Jack</span>
-        <span className="font-bold">Jack Kao</span>
-      </div>
-      <div className="flex justify-between">
-        <span>Hao-Hao</span>
-        <span className="font-bold">Duan Chun-hao</span>
-      </div>
+      {credits &&
+        credits.map((credit) => (
+          <div key={credit.credit_id} className="flex flex-col justify-between">
+            <span>{credit.character || credit.job || "N/A"}</span>
+            <span className="font-black">
+              {credit.name ? credit.name : "N/A"}
+            </span>
+          </div>
+        ))}
     </div>
   );
 };
