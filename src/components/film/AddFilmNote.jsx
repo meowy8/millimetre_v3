@@ -2,8 +2,16 @@ import React from "react";
 import CloseModalBtn from "../buttons/CloseModalBtn";
 import SmallFilmPoster from "./SmallFilmPoster";
 
-const AddFilmNote = ({ toggleModal, toggleNotesModal, poster_path, title }) => {
+const AddFilmNote = ({
+  toggleModal,
+  toggleNotesModal,
+  poster_path,
+  title,
+  filmId,
+}) => {
   const [enableDate, setEnableDate] = React.useState(false);
+  const [noteContent, setNoteContent] = React.useState("");
+
   const handleChange = () => {
     setEnableDate(!enableDate);
   };
@@ -13,32 +21,61 @@ const AddFilmNote = ({ toggleModal, toggleNotesModal, poster_path, title }) => {
     toggleModal();
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const note = {
+      title,
+      content: noteContent,
+      username: "cadaverinbloom",
+      filmId,
+    };
+
+    try {
+      const response = await fetch("/api/v1/notes/filmNotes", {
+        method: "POST",
+        body: JSON.stringify(note),
+      });
+      const data = await response.json();
+      // console.log(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      toggleNotesModal();
+      toggleModal();
+    }
+  };
+
   return (
     <div className="bg-[#001F24] p-4 m-2 border border-[#137150] rounded-lg flex flex-col justify-center items-center gap-4 md:w-[700px] w-full">
-      <div className="flex gap-4 lg:w-4/5 justify-between">
-        <div>
-          <SmallFilmPoster poster_path={poster_path} />
-        </div>
-        <div className="flex flex-col gap-4 lg:w-full">
-          <div className="flex justify-between">
-            <span className="outfit text-2xl line-clamp-1">{title}</span>
-            <CloseModalBtn handleClick={handleClick} />
+      <form onSubmit={handleSubmit}>
+        <div className="flex gap-4 lg:w-4/5 justify-between">
+          <div>
+            <SmallFilmPoster poster_path={poster_path} />
           </div>
-          <label htmlFor="note" className="flex flex-col karla">
-            Note
-            <textarea
-              name="note"
-              id="note"
-              cols="30"
-              rows={5}
-              className="bg-white/10 p-2 rounded-lg border hover:bg-white/20 focus:bg-white/30"
-              placeholder="Add a note"
-            />
-          </label>
+          <div className="flex flex-col gap-4 lg:w-full">
+            <div className="flex justify-between">
+              <span className="outfit text-2xl line-clamp-1">{title}</span>
+              <CloseModalBtn handleClick={handleClick} />
+            </div>
+
+            <label htmlFor="note" className="flex flex-col karla">
+              Note
+              <textarea
+                name="note"
+                id="note"
+                cols="30"
+                rows={5}
+                className="bg-white/10 p-2 rounded-lg border hover:bg-white/20 focus:bg-white/30"
+                placeholder="Add a note"
+                value={noteContent}
+                onChange={(e) => setNoteContent(e.target.value)}
+              />
+            </label>
+          </div>
         </div>
-      </div>
-      <div className="flex justify-between md:w-2/3 w-full px-4">
-        <div className="flex gap-2">
+        <div className="flex justify-end md:w-2/3 w-full px-4">
+          {/* <div className="flex gap-2">
           <input
             type="checkbox"
             name="datecheck"
@@ -54,13 +91,17 @@ const AddFilmNote = ({ toggleModal, toggleNotesModal, poster_path, title }) => {
             }`}
             disabled={!enableDate}
           />
+        </div> */}
+          <div>
+            <button
+              type="submit"
+              className="bg-[#01442C] rounded-md border border-[#137150] px-4 py-2 karla hover:bg-[#137150]"
+            >
+              Save
+            </button>
+          </div>
         </div>
-        <div>
-          <button className="bg-[#01442C] rounded-md border border-[#137150] px-4 py-2 karla hover:bg-[#137150]">
-            Save
-          </button>
-        </div>
-      </div>
+      </form>
     </div>
   );
 };

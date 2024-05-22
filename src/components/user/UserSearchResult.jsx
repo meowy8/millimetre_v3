@@ -2,11 +2,14 @@ import React from "react";
 import MediumUserAvatar from "./MediumUserAvatar";
 import Link from "next/link";
 
-const UserSearchResult = () => {
+const UserSearchResult = ({ username }) => {
   return (
-    <Link href={"/profile"} className="flex flex-col gap-2 justify-center">
+    <Link
+      href={`/user/profile/${username}`}
+      className="flex flex-col gap-2 justify-center"
+    >
       <MediumUserAvatar />
-      <span className="outfit text-sm">cadaverinbloom</span>
+      <span className="outfit text-sm">{username}</span>
     </Link>
   );
 };

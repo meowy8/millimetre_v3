@@ -23,7 +23,7 @@ const FilmSearch = () => {
   }, [searchValue]);
 
   return (
-    <section className="relative top-32 m-4 flex flex-col items-center gap-8">
+    <section className="relative m-4 flex flex-col items-center gap-8">
       <div className="w-full mx-4 flex flex-col">
         <SearchInput placeholder={"Search for a film"} />
       </div>
@@ -43,7 +43,10 @@ const FilmSearch = () => {
               key={film.id}
             >
               {film.poster_path ? (
-                <MediumFilmPoster poster_path={film.poster_path} />
+                <MediumFilmPoster
+                  title={film.title}
+                  posterPath={film.poster_path}
+                />
               ) : (
                 <EmptyFilmPoster />
               )}

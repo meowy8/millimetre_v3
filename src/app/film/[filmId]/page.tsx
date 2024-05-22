@@ -1,11 +1,7 @@
 "use client";
 import FilmBackdrop from "@/components/film/FilmBackdrop";
-import LargeFilmPoster from "@/components/film/LargeFilmPoster";
-import React, { useEffect } from "react";
-import FilmDescription from "@/components/film/FilmDescription";
-import WatchedButton from "@/components/buttons/WatchedButton";
-import AddToWatchlistBtn from "@/components/buttons/AddToWatchlistBtn";
-import FilmProductionDetails from "@/components/film/FilmProductionDetails";
+import React, { useEffect, useState } from "react";
+import MainFilmInfo from "@/components/film/MainFilmInfo";
 import FilmImagesDisplay from "@/components/film/FilmImagesDisplay";
 import FilmNotesList from "@/components/film/FilmNotesList";
 import Modal from "@/components/Modal";
@@ -17,35 +13,90 @@ import {
   fetchFilmDetails,
   fetchFilmImages,
 } from "@/utils/fetchFilmData";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { FilmDetails, FilmCredits, FilmImages } from "@/types/filmTypes";
+import Loading from "@/components/loading";
 
 const FilmDetail = () => {
-  const [showModal, setShowModal] = React.useState(false);
-  const [showNotesModal, setShowNotesModal] = React.useState(false);
-  const [showImageModal, setShowImageModal] = React.useState(false);
-  const [modalImageData, setModalImageData] = React.useState("");
-  const [filmDetails, setFilmDetails] = React.useState({} as FilmDetails);
-  const [filmCredits, setFilmCredits] = React.useState({} as FilmCredits);
-  const [filmImages, setFilmImages] = React.useState({} as FilmImages);
+  const [showModal, setShowModal] = useState(false);
+  const [showNotesModal, setShowNotesModal] = useState(false);
+  const [showImageModal, setShowImageModal] = useState(false);
+  const [modalImageData, setModalImageData] = useState("");
+  const [filmDetails, setFilmDetails] = useState({} as FilmDetails);
+  const [filmCredits, setFilmCredits] = useState({} as FilmCredits);
+  const [filmImages, setFilmImages] = useState({} as FilmImages);
+  const [filmNotes, setFilmNotes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
 
-  const params = useParams();
-  const { filmId } = params;
+  const { filmId } = useParams();
+  const router = useRouter();
 
   useEffect(() => {
-    setFilmDetails({} as FilmDetails);
-    (async () => setFilmDetails(await fetchFilmDetails(filmId as string)))();
+    if (!filmId) {
+      router.push("/not-found");
+    }
+  }, [filmId, router]);
+
+  // fetch film data
+  useEffect(() => {
+    const fetchFilmData = async () => {
+      try {
+        setLoading(true);
+        const [details, credits, images] = await Promise.all([
+          fetchFilmDetails(filmId as string),
+          fetchFilmCredits(filmId as string),
+          fetchFilmImages(filmId as string),
+        ]);
+
+        if (
+          details.success === false ||
+          credits.success === false ||
+          images.success === false
+        ) {
+          router.push("/not-found");
+          return;
+        }
+
+        setFilmDetails(details);
+        setFilmCredits(credits);
+        setFilmImages(images);
+      } catch (error) {
+        console.error(error);
+        router.push("/not-found");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFilmData();
+  }, [filmId, router]);
+
+  // fetch notes
+  useEffect(() => {
+    const fetchNotes = async () => {
+      try {
+        const response = await fetch(
+          `/api/v1/notes/filmNotes?filmId=${filmId}&limit=4`
+        );
+        const data = await response.json();
+        // console.log(data);
+
+        if (data.message === "Success") {
+          setFilmNotes(data.result);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchNotes();
   }, [filmId]);
 
   useEffect(() => {
-    setFilmCredits({} as FilmCredits);
-    (async () => setFilmCredits(await fetchFilmCredits(filmId as string)))();
-  }, [filmId]);
-
-  useEffect(() => {
-    setFilmImages({} as FilmImages);
-    (async () => setFilmImages(await fetchFilmImages(filmId as string)))();
-  }, [filmId]);
+    if (!loading) {
+      setIsVisible(true);
+    }
+  }, [loading]);
 
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -64,8 +115,14 @@ const FilmDetail = () => {
     toggleNotesModal();
   };
 
+  if (loading) return <Loading />;
+
   return (
-    <section className="overflow-x-hidden flex flex-col items-center w-full mt-20">
+    <section
+      className={`relative -top-24 overflow-x-hidden flex flex-col items-center w-full ${
+        isVisible ? "opacity-100" : "opacity-0"
+      } transition-opacity duration-500 ease-in-out`}
+    >
       <Modal showModal={showModal}>
         {showNotesModal && (
           <AddFilmNote
@@ -73,6 +130,7 @@ const FilmDetail = () => {
             toggleModal={toggleModal}
             toggleNotesModal={toggleNotesModal}
             title={filmDetails.title}
+            filmId={filmId}
           />
         )}
         {showImageModal && (
@@ -88,36 +146,14 @@ const FilmDetail = () => {
           backdropImage={`https://image.tmdb.org/t/p/original${filmDetails.backdrop_path}`}
         />
       )}
-      <div className="relative bottom-20 md:bottom-32 lg:bottom-44 m-6 z-10 flex flex-col lg:flex-row lg:gap-20">
-        <div className="lg:flex-row flex flex-col  gap-10">
-          {filmDetails.poster_path && (
-            <LargeFilmPoster poster_path={filmDetails.poster_path} />
-          )}
-          <FilmDescription
-            title={filmDetails.title}
-            overview={filmDetails.overview}
-            release_date={filmDetails.release_date}
-            runtime={filmDetails.runtime}
-          />
-        </div>
-        <div className="lg:flex flex-col w-full lg:w-auto">
-          <div className="flex justify-between my-8 lg:gap-4">
-            <WatchedButton handleClick={handleClick} />
-            <AddToWatchlistBtn />
-          </div>
-          <div className="flex flex-col gap-4">
-            <FilmProductionDetails
-              sectionName="Cast"
-              creditsType={filmCredits.cast}
-            />
-            <FilmProductionDetails
-              sectionName="Crew"
-              creditsType={filmCredits.crew}
-            />
-          </div>
-        </div>
-      </div>
-      <div className="overflow-x-auto w-full lg:relative bottom-20">
+      {filmCredits && filmDetails && (
+        <MainFilmInfo
+          filmDetails={filmDetails}
+          handleClick={handleClick}
+          filmCredits={filmCredits}
+        />
+      )}
+      <div className="overflow-x-auto w-full lg:relative bottom-20 z-10">
         <FilmImagesDisplay
           toggleImageModal={toggleImageModal}
           toggleModal={toggleModal}
@@ -125,17 +161,23 @@ const FilmDetail = () => {
           images={filmImages.backdrops}
         />
       </div>
-      <div className="flex flex-col gap-2 my-8">
+      <div className="flex flex-col gap-2 my-8 w-full">
         <div className="flex justify-end">
-          <Link
-            href={`/film/notes/${filmId}`}
-            className="karla font-bold text-lg"
-          >
-            View All Notes
-          </Link>
+          {filmNotes.length > 0 && (
+            <Link
+              href={`/film/notes/${filmId}`}
+              className="karla font-bold text-lg"
+            >
+              View All Notes
+            </Link>
+          )}
         </div>
         <div className="flex justify-center w-full">
-          <FilmNotesList />
+          <FilmNotesList
+            filmNotes={filmNotes}
+            toggleNotesModal={toggleNotesModal}
+            toggleModal={toggleModal}
+          />
         </div>
       </div>
     </section>

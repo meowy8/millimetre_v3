@@ -12,7 +12,7 @@ const Settings = () => {
   };
 
   return (
-    <section className="my-28">
+    <section className="">
       <h1 className="text-3xl karla m-2 mb-8">Settings</h1>
       <div className="lg:hidden">
         <SettingsToggle changeSection={changeSection} section={section} />

@@ -3,7 +3,7 @@ import XIcon from "../icons/XIcon";
 
 const CloseModalBtn = ({ handleClick }) => {
   return (
-    <button onClick={handleClick}>
+    <button type="button" onClick={handleClick}>
       <XIcon />
     </button>
   );

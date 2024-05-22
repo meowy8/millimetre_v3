@@ -14,7 +14,7 @@ export const fetchFilmDetails = async (filmId: string) => {
     );
     const filmDetailsData = await response.json();
 
-    console.log(filmDetailsData);
+    // console.log(filmDetailsData);
     return filmDetailsData;
   } catch (error) {
     console.log(error);
@@ -36,7 +36,7 @@ export const fetchFilmCredits = async (filmId: string) => {
       options
     );
     const filmCreditsData = await response.json();
-    console.log(filmCreditsData);
+    // console.log(filmCreditsData);
     return filmCreditsData;
   } catch (error) {
     console.log(error);
@@ -58,7 +58,7 @@ export const fetchFilmImages = async (filmId: string) => {
       options
     );
     const filmImagesData = await response.json();
-    console.log(filmImagesData);
+    // console.log(filmImagesData);
     return filmImagesData;
   } catch (error) {
     console.log(error);
@@ -80,7 +80,7 @@ export const fetchFilmSearch = async (query: string) => {
       options
     );
     const filmSearchData = await response.json();
-    console.log(filmSearchData);
+    // console.log(filmSearchData);
     return filmSearchData;
   } catch (error) {
     console.log(error);
@@ -110,8 +110,6 @@ export const fetchFilmsByPopularityRange = async (
 
     const randomPage = Math.floor(Math.random() * filmsData.total_pages) + 1;
 
-    console.log("Random page:", randomPage);
-
     const randomResponse = await fetch(
       `https://api.themoviedb.org/3/discover/movie?page=${randomPage}&sort_by=popularity.desc&vote_count.gte=${minPopularity}&vote_count.lte=${maxPopularity}&release_date.lte=${
         new Date().getFullYear() - 10
@@ -120,7 +118,7 @@ export const fetchFilmsByPopularityRange = async (
     );
     const randomFilmsData = await randomResponse.json();
 
-    console.log(randomFilmsData.results);
+    // console.log(randomFilmsData.results);
     return randomFilmsData.results.slice(0, 4); // Return the first 4 films
   } catch (error) {
     console.error("Error fetching films by popularity range:", error);
