@@ -3,18 +3,18 @@ import FilmBackdrop from "@/components/film/FilmBackdrop";
 import React, { useEffect, useState } from "react";
 import MainFilmInfo from "@/components/film/MainFilmInfo";
 import FilmImagesDisplay from "@/components/film/FilmImagesDisplay";
-import FilmNotesList from "@/components/film/FilmNotesList";
 import Modal from "@/components/Modal";
-import Link from "next/link";
+import FilmNotesContainer from "@/components/containers/FilmNotesContainer";
 import AddFilmNote from "@/components/film/AddFilmNote";
 import ImageModal from "@/components/ImageModal";
-import {
-  fetchFilmCredits,
-  fetchFilmDetails,
-  fetchFilmImages,
-} from "@/utils/fetchFilmData";
+import { fetchFilmPageData, fetchFilmNotes } from "@/utils/fetchFilmData";
 import { useParams, useRouter } from "next/navigation";
-import { FilmDetails, FilmCredits, FilmImages } from "@/types/filmTypes";
+import {
+  FilmDetails,
+  FilmCredits,
+  FilmImages,
+  FilmNotes,
+} from "@/types/filmTypes";
 import Loading from "@/components/loading";
 
 const FilmDetail = () => {
@@ -25,7 +25,7 @@ const FilmDetail = () => {
   const [filmDetails, setFilmDetails] = useState({} as FilmDetails);
   const [filmCredits, setFilmCredits] = useState({} as FilmCredits);
   const [filmImages, setFilmImages] = useState({} as FilmImages);
-  const [filmNotes, setFilmNotes] = useState([]);
+  const [filmNotes, setFilmNotes] = useState({} as FilmNotes);
   const [loading, setLoading] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -38,60 +38,40 @@ const FilmDetail = () => {
     }
   }, [filmId, router]);
 
-  // fetch film data
+  // fetch film details, credits and images
   useEffect(() => {
-    const fetchFilmData = async () => {
+    (async () => {
       try {
+        // display loading state
         setLoading(true);
-        const [details, credits, images] = await Promise.all([
-          fetchFilmDetails(filmId as string),
-          fetchFilmCredits(filmId as string),
-          fetchFilmImages(filmId as string),
-        ]);
 
-        if (
-          details.success === false ||
-          credits.success === false ||
-          images.success === false
-        ) {
-          router.push("/not-found");
-          return;
+        // fetch film data
+        const data = await fetchFilmPageData(filmId);
+
+        // check if film data is null
+        if (!data) {
+          return router.push("/not-found");
+        } else {
+          // set film data
+          setFilmDetails(data.details);
+          setFilmCredits(data.credits);
+          setFilmImages(data.images);
         }
 
-        setFilmDetails(details);
-        setFilmCredits(credits);
-        setFilmImages(images);
+        // change loading state to false
+        setLoading(false);
       } catch (error) {
         console.error(error);
-        router.push("/not-found");
-      } finally {
-        setLoading(false);
       }
-    };
-
-    fetchFilmData();
+    })();
   }, [filmId, router]);
 
-  // fetch notes
+  // fetch notes for film
   useEffect(() => {
-    const fetchNotes = async () => {
-      try {
-        const response = await fetch(
-          `/api/v1/notes/filmNotes?filmId=${filmId}&limit=4`
-        );
-        const data = await response.json();
-        // console.log(data);
-
-        if (data.message === "Success") {
-          setFilmNotes(data.result);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchNotes();
+    (async () => setFilmNotes(await fetchFilmNotes(filmId, 4)))();
   }, [filmId]);
 
+  // wait for data to load before displaying page
   useEffect(() => {
     if (!loading) {
       setIsVisible(true);
@@ -110,6 +90,7 @@ const FilmDetail = () => {
     setShowImageModal(!showImageModal);
   };
 
+  // open or close modal
   const handleClick = () => {
     toggleModal();
     toggleNotesModal();
@@ -126,7 +107,8 @@ const FilmDetail = () => {
       <Modal showModal={showModal}>
         {showNotesModal && (
           <AddFilmNote
-            poster_path={filmDetails.poster_path}
+            posterPath={filmDetails.poster_path}
+            backdropPath={filmDetails.backdrop_path}
             toggleModal={toggleModal}
             toggleNotesModal={toggleNotesModal}
             title={filmDetails.title}
@@ -161,25 +143,12 @@ const FilmDetail = () => {
           images={filmImages.backdrops}
         />
       </div>
-      <div className="flex flex-col gap-2 my-8 w-full">
-        <div className="flex justify-end">
-          {filmNotes.length > 0 && (
-            <Link
-              href={`/film/notes/${filmId}`}
-              className="karla font-bold text-lg"
-            >
-              View All Notes
-            </Link>
-          )}
-        </div>
-        <div className="flex justify-center w-full">
-          <FilmNotesList
-            filmNotes={filmNotes}
-            toggleNotesModal={toggleNotesModal}
-            toggleModal={toggleModal}
-          />
-        </div>
-      </div>
+      <FilmNotesContainer
+        filmNotes={filmNotes}
+        toggleModal={toggleModal}
+        toggleNotesModal={toggleNotesModal}
+        filmId={filmId}
+      />
     </section>
   );
 };

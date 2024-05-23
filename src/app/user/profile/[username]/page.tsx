@@ -1,13 +1,12 @@
 "use client";
 import FilmBackdrop from "@/components/film/FilmBackdrop";
 import React, { useEffect } from "react";
-import LargeUserAvatar from "@/components/user/LargeUserAvatar";
 import { useParams } from "next/navigation";
-import FavFilmsDisplay from "@/components/film/FavFilmsDisplay";
-import RecentFilmsDisplay from "@/components/film/RecentFilmsDisplay";
 import Loading from "@/components/loading";
-import UserNotesList from "@/components/user/UserNotesList";
 import { useRouter } from "next/navigation";
+import { fetchUserData } from "@/utils/fetchUserData";
+import { fetchUserNoteData } from "@/utils/fetchNoteData";
+import ProfileDetailsContainer from "@/components/containers/ProfileDetailsContainer";
 
 const Profile = () => {
   const [user, setUser] = React.useState({} as any);
@@ -20,65 +19,63 @@ const Profile = () => {
 
   const router = useRouter();
 
-  useEffect(() => {
-    console.log("user", user);
-  }, [user]);
+  // useEffect(() => {
+  //   console.log("user", user);
+  // }, [user]);
 
+  // fetch user
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await fetch(`/api/v1/users/user?username=${username}`);
-        const data = await response.json();
-        // console.log(data);
+    (async () => {
+      const data = await fetchUserData(username);
 
-        if (data.message === "User not found") {
-          router.push("/not-found");
-        } else if (data.message === "Success") {
-          setUser(data.result);
-        }
-      } catch (error) {
-        console.error(error);
+      // check if user data is null
+      if (!data) {
+        return router.push("/not-found");
       }
-    };
-    fetchUser();
+
+      // set user data
+      setUser(data);
+    })();
   }, [username, router]);
 
+  // fetch user notes
   useEffect(() => {
-    const fetchUserNotes = async () => {
-      try {
-        const response = await fetch(
-          `/api/v1/notes/userNotes?username=${username}&limit=3`
-        );
-        const data = await response.json();
-        // console.log(data);
+    // check if user is null
+    if (!user) return;
 
-        if (data.message === "Success") {
-          setUserNotes(data.result);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchUserNotes();
-  }, [username]);
+    // fetch user notes
+    (async () => {
+      const data = await fetchUserNoteData(username, null, 3);
 
+      setUserNotes(data);
+    })();
+  }, [user, username]);
+
+  // set user backdrop
   useEffect(() => {
+    // check if user is null
     if (!user.backdropPath) return;
+
+    // set user backdrop
     setUserBackdrop(`https://image.tmdb.org/t/p/original${user.backdropPath}`);
   }, [user]);
 
+  // set loading state
   useEffect(() => {
+    // check if user and backdrop are not null
     if (user && userBackdrop) {
       setLoading(false);
     }
   }, [user, userBackdrop]);
 
+  // set isVisible state
   useEffect(() => {
     if (!loading) {
       setIsVisible(true);
     }
   }, [loading]);
 
+  // wait for data to load before displaying page
   if (loading) return <Loading />;
 
   return (
@@ -88,31 +85,7 @@ const Profile = () => {
       } transition-opacity duration-500 ease-in-out`}
     >
       {userBackdrop && <FilmBackdrop backdropImage={userBackdrop} />}
-      <div className="relative bottom-24 m-6 flex flex-col justify-between  gap-4 lg:bottom-44 lg:flex-row">
-        <div className="bg-black/30 blur-lg w-full h-full absolute -z-10 mt-10"></div>
-        <div className="flex flex-col items-center gap-4 lg:items-start w-full">
-          <LargeUserAvatar />
-          <span className="outfit text-xl font-bold">{user.username}</span>
-          <p className="karla text-center px-6 mb-4 lg:text-left lg:p-0 max-w-96 ml-2">
-            {user.bio}
-          </p>
-          <div className="my-4 flex flex-col gap-2">
-            <span className="karla font-semibold ml-2">Favourite Films</span>
-            <FavFilmsDisplay user={user} />
-          </div>
-          <div className="my-4 flex flex-col gap-2 lg:my-0">
-            <span className="karla font-semibold ml-2">Recently Watched</span>
-            <RecentFilmsDisplay user={user} />
-          </div>
-        </div>
-        <div className="my-4 flex flex-col lg:items-end gap-2 mt-32 w-full">
-          <span className="karla ml-2">
-            Notes by{" "}
-            <span className="outfit font-semibold">{user.username}</span>
-          </span>
-          <UserNotesList userNotes={userNotes} />
-        </div>
-      </div>
+      <ProfileDetailsContainer user={user} userNotes={userNotes} />
     </section>
   );
 };

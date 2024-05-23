@@ -25,6 +25,7 @@ const FilmImage = ({
         width={350}
         height={200}
         className="rounded-md object-cover w-full h-full"
+        loading="lazy"
       />
     </button>
   );

@@ -57,12 +57,14 @@ const Sidebar = () => {
                 name="Profile"
                 key={1}
                 closeSidebar={closeSidebar}
+                urlPath={`/user/profile/cadaverinbloom`}
               />,
               <SidebarNavBtn
                 icon={<HomeIcon />}
                 name="Home"
                 key={2}
                 closeSidebar={closeSidebar}
+                urlPath={`/`}
               />,
             ]}
           />
@@ -74,6 +76,7 @@ const Sidebar = () => {
                 name="Members"
                 key={1}
                 closeSidebar={closeSidebar}
+                urlPath={`/members/memberSearch`}
               />,
             ]}
           />
@@ -85,6 +88,7 @@ const Sidebar = () => {
                 name="Settings"
                 key={1}
                 closeSidebar={closeSidebar}
+                urlPath={`/settings`}
               />,
             ]}
           />

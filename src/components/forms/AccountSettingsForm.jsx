@@ -3,7 +3,7 @@ import React from "react";
 import GeneralBtn from "../buttons/GeneralBtn";
 import GeneralInput from "../GeneralInput";
 
-const AccountSettingsForm = () => {
+const AccountSettingsForm = ({ setShowModal, setFilmSearchModal }) => {
   const [avatarImage, setAvatarImage] = React.useState(
     "/images/profilePicture.jpg"
   );
@@ -13,6 +13,11 @@ const AccountSettingsForm = () => {
     if (!file) return;
 
     setAvatarImage(URL.createObjectURL(file));
+  };
+
+  const handleClick = () => {
+    setShowModal(true);
+    setFilmSearchModal(true);
   };
 
   return (
@@ -70,6 +75,18 @@ const AccountSettingsForm = () => {
               placeholder="Bio"
             ></textarea>
           </label>
+          <div>
+            <span>Change Favourite Films</span>
+            <div>
+              <button
+                type="button"
+                onClick={handleClick}
+                className="border w-32 h-44 rounded-lg flex justify-center items-center"
+              >
+                <span>+</span>
+              </button>
+            </div>
+          </div>
           <div>
             <GeneralBtn text="Save" />
           </div>

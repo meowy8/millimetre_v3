@@ -11,7 +11,7 @@ const SearchInput = ({ placeholder }) => {
     e.preventDefault();
     if (!searchValue) return;
 
-    router.push(`/search/${searchValue}`);
+    router.push(`/search/${searchValue.replace(/\s/g, "-")}`);
   };
 
   return (

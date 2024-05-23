@@ -1,22 +1,21 @@
 "use client";
 import React, { useEffect } from "react";
-import SearchInput from "@/components/SearchInput";
+import FilmSearchHeader from "@/components/film/FilmSearchHeader";
 import { useParams } from "next/navigation";
-import MediumFilmPoster from "@/components/film/MediumFilmPoster";
-import Link from "next/link";
-import GeneralBtn from "@/components/buttons/GeneralBtn";
+import FilmSearchResultsList from "@/components/film/FilmSearchResultsList";
 import { fetchFilmSearch } from "@/utils/fetchFilmData";
 import { FilmSearchResults } from "@/types/filmTypes";
-import EmptyFilmPoster from "@/components/film/EmptyFilmPoster";
 
 const FilmSearch = () => {
   const [searchResults, setSearchResults] = React.useState(
     {} as FilmSearchResults
   );
 
+  // get search value from url
   const params = useParams();
-  const { searchValue } = params;
+  const { searchValue } = params as { searchValue: string };
 
+  // fetch search results
   useEffect(() => {
     (async () =>
       setSearchResults(await fetchFilmSearch(searchValue as string)))();
@@ -24,35 +23,8 @@ const FilmSearch = () => {
 
   return (
     <section className="relative m-4 flex flex-col items-center gap-8">
-      <div className="w-full mx-4 flex flex-col">
-        <SearchInput placeholder={"Search for a film"} />
-      </div>
-      <div className="flex flex-col w-full">
-        <span className="karla">Results for...</span>
-        <span className="outfit text-3xl">{searchValue}</span>
-      </div>
-      <div className="w-full">
-        <GeneralBtn text={"Show archived"} />
-      </div>
-      <div className="flex flex-wrap justify-center gap-4">
-        {searchResults.results &&
-          searchResults.results.map((film) => (
-            <Link
-              href={`/film/${film.id}`}
-              className="hover:opacity-80"
-              key={film.id}
-            >
-              {film.poster_path ? (
-                <MediumFilmPoster
-                  title={film.title}
-                  posterPath={film.poster_path}
-                />
-              ) : (
-                <EmptyFilmPoster />
-              )}
-            </Link>
-          ))}
-      </div>
+      <FilmSearchHeader searchValue={searchValue} />
+      <FilmSearchResultsList searchResults={searchResults} />
     </section>
   );
 };

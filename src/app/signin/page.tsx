@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
 import SignInToggle from "@/components/buttons/SignInToggle";
-import SignUpForm from "@/components/forms/SignUpForm";
-import SignInForm from "@/components/forms/SignInForm";
 import CreateAccountForm from "@/components/forms/CreateAccountForm";
 import Modal from "@/components/Modal";
+import MobileSignInForms from "@/components/signin/MobileSignInForms";
+import DesktopSignInForms from "@/components/signin/DesktopSignInForms";
 
 const SignIn = () => {
   const [section, setSection] = React.useState("signup");
@@ -13,6 +13,7 @@ const SignIn = () => {
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
 
+  // changes section of sign up/sign in page
   const changeSection = (section: string) => {
     setSection(section);
   };
@@ -31,32 +32,32 @@ const SignIn = () => {
         <SignInToggle section={section} changeSection={changeSection} />
       </div>
       <div className="lg:hidden">
-        {section === "signin" ? (
-          <SignInForm />
-        ) : (
-          <SignUpForm
-            setSignedUp={setSignedUp}
-            email={email}
-            password={password}
-            confirmPassword={confirmPassword}
-            setEmail={setEmail}
-            setPassword={setPassword}
-            setConfirmPassword={setConfirmPassword}
-          />
-        )}
+        <MobileSignInForms
+          {...{
+            email,
+            password,
+            confirmPassword,
+            setEmail,
+            setPassword,
+            setConfirmPassword,
+            setSignedUp,
+            section,
+          }}
+        />
       </div>
       <div className="hidden lg:flex justify-between">
-        <SignUpForm
-          setSignedUp={setSignedUp}
-          email={email}
-          password={password}
-          confirmPassword={confirmPassword}
-          setEmail={setEmail}
-          setPassword={setPassword}
-          setConfirmPassword={setConfirmPassword}
+        <DesktopSignInForms
+          {...{
+            email,
+            password,
+            confirmPassword,
+            setEmail,
+            setPassword,
+            setConfirmPassword,
+            setSignedUp,
+            section,
+          }}
         />
-        <div className="border-r border-[#FBF7F4]"></div>
-        <SignInForm />
       </div>
     </section>
   );

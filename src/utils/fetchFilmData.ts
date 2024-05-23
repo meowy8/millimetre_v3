@@ -80,7 +80,7 @@ export const fetchFilmSearch = async (query: string) => {
       options
     );
     const filmSearchData = await response.json();
-    // console.log(filmSearchData);
+    console.log("filmSearchData:", filmSearchData);
     return filmSearchData;
   } catch (error) {
     console.log(error);
@@ -122,5 +122,50 @@ export const fetchFilmsByPopularityRange = async (
     return randomFilmsData.results.slice(0, 4); // Return the first 4 films
   } catch (error) {
     console.error("Error fetching films by popularity range:", error);
+  }
+};
+
+export const fetchFilmNotes = async (
+  filmId: string[] | string,
+  limit: number | null
+) => {
+  try {
+    const response = await fetch(
+      `/api/v1/notes/filmNotes?filmId=${filmId}&limit=${limit}`
+    );
+    const data = await response.json();
+    // console.log(data);
+
+    if (data.message === "Success") {
+      return data.result;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const fetchFilmPageData = async (filmId: string | string[]) => {
+  try {
+    const [details, credits, images] = await Promise.all([
+      fetchFilmDetails(filmId as string),
+      fetchFilmCredits(filmId as string),
+      fetchFilmImages(filmId as string),
+    ]);
+
+    if (
+      details.success === false ||
+      credits.success === false ||
+      images.success === false
+    ) {
+      return null;
+    }
+
+    return {
+      details,
+      credits,
+      images,
+    };
+  } catch (error) {
+    console.error(error);
   }
 };

@@ -1,11 +1,11 @@
 import React from "react";
 import Image from "next/image";
 
-const SmallFilmPoster = ({ poster_path }) => {
+const SmallFilmPoster = ({ posterPath }) => {
   return (
     <div className="flex justify-center w-[120px]">
       <Image
-        src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+        src={`https://image.tmdb.org/t/p/w500${posterPath}`}
         alt="film poster"
         width={120}
         height={160}

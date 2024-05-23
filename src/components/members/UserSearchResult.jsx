@@ -1,5 +1,5 @@
 import React from "react";
-import MediumUserAvatar from "./MediumUserAvatar";
+import MediumUserAvatar from "../user/MediumUserAvatar";
 import Link from "next/link";
 
 const UserSearchResult = ({ username }) => {

@@ -5,7 +5,8 @@ import SmallFilmPoster from "./SmallFilmPoster";
 const AddFilmNote = ({
   toggleModal,
   toggleNotesModal,
-  poster_path,
+  posterPath,
+  backdropPath,
   title,
   filmId,
 }) => {
@@ -29,6 +30,8 @@ const AddFilmNote = ({
       content: noteContent,
       username: "cadaverinbloom",
       filmId,
+      backdropPath,
+      posterPath,
     };
 
     try {
@@ -51,7 +54,7 @@ const AddFilmNote = ({
       <form onSubmit={handleSubmit}>
         <div className="flex gap-4 lg:w-4/5 justify-between">
           <div>
-            <SmallFilmPoster poster_path={poster_path} />
+            <SmallFilmPoster posterPath={posterPath} />
           </div>
           <div className="flex flex-col gap-4 lg:w-full">
             <div className="flex justify-between">

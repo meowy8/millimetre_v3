@@ -9,8 +9,8 @@ const FavFilmsDisplay = ({ user }) => {
         user.favouriteFilms.map((film) => {
           return (
             <Link
-              href={`/film/${film.id}`}
-              key={film.id}
+              href={`/film/${film.filmId}`}
+              key={film.filmId}
               className="hover:opacity-80"
             >
               <MediumFilmPoster

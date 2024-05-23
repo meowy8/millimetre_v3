@@ -23,7 +23,7 @@ const FilmNote = ({ note }) => {
           </span>
         </div>
       </div>
-      <Link href={"/user/notes/note"}>
+      <Link href={`/user/notes/${note.username}/${note._id}`}>
         <p className=" line-clamp-4 hover:opacity-80">{note.content}</p>
       </Link>
     </div>

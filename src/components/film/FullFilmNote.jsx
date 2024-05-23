@@ -5,38 +5,49 @@ import Link from "next/link";
 import MediumFilmPoster from "./MediumFilmPoster";
 import EmptyFilmPoster from "./EmptyFilmPoster";
 
-const FullFilmNote = () => {
+const FullFilmNote = ({ noteData }) => {
   return (
     <div className="relative max-w-[1000px] mx-auto karla flex flex-col gap-4">
       <div className="relative -top-24 md:-top-44">
-        <FilmBackdrop backdropImage="/images/homePageBackdrop.jpeg" />
+        {noteData.backdropPath && (
+          <FilmBackdrop
+            backdropImage={`https://image.tmdb.org/t/p/original${noteData.backdropPath}`}
+          />
+        )}
       </div>
       <div className="relative bottom-44 md:bottom-64 lg:bottom-80 flex justify-between">
         <div className="flex flex-col gap-4">
           <div className="flex flex-col lg:flex-row gap-4 lg:items-end">
-            <Link href={"/user/profile"}>
+            <Link href={`/user/profile/${noteData.username}`}>
               <MediumUserAvatar />
             </Link>
             <span>
               Note by{" "}
-              <Link href={"/user/profile"} className="font-bold text-lg">
-                cadaverinbloom
+              <Link
+                href={"/user/profile/cadaverinbloom"}
+                className="font-bold text-lg"
+              >
+                {noteData.username}
               </Link>{" "}
               for{" "}
-              <Link href={"#"} className="outfit text-2xl">
-                Millennium Mambo
+              <Link
+                href={`/film/${noteData.filmId}`}
+                className="outfit text-2xl"
+              >
+                {noteData.title}
               </Link>
             </span>
           </div>
           <hr />
-          <p className="mt-4 text-lg">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore,
-            aperiam.
-          </p>
+          <p className="mt-4 text-lg">{noteData.content}</p>
         </div>
         <div className="hidden md:block">
-          <Link href={"#"}>
-            <EmptyFilmPoster />
+          <Link href={`/film/${noteData.filmId}`}>
+            {noteData.posterPath ? (
+              <MediumFilmPoster posterPath={noteData.posterPath} />
+            ) : (
+              <EmptyFilmPoster />
+            )}
           </Link>
         </div>
       </div>

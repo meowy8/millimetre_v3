@@ -34,3 +34,13 @@ export interface FilmSearchResults {
   total_pages: number;
   total_results: number;
 }
+
+export interface FilmNotes {
+  title: string;
+  content: string;
+  filmId: number;
+  _id: string;
+  username: string;
+  posterPath: string;
+  backdropPath: string;
+}

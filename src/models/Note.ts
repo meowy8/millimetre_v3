@@ -17,6 +17,12 @@ const noteSchema = new mongoose.Schema(
     username: {
       type: String,
     },
+    posterPath: {
+      type: String,
+    },
+    backdropPath: {
+      type: String,
+    },
   },
   {
     timestamps: true,

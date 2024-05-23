@@ -1,56 +1,70 @@
 "use client";
 import FilmNotesList from "@/components/film/FilmNotesList";
-import GeneralBtn from "@/components/buttons/GeneralBtn";
 import FilmNoteHeader from "@/components/film/FilmNoteHeader";
 import React, { useEffect } from "react";
 import { FilmDetails } from "@/types/filmTypes";
-import { fetchFilmDetails } from "@/utils/fetchFilmData";
+import { fetchFilmDetails, fetchFilmNotes } from "@/utils/fetchFilmData";
 import { useParams } from "next/navigation";
+import Modal from "@/components/Modal";
+import AddFilmNote from "@/components/film/AddFilmNote";
 
 const FilmNotes = () => {
   const [filmData, setFilmData] = React.useState({} as FilmDetails);
   const [filmNotes, setFilmNotes] = React.useState([]);
+  const [showModal, setShowModal] = React.useState(false);
+  const [showNotesModal, setShowNotesModal] = React.useState(false);
 
   const params = useParams();
   const { filmId } = params;
 
+  // fetch film notes
   useEffect(() => {
-    const fetchNotes = async () => {
-      try {
-        const response = await fetch(
-          `/api/v1/notes/filmNotes?filmId=${filmId}`
-        );
-        const data = await response.json();
-        // console.log(data);
-
-        if (data.message === "Success") {
-          setFilmNotes(data.result);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchNotes();
+    (async () => setFilmNotes(await fetchFilmNotes(filmId, null)))();
   }, [filmId]);
 
+  // fetch film details
   useEffect(() => {
-    setFilmData({} as FilmDetails);
+    // setFilmData({} as FilmDetails);
     (async () => setFilmData(await fetchFilmDetails(filmId as string)))();
   }, [filmId]);
 
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
+
+  const toggleNotesModal = () => {
+    setShowNotesModal(!showNotesModal);
+  };
+
   return (
     <section className="m-4 flex flex-col gap-8">
+      <Modal showModal={showModal}>
+        {showNotesModal && (
+          <AddFilmNote
+            posterPath={filmData.poster_path}
+            backdropPath={filmData.backdrop_path}
+            toggleModal={toggleModal}
+            toggleNotesModal={toggleNotesModal}
+            title={filmData.title}
+            filmId={filmId}
+          />
+        )}
+      </Modal>
       <FilmNoteHeader filmData={filmData} filmId={filmId} />
-      <div className="flex gap-4">
+      {/* <div className="flex gap-4">
         <div>
           <GeneralBtn text={"Best"} />
         </div>
         <div>
           <GeneralBtn text={"Recent"} />
         </div>
-      </div>
+      </div> */}
       <div>
-        <FilmNotesList filmNotes={filmNotes} />
+        <FilmNotesList
+          filmNotes={filmNotes}
+          toggleModal={toggleModal}
+          toggleNotesModal={toggleNotesModal}
+        />
       </div>
     </section>
   );
