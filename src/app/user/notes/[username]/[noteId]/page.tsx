@@ -2,7 +2,7 @@
 import FullFilmNote from "@/components/film/FullFilmNote";
 import React, { useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { fetchUserNoteData } from "@/utils/fetchNoteData";
+import { fetchUserNoteData } from "@/utils/noteData";
 import { FilmNotes } from "@/types/filmTypes";
 
 const Note = () => {
@@ -26,9 +26,9 @@ const Note = () => {
     })();
   }, [username, noteId, router]);
 
-  // useEffect(() => {
-  //   console.log("noteData", noteData);
-  // }, [noteData]);
+  useEffect(() => {
+    console.log("noteData", noteData);
+  }, [noteData]);
 
   return (
     <section className="m-4">

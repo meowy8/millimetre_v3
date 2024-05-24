@@ -6,7 +6,7 @@ const UserSearchResult = ({ username }) => {
   return (
     <Link
       href={`/user/profile/${username}`}
-      className="flex flex-col gap-2 justify-center"
+      className="flex flex-col gap-2 justify-center items-center"
     >
       <MediumUserAvatar />
       <span className="outfit text-sm">{username}</span>

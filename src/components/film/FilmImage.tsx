@@ -1,12 +1,13 @@
 import React from "react";
 import Image from "next/image";
+import { FilmImageProps } from "@/types/propTypes";
 
 const FilmImage = ({
   toggleImageModal,
   toggleModal,
   setModalImageData,
   image,
-}) => {
+}: FilmImageProps) => {
   const handleClick = () => {
     toggleModal();
     toggleImageModal();

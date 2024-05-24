@@ -1,33 +1,36 @@
 "use client";
 import { useState } from "react";
 import React from "react";
-import { fetchFilmSearch } from "@/utils/fetchFilmData";
+import { fetchFilmSearch } from "@/utils/filmData";
+import { TMDBFilmDetails } from "@/types/filmTypes";
 
-const FilmSearchModal = ({ setShowModal, addNewFavFilm }) => {
-  const [searchResults, setSearchResults] = useState([]);
+const FilmSearchModal = ({
+  addNewFavFilm,
+  closeModal,
+}: {
+  addNewFavFilm: (film: TMDBFilmDetails) => void;
+  closeModal: () => void;
+}) => {
+  const [searchResults, setSearchResults] = useState([] as TMDBFilmDetails[]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [chosenFilm, setChosenFilm] = useState({});
 
-  const fetchFilmTitles = async (searchTerm) => {
+  const fetchFilmTitles = async (searchTerm: string) => {
     const data = await fetchFilmSearch(searchTerm);
-    setSearchResults(data);
-    console.log("searchResults", searchResults);
+    setSearchResults(data.results);
+    // console.log("searchResults", searchResults);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!searchTerm) return;
 
-    setShowModal(true);
     fetchFilmTitles(searchTerm);
   };
 
-  // const handleClick = () => {
-  //   await setChosenFilm(searchResults.results[0]);
-  //   console.log("chosenFilm", chosenFilm);
-  //   addNewFavFilm(chosenFilm);
-  //   setShowModal(false);
-  // };
+  const handleClick = (film: TMDBFilmDetails) => {
+    setSearchTerm("");
+    addNewFavFilm(film as TMDBFilmDetails);
+  };
 
   return (
     <form
@@ -36,8 +39,9 @@ const FilmSearchModal = ({ setShowModal, addNewFavFilm }) => {
     >
       <div className="flex w-full justify-end">
         <button
+          type="button"
           className="text-white text-3xl"
-          onClick={() => setShowModal(false)}
+          onClick={closeModal}
         >
           x
         </button>
@@ -53,11 +57,12 @@ const FilmSearchModal = ({ setShowModal, addNewFavFilm }) => {
       </div>
       <div className="overflow-scroll overflow-x-auto">
         {searchResults &&
-          searchResults.results?.length > 0 &&
-          searchResults.results.map((film) => (
+          searchResults.length > 0 &&
+          searchResults.map((film: TMDBFilmDetails) => (
             <button
               key={film.id}
-              onClick={() => handleClick(film.id)}
+              type="button"
+              onClick={() => handleClick(film as TMDBFilmDetails)}
               className="flex w-full justify-between gap-4 hover:bg-white/10 p-2 rounded-lg"
             >
               <span className="text-start">{film.title}</span>

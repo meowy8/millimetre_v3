@@ -1,8 +1,9 @@
 import React from "react";
 import SmallUserAvatar from "../user/SmallUserAvatar";
 import Link from "next/link";
+import { FilmNotes } from "@/types/filmTypes";
 
-const FilmNote = ({ note }) => {
+const FilmNote = ({ note }: { note: FilmNotes }) => {
   return (
     <div className="bg-[#001F24] w-full max-w-[400px] h-48 rounded-md border border-[#184249] karla p-4 flex flex-col gap-2">
       <div className="flex justify-between">
@@ -19,7 +20,7 @@ const FilmNote = ({ note }) => {
         </div>
         <div>
           <span className="italic font-light text-sm">
-            {new Date(note.createdAt).toDateString()}
+            {new Date(note.createdAt as string).toDateString()}
           </span>
         </div>
       </div>

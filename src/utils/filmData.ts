@@ -1,4 +1,4 @@
-export const fetchFilmDetails = async (filmId: string) => {
+export const fetchFilmDetails = async (filmId: number) => {
   const options = {
     method: "GET",
     headers: {
@@ -21,7 +21,7 @@ export const fetchFilmDetails = async (filmId: string) => {
   }
 };
 
-export const fetchFilmCredits = async (filmId: string) => {
+export const fetchFilmCredits = async (filmId: number) => {
   const options = {
     method: "GET",
     headers: {
@@ -43,7 +43,7 @@ export const fetchFilmCredits = async (filmId: string) => {
   }
 };
 
-export const fetchFilmImages = async (filmId: string) => {
+export const fetchFilmImages = async (filmId: number) => {
   const options = {
     method: "GET",
     headers: {
@@ -125,10 +125,7 @@ export const fetchFilmsByPopularityRange = async (
   }
 };
 
-export const fetchFilmNotes = async (
-  filmId: string[] | string,
-  limit: number | null
-) => {
+export const fetchFilmNotes = async (filmId: number, limit: number | null) => {
   try {
     const response = await fetch(
       `/api/v1/notes/filmNotes?filmId=${filmId}&limit=${limit}`
@@ -144,12 +141,12 @@ export const fetchFilmNotes = async (
   }
 };
 
-export const fetchFilmPageData = async (filmId: string | string[]) => {
+export const fetchFilmPageData = async (filmId: number) => {
   try {
     const [details, credits, images] = await Promise.all([
-      fetchFilmDetails(filmId as string),
-      fetchFilmCredits(filmId as string),
-      fetchFilmImages(filmId as string),
+      fetchFilmDetails(filmId),
+      fetchFilmCredits(filmId),
+      fetchFilmImages(filmId),
     ]);
 
     if (

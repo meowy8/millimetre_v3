@@ -1,4 +1,4 @@
-export interface FilmDetails {
+export interface TMDBFilmDetails {
   backdrop_path: string;
   runtime: number;
   id: number;
@@ -39,8 +39,17 @@ export interface FilmNotes {
   title: string;
   content: string;
   filmId: number;
-  _id: string;
+  _id?: string;
+  createdAt?: string;
   username: string;
   posterPath: string;
   backdropPath: string;
+}
+
+export interface Credits {
+  id: number;
+  name: string;
+  character: string;
+  job: string;
+  credit_id: string;
 }

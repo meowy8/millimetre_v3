@@ -1,6 +1,9 @@
 import React from "react";
 import CloseModalBtn from "../buttons/CloseModalBtn";
 import SmallFilmPoster from "./SmallFilmPoster";
+import { AddFilmNoteProps } from "@/types/propTypes";
+import { FilmNotes } from "@/types/filmTypes";
+import { postNote } from "@/utils/noteData";
 
 const AddFilmNote = ({
   toggleModal,
@@ -9,7 +12,7 @@ const AddFilmNote = ({
   backdropPath,
   title,
   filmId,
-}) => {
+}: AddFilmNoteProps) => {
   const [enableDate, setEnableDate] = React.useState(false);
   const [noteContent, setNoteContent] = React.useState("");
 
@@ -22,7 +25,7 @@ const AddFilmNote = ({
     toggleModal();
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const note = {
@@ -34,19 +37,10 @@ const AddFilmNote = ({
       posterPath,
     };
 
-    try {
-      const response = await fetch("/api/v1/notes/filmNotes", {
-        method: "POST",
-        body: JSON.stringify(note),
-      });
-      const data = await response.json();
-      // console.log(data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      toggleNotesModal();
-      toggleModal();
-    }
+    await postNote(note as FilmNotes);
+
+    toggleNotesModal();
+    toggleModal();
   };
 
   return (
@@ -61,13 +55,12 @@ const AddFilmNote = ({
               <span className="outfit text-2xl line-clamp-1">{title}</span>
               <CloseModalBtn handleClick={handleClick} />
             </div>
-
             <label htmlFor="note" className="flex flex-col karla">
               Note
               <textarea
                 name="note"
                 id="note"
-                cols="30"
+                cols={30}
                 rows={5}
                 className="bg-white/10 p-2 rounded-lg border hover:bg-white/20 focus:bg-white/30"
                 placeholder="Add a note"

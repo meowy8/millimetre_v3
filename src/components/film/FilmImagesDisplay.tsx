@@ -1,3 +1,4 @@
+import { FilmImagesDisplayProps } from "@/types/propTypes";
 import FilmImage from "./FilmImage";
 import React from "react";
 
@@ -6,7 +7,7 @@ const FilmImagesDisplay = ({
   toggleModal,
   setModalImageData,
   images,
-}) => {
+}: FilmImagesDisplayProps) => {
   return (
     <div className="flex gap-4 mx-4 overflow-x-auto whitespace-nowrap">
       {images &&

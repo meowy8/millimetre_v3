@@ -7,10 +7,10 @@ import Modal from "@/components/Modal";
 import FilmNotesContainer from "@/components/containers/FilmNotesContainer";
 import AddFilmNote from "@/components/film/AddFilmNote";
 import ImageModal from "@/components/ImageModal";
-import { fetchFilmPageData, fetchFilmNotes } from "@/utils/fetchFilmData";
+import { fetchFilmPageData, fetchFilmNotes } from "@/utils/filmData";
 import { useParams, useRouter } from "next/navigation";
 import {
-  FilmDetails,
+  TMDBFilmDetails,
   FilmCredits,
   FilmImages,
   FilmNotes,
@@ -22,14 +22,15 @@ const FilmDetail = () => {
   const [showNotesModal, setShowNotesModal] = useState(false);
   const [showImageModal, setShowImageModal] = useState(false);
   const [modalImageData, setModalImageData] = useState("");
-  const [filmDetails, setFilmDetails] = useState({} as FilmDetails);
+  const [filmDetails, setFilmDetails] = useState({} as TMDBFilmDetails);
   const [filmCredits, setFilmCredits] = useState({} as FilmCredits);
   const [filmImages, setFilmImages] = useState({} as FilmImages);
   const [filmNotes, setFilmNotes] = useState({} as FilmNotes);
   const [loading, setLoading] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
 
-  const { filmId } = useParams();
+  let params = useParams<{ filmId: string }>();
+  const filmId = parseInt(params.filmId);
   const router = useRouter();
 
   useEffect(() => {
@@ -46,7 +47,7 @@ const FilmDetail = () => {
         setLoading(true);
 
         // fetch film data
-        const data = await fetchFilmPageData(filmId);
+        const data = await fetchFilmPageData(filmId as number);
 
         // check if film data is null
         if (!data) {

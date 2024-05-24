@@ -4,8 +4,8 @@ import React, { useEffect } from "react";
 import { useParams } from "next/navigation";
 import Loading from "@/components/loading";
 import { useRouter } from "next/navigation";
-import { fetchUserData } from "@/utils/fetchUserData";
-import { fetchUserNoteData } from "@/utils/fetchNoteData";
+import { fetchUserData } from "@/utils/userData";
+import { fetchUserNoteData } from "@/utils/noteData";
 import ProfileDetailsContainer from "@/components/containers/ProfileDetailsContainer";
 
 const Profile = () => {

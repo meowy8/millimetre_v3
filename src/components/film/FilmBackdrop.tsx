@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-const FilmBackdrop = ({ backdropImage }) => {
+const FilmBackdrop = ({ backdropImage }: { backdropImage: string }) => {
   return (
     <div className="relative max-w-[1000px] mx-auto -z-10">
       <div className="bg-[#0B0618] w-[10%] h-[700px] absolute bottom-0 -left-10 blur-lg"></div>

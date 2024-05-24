@@ -2,7 +2,7 @@ import React from "react";
 import GeneralBtn from "../buttons/GeneralBtn";
 import SearchInput from "../SearchInput";
 
-const FilmSearchHeader = ({ searchValue }) => {
+const FilmSearchHeader = ({ searchValue }: { searchValue: string }) => {
   return (
     <div>
       <div className="w-full mx-4 flex flex-col">

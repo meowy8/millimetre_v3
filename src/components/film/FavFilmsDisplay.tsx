@@ -1,8 +1,9 @@
 import React from "react";
 import Link from "next/link";
 import MediumFilmPoster from "./MediumFilmPoster";
+import { User } from "@/types/userTypes";
 
-const FavFilmsDisplay = ({ user }) => {
+const FavFilmsDisplay = ({ user }: { user: User }) => {
   return (
     <div className="grid grid-cols-3 gap-4">
       {user.favouriteFilms && user.favouriteFilms.length > 0 ? (

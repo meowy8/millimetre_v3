@@ -4,14 +4,23 @@ import FilmDescription from "./FilmDescription";
 import WatchedButton from "@/components/buttons/WatchedButton";
 import AddToWatchlistBtn from "@/components/buttons/AddToWatchlistBtn";
 import FilmProductionDetails from "./FilmProductionDetails";
+import { Credits, TMDBFilmDetails } from "@/types/filmTypes";
 
-const MainFilmInfo = ({ filmDetails, filmCredits, handleClick }) => {
+const MainFilmInfo = ({
+  filmDetails,
+  filmCredits,
+  handleClick,
+}: {
+  filmDetails: TMDBFilmDetails;
+  filmCredits: Credits;
+  handleClick: () => void;
+}) => {
   return (
     <div className="relative bottom-20 md:bottom-32 lg:bottom-44 m-6 z-10 flex flex-col lg:flex-row lg:gap-20">
       <div className="bg-black/40 rounded-lg w-full h-[700px] absolute blur-lg -z-10"></div>
       <div className="lg:flex-row flex flex-col items-center lg:items-start gap-10">
         {filmDetails.poster_path && (
-          <LargeFilmPoster poster_path={filmDetails.poster_path} />
+          <LargeFilmPoster posterPath={filmDetails.poster_path} />
         )}
         <FilmDescription
           title={filmDetails.title}
@@ -28,11 +37,11 @@ const MainFilmInfo = ({ filmDetails, filmCredits, handleClick }) => {
         <div className="flex flex-col gap-4">
           <FilmProductionDetails
             sectionName="Cast"
-            creditsType={filmCredits.cast}
+            credits={filmCredits.cast}
           />
           <FilmProductionDetails
             sectionName="Crew"
-            creditsType={filmCredits.crew}
+            credits={filmCredits.crew}
           />
         </div>
       </div>

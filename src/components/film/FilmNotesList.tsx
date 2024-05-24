@@ -1,8 +1,12 @@
 import React from "react";
 import FilmNote from "./FilmNote";
-import Link from "next/link";
+import { FilmNotesListProps } from "@/types/propTypes";
 
-const FilmNotesList = ({ filmNotes, toggleModal, toggleNotesModal }) => {
+const FilmNotesList = ({
+  filmNotes,
+  toggleModal,
+  toggleNotesModal,
+}: FilmNotesListProps) => {
   const handleClick = () => {
     toggleNotesModal();
     toggleModal();

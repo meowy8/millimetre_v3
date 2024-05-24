@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import FilmSearchHeader from "@/components/film/FilmSearchHeader";
 import { useParams } from "next/navigation";
 import FilmSearchResultsList from "@/components/film/FilmSearchResultsList";
-import { fetchFilmSearch } from "@/utils/fetchFilmData";
+import { fetchFilmSearch } from "@/utils/filmData";
 import { FilmSearchResults } from "@/types/filmTypes";
 
 const FilmSearch = () => {

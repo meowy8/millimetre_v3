@@ -1,6 +1,12 @@
+import { TMDBFilmDetails } from "@/types/filmTypes";
 import React from "react";
 
-const FilmDescription = ({ runtime, overview, title, release_date }) => {
+const FilmDescription = ({
+  runtime,
+  overview,
+  title,
+  release_date,
+}: TMDBFilmDetails) => {
   return (
     <div className="flex flex-col gap-2 my-8 lg:w-96">
       <h1 className="outfit text-3xl">{title}</h1>

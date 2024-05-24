@@ -4,8 +4,9 @@ import FilmBackdrop from "./FilmBackdrop";
 import Link from "next/link";
 import MediumFilmPoster from "./MediumFilmPoster";
 import EmptyFilmPoster from "./EmptyFilmPoster";
+import { FilmNotes } from "@/types/filmTypes";
 
-const FullFilmNote = ({ noteData }) => {
+const FullFilmNote = ({ noteData }: { noteData: FilmNotes }) => {
   return (
     <div className="relative max-w-[1000px] mx-auto karla flex flex-col gap-4">
       <div className="relative -top-24 md:-top-44">
@@ -44,7 +45,10 @@ const FullFilmNote = ({ noteData }) => {
         <div className="hidden md:block">
           <Link href={`/film/${noteData.filmId}`}>
             {noteData.posterPath ? (
-              <MediumFilmPoster posterPath={noteData.posterPath} />
+              <MediumFilmPoster
+                posterPath={noteData.posterPath}
+                title={noteData.title}
+              />
             ) : (
               <EmptyFilmPoster />
             )}

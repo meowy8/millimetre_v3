@@ -1,13 +1,18 @@
 import Link from "next/link";
 import React from "react";
-import MediumFilmPoster from "../film/MediumFilmPoster";
-import EmptyFilmPoster from "../film/EmptyFilmPoster";
+import MediumFilmPoster from "./MediumFilmPoster";
+import EmptyFilmPoster from "./EmptyFilmPoster";
+import { TMDBFilmDetails } from "@/types/filmTypes";
 
-const FilmSearchResultsList = ({ searchResults }) => {
+const FilmSearchResultsList = ({
+  searchResults,
+}: {
+  searchResults: TMDBFilmDetails[];
+}) => {
   return (
     <div className="flex flex-wrap justify-center gap-4">
-      {searchResults.results &&
-        searchResults.results.map((film) => (
+      {searchResults &&
+        searchResults.map((film) => (
           <Link
             href={`/film/${film.id}`}
             className="hover:opacity-80"

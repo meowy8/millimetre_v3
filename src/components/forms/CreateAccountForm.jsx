@@ -60,7 +60,7 @@ const CreateAccountForm = ({
     };
 
     try {
-      const response = await fetch("/api/v1/createAccount", {
+      const response = await fetch("/api/v1/users/user", {
         method: "POST",
         body: JSON.stringify(userData),
       });

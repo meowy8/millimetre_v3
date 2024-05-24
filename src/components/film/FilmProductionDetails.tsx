@@ -3,8 +3,15 @@ import React from "react";
 import UpArrow from "../icons/UpArrow";
 import DownArrow from "../icons/DownArrow";
 import CreditsList from "./CreditsList";
+import { Credits } from "@/types/filmTypes";
 
-const FilmProductionDetails = ({ sectionName, creditsType }) => {
+const FilmProductionDetails = ({
+  sectionName,
+  credits,
+}: {
+  sectionName: string;
+  credits: Credits;
+}) => {
   const [showDetails, setShowDetails] = React.useState(false);
 
   const toggleDetails = () => {
@@ -21,7 +28,7 @@ const FilmProductionDetails = ({ sectionName, creditsType }) => {
         <span>{showDetails ? <DownArrow /> : <UpArrow />}</span>
       </button>
       <hr />
-      <CreditsList showDetails={showDetails} credits={creditsType} />
+      <CreditsList showDetails={showDetails} credits={credits as Credits[]} />
     </div>
   );
 };

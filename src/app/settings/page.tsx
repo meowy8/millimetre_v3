@@ -2,8 +2,6 @@
 import React from "react";
 import SettingsToggle from "@/components/buttons/SettingsToggle";
 import DesktopSettingsForms from "@/components/settings/DesktopSettingsForms";
-import Modal from "@/components/Modal";
-import FilmSearchModal from "@/components/film/FilmSearchModal";
 import MobileSettingsForms from "@/components/settings/MobileSettingsForms";
 
 const Settings = () => {
@@ -16,22 +14,8 @@ const Settings = () => {
     setSection(section);
   };
 
-  // NEEDS TO BE IMPLEMENTED
-  const addNewFavFilm = () => {
-    setShowFilmSearchModal(false);
-    setShowModal(false);
-  };
-
   return (
     <section className="">
-      <Modal showModal={showModal}>
-        {showFilmSearchModal && (
-          <FilmSearchModal
-            setShowModal={setShowModal}
-            addNewFavFilm={addNewFavFilm}
-          />
-        )}
-      </Modal>
       <h1 className="text-3xl karla m-2 mb-8">Settings</h1>
       <div className="lg:hidden">
         <SettingsToggle changeSection={changeSection} section={section} />

@@ -2,20 +2,21 @@
 import FilmNotesList from "@/components/film/FilmNotesList";
 import FilmNoteHeader from "@/components/film/FilmNoteHeader";
 import React, { useEffect } from "react";
-import { FilmDetails } from "@/types/filmTypes";
-import { fetchFilmDetails, fetchFilmNotes } from "@/utils/fetchFilmData";
+import { TMDBFilmDetails } from "@/types/filmTypes";
+import { fetchFilmDetails, fetchFilmNotes } from "@/utils/filmData";
 import { useParams } from "next/navigation";
 import Modal from "@/components/Modal";
 import AddFilmNote from "@/components/film/AddFilmNote";
 
 const FilmNotes = () => {
-  const [filmData, setFilmData] = React.useState({} as FilmDetails);
+  const [filmData, setFilmData] = React.useState({} as TMDBFilmDetails);
   const [filmNotes, setFilmNotes] = React.useState([]);
   const [showModal, setShowModal] = React.useState(false);
   const [showNotesModal, setShowNotesModal] = React.useState(false);
 
   const params = useParams();
-  const { filmId } = params;
+  const param = params.filmId;
+  const filmId = parseInt(param as string);
 
   // fetch film notes
   useEffect(() => {
@@ -25,7 +26,7 @@ const FilmNotes = () => {
   // fetch film details
   useEffect(() => {
     // setFilmData({} as FilmDetails);
-    (async () => setFilmData(await fetchFilmDetails(filmId as string)))();
+    (async () => setFilmData(await fetchFilmDetails(filmId)))();
   }, [filmId]);
 
   const toggleModal = () => {
