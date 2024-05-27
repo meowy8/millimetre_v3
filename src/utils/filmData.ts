@@ -128,14 +128,18 @@ export const fetchFilmsByPopularityRange = async (
 export const fetchFilmNotes = async (filmId: number, limit: number | null) => {
   try {
     const response = await fetch(
-      `/api/v1/notes/filmNotes?filmId=${filmId}&limit=${limit}`
+      `/api/v1/notes/filmNotes?filmId=${filmId}${
+        limit ? `&limit=${limit}` : ""
+      }`
     );
+
     const data = await response.json();
-    // console.log(data);
 
     if (data.message === "Success") {
       return data.result;
     }
+
+    throw new Error("Failed to fetch film notes");
   } catch (error) {
     console.error(error);
   }

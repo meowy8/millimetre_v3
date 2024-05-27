@@ -25,7 +25,13 @@ export interface FilmCredits {
 
 export interface FilmImages {
   id: number;
-  backdrops: String[];
+  backdrops: FilmImage[];
+}
+
+export interface FilmImage {
+  file_path: string;
+  height: number;
+  width: number;
 }
 
 export interface FilmSearchDetails {

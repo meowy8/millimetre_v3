@@ -3,7 +3,7 @@ import connectDB from "@/utils/db";
 import Note from "@/models/Note";
 import User from "@/models/User";
 
-export async function GET(req) {
+export async function GET(req: Request) {
   await connectDB();
   const filmId = new URL(req.url).searchParams.get("filmId");
   const limit = new URL(req.url).searchParams.get("limit");
@@ -18,7 +18,7 @@ export async function GET(req) {
   return NextResponse.json({ message: "Success", result }, { status: 200 });
 }
 
-export async function POST(req) {
+export async function POST(req: Request) {
   await connectDB();
   const data = await req.json();
   const result = await Note.create(data);

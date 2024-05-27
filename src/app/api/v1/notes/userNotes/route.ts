@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import connectDB from "@/utils/db";
 import Note from "@/models/Note";
 
-export async function GET(req) {
+export async function GET(req: Request) {
   const db = await connectDB();
   const username = new URL(req.url).searchParams.get("username");
   const noteId = new URL(req.url).searchParams.get("noteId");

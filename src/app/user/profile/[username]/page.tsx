@@ -28,6 +28,8 @@ const Profile = () => {
     (async () => {
       const data = await fetchUserData(username);
 
+      console.log(data);
+
       // check if user data is null
       if (!data) {
         return router.push("/not-found");

@@ -16,16 +16,19 @@ import {
   FilmNotes,
 } from "@/types/filmTypes";
 import Loading from "@/components/loading";
+import { ModalImageDataType } from "@/types/propTypes";
 
 const FilmDetail = () => {
   const [showModal, setShowModal] = useState(false);
   const [showNotesModal, setShowNotesModal] = useState(false);
   const [showImageModal, setShowImageModal] = useState(false);
-  const [modalImageData, setModalImageData] = useState("");
+  const [modalImageData, setModalImageData] = useState(
+    {} as ModalImageDataType
+  );
   const [filmDetails, setFilmDetails] = useState({} as TMDBFilmDetails);
   const [filmCredits, setFilmCredits] = useState({} as FilmCredits);
   const [filmImages, setFilmImages] = useState({} as FilmImages);
-  const [filmNotes, setFilmNotes] = useState({} as FilmNotes);
+  const [filmNotes, setFilmNotes] = useState([] as FilmNotes[]);
   const [loading, setLoading] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -47,7 +50,7 @@ const FilmDetail = () => {
         setLoading(true);
 
         // fetch film data
-        const data = await fetchFilmPageData(filmId as number);
+        const data = await fetchFilmPageData(filmId);
 
         // check if film data is null
         if (!data) {

@@ -72,9 +72,11 @@ export interface SignInFormPropsMobile extends SignInFormProps {
 export interface ImageModalType {
   toggleModal: () => void;
   toggleImageModal: () => void;
-  modalImageData: {
-    src: string;
-    height: number;
-    width: number;
-  };
+  modalImageData: ModalImageDataType;
+}
+
+export interface ModalImageDataType {
+  src: string;
+  height: number;
+  width: number;
 }
