@@ -4,7 +4,7 @@ import FilmDescription from "./FilmDescription";
 import WatchedButton from "@/components/buttons/WatchedButton";
 import AddToWatchlistBtn from "@/components/buttons/AddToWatchlistBtn";
 import FilmProductionDetails from "./FilmProductionDetails";
-import { Credits, TMDBFilmDetails } from "@/types/filmTypes";
+import { Credits, FilmCredits, TMDBFilmDetails } from "@/types/filmTypes";
 
 const MainFilmInfo = ({
   filmDetails,
@@ -12,7 +12,7 @@ const MainFilmInfo = ({
   handleClick,
 }: {
   filmDetails: TMDBFilmDetails;
-  filmCredits: Credits;
+  filmCredits: FilmCredits;
   handleClick: () => void;
 }) => {
   return (

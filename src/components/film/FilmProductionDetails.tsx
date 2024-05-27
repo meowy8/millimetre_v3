@@ -3,14 +3,14 @@ import React from "react";
 import UpArrow from "../icons/UpArrow";
 import DownArrow from "../icons/DownArrow";
 import CreditsList from "./CreditsList";
-import { Credits } from "@/types/filmTypes";
+import { Credits, FilmCredits } from "@/types/filmTypes";
 
 const FilmProductionDetails = ({
   sectionName,
   credits,
 }: {
   sectionName: string;
-  credits: Credits;
+  credits: Credits[];
 }) => {
   const [showDetails, setShowDetails] = React.useState(false);
 
@@ -28,7 +28,7 @@ const FilmProductionDetails = ({
         <span>{showDetails ? <DownArrow /> : <UpArrow />}</span>
       </button>
       <hr />
-      <CreditsList showDetails={showDetails} credits={credits as Credits[]} />
+      <CreditsList showDetails={showDetails} credits={credits} />
     </div>
   );
 };

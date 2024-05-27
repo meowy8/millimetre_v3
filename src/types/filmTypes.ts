@@ -11,10 +11,16 @@ export interface TMDBFilmDetails {
   title: string;
 }
 
+export interface FilmDescriptionType
+  extends Pick<
+    TMDBFilmDetails,
+    "runtime" | "overview" | "title" | "release_date"
+  > {}
+
 export interface FilmCredits {
   id: number;
-  cast: String[];
-  crew: String[];
+  cast: Credits[];
+  crew: Credits[];
 }
 
 export interface FilmImages {

@@ -3,12 +3,15 @@ import { useState } from "react";
 import React from "react";
 import { fetchFilmSearch } from "@/utils/filmData";
 import { TMDBFilmDetails } from "@/types/filmTypes";
+import { FavouriteFilms } from "@/types/userTypes";
 
 const FilmSearchModal = ({
   addNewFavFilm,
   closeModal,
+  favFilms,
 }: {
   addNewFavFilm: (film: TMDBFilmDetails) => void;
+  favFilms: FavouriteFilms[];
   closeModal: () => void;
 }) => {
   const [searchResults, setSearchResults] = useState([] as TMDBFilmDetails[]);

@@ -1,4 +1,5 @@
 import { Credits, FilmNotes } from "./filmTypes";
+import { SignUp } from "./formTypes";
 
 export interface AddFilmNoteProps {
   toggleModal: () => void;
@@ -55,4 +56,25 @@ export interface FilmCardProps {
   title: string;
   releaseDate: string;
   filmId: number;
+}
+
+export interface SignInFormProps extends SignUp {
+  setSignedUp: (value: boolean) => void;
+  setEmail: (value: SignUp["email"]) => void;
+  setPassword: (value: SignUp["password"]) => void;
+  setConfirmPassword: (value: SignUp["confirmPassword"]) => void;
+}
+
+export interface SignInFormPropsMobile extends SignInFormProps {
+  section: string;
+}
+
+export interface ImageModalType {
+  toggleModal: () => void;
+  toggleImageModal: () => void;
+  modalImageData: {
+    src: string;
+    height: number;
+    width: number;
+  };
 }
