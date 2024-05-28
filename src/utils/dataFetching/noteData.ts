@@ -9,7 +9,7 @@ export const fetchUserNoteData = async (
     // fetch first 3 notes
     if (!noteId && limit) {
       const response = await fetch(
-        `/api/v1/notes/userNotes?username=${username}&limit=${limit}`
+        `/api/notes/userNotes?username=${username}&limit=${limit}`
       );
       const data = await response.json();
       // console.log(data);
@@ -24,7 +24,7 @@ export const fetchUserNoteData = async (
     // fetch single note
     if (noteId && !limit) {
       const response = await fetch(
-        `/api/v1/notes/userNotes?username=${username}&noteId=${noteId}`
+        `/api/notes/userNotes?username=${username}&noteId=${noteId}`
       );
       const data = await response.json();
       // console.log(data);
@@ -38,9 +38,7 @@ export const fetchUserNoteData = async (
 
     // fetch all user notes
     if (!noteId && !limit) {
-      const response = await fetch(
-        `/api/v1/notes/userNotes?username=${username}`
-      );
+      const response = await fetch(`/api/notes/userNotes?username=${username}`);
       const data = await response.json();
       // console.log(data);
 
@@ -55,9 +53,9 @@ export const fetchUserNoteData = async (
   }
 };
 
-export const postNote = async (noteData: FilmNotes) => {
+export const postNote = async (noteData: FilmNotes, userId: string) => {
   try {
-    const response = await fetch("/api/v1/notes/filmNotes", {
+    const response = await fetch(`/api/notes/filmNotes?userId=${userId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(noteData),

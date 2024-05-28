@@ -43,7 +43,7 @@ const SignUpForm = ({
     }
 
     try {
-      const response = await fetch("/api/v1/users/user", {
+      const response = await fetch("/api/users/user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -51,10 +51,11 @@ const SignUpForm = ({
         body: JSON.stringify({ email, password }),
       });
       const data = await response.json();
-      if (data.message === "Success") {
+      if (data.message === "Email is available") {
         setSignedUp(true);
       } else {
         setDuplicateEmail(true);
+        console.log(data);
       }
     } catch (error) {
       console.error(error);

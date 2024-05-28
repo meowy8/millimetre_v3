@@ -21,10 +21,21 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   await connectDB();
   const data = await req.json();
+  const userId = new URL(req.url).searchParams.get("userId");
+
+  if (!userId) {
+    return NextResponse.json({ message: "Requires user id" }, { status: 500 });
+  }
+
+  const user = await User.findById(userId);
+  if (!user) {
+    return NextResponse.json({ message: "User not found" }, { status: 500 });
+  }
+
   const result = await Note.create(data);
 
   await User.findOneAndUpdate(
-    { username: data.username },
+    { _id: userId },
     { $push: { notes: result._id } },
     { new: true }
   );

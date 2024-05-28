@@ -2,7 +2,7 @@
 import FullFilmNote from "@/components/film/FullFilmNote";
 import React, { useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { fetchUserNoteData } from "@/utils/noteData";
+import { fetchUserNoteData } from "@/utils/dataFetching/noteData";
 import { FilmNotes } from "@/types/filmTypes";
 
 const Note = () => {

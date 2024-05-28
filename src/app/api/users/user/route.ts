@@ -3,9 +3,10 @@ import connectDB from "@/utils/db";
 import User from "@/models/User";
 import bcrypt from "bcrypt";
 import { FavouriteFilms } from "@/types/userTypes";
+import { hashPassword } from "@/utils/auth";
 
 export async function GET(req: Request) {
-  const db = await connectDB();
+  await connectDB();
 
   const username = new URL(req.url).searchParams.get("username");
   const result = await User.findOne({ username });
@@ -76,7 +77,7 @@ export async function POST(req: Request) {
     }
 
     // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await hashPassword(password);
 
     // Create a new user object
     const user = new User({
@@ -99,7 +100,9 @@ export async function POST(req: Request) {
 
 export async function PATCH(req: Request) {
   const { username, favouriteFilms, bio } = await req.json();
-  const usernameParam = new URL(req.url).searchParams.get("username");
+  const userId = new URL(req.url).searchParams.get("userId");
+
+  console.log("userId", userId);
 
   const filteredFavouriteFilms = favouriteFilms.filter(
     (film: FavouriteFilms) => {
@@ -109,10 +112,15 @@ export async function PATCH(req: Request) {
 
   const db = await connectDB();
   const result = await User.findOneAndUpdate(
-    { username: usernameParam },
+    { _id: userId },
     { username, favouriteFilms: filteredFavouriteFilms, bio },
     { new: true }
   );
+
+  if (!result) {
+    return NextResponse.json({ message: "User not found" }, { status: 404 });
+  }
+
   console.log(result);
   return NextResponse.json({ message: "Success", result }, { status: 200 });
 }

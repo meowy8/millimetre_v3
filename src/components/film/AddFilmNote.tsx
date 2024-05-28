@@ -1,9 +1,12 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import CloseModalBtn from "../buttons/CloseModalBtn";
 import SmallFilmPoster from "./SmallFilmPoster";
 import { AddFilmNoteProps } from "@/types/propTypes";
 import { FilmNotes } from "@/types/filmTypes";
-import { postNote } from "@/utils/noteData";
+import { postNote } from "@/utils/dataFetching/noteData";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const AddFilmNote = ({
   toggleModal,
@@ -15,6 +18,14 @@ const AddFilmNote = ({
 }: AddFilmNoteProps) => {
   const [enableDate, setEnableDate] = React.useState(false);
   const [noteContent, setNoteContent] = React.useState("");
+
+  const router = useRouter();
+
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    if (!session) return router.push("/signin");
+  }, [session, router]);
 
   const handleChange = () => {
     setEnableDate(!enableDate);
@@ -31,13 +42,13 @@ const AddFilmNote = ({
     const note = {
       title,
       content: noteContent,
-      username: "cadaverinbloom",
+      username: session?.user?.username,
       filmId,
       backdropPath,
       posterPath,
     };
 
-    await postNote(note as FilmNotes);
+    await postNote(note as FilmNotes, session?.user?.id);
 
     toggleNotesModal();
     toggleModal();
@@ -48,7 +59,7 @@ const AddFilmNote = ({
       <form onSubmit={handleSubmit}>
         <div className="flex gap-4 lg:w-4/5 justify-between">
           <div>
-            <SmallFilmPoster posterPath={posterPath} />
+            <SmallFilmPoster posterPath={posterPath} title={title} />
           </div>
           <div className="flex flex-col gap-4 lg:w-full">
             <div className="flex justify-between">

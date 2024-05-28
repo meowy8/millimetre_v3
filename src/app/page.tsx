@@ -1,9 +1,13 @@
+"use client";
 import FilmBackdrop from "@/components/film/FilmBackdrop";
 import CreateAccountBtn from "@/components/buttons/CreateAccountBtn";
 import HomeFilmDisplay from "@/components/film/HomeFilmDisplay";
 import HomeInfoSection from "@/components/HomeInfoSection";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
+  const { data: session } = useSession();
+
   return (
     <section>
       <section className="relative top-0 left-0">
@@ -18,16 +22,20 @@ export default function Home() {
               a place to share and expand your love of film.
             </span>
           </h1>
-          <section className="flex flex-col items-center gap-2 relative bottom-10 md:bottom-20 lg:bottom-0 md:right-10">
-            <span className="oranienbaumRegular text-xl">
-              Click here to create an account!
-            </span>
-            <CreateAccountBtn />
-          </section>
+          {!session && (
+            <section className="flex flex-col items-center gap-2 relative bottom-10 md:bottom-20 lg:bottom-0 md:right-10">
+              <span className="oranienbaumRegular text-xl">
+                Click here to create an account!
+              </span>
+              <CreateAccountBtn />
+            </section>
+          )}
         </div>
         <div className="flex justify-center">
           <span className="oranienbaumRegular text-xl text-center">
-            or discover something new...
+            {session
+              ? "Discover something new!"
+              : "or discover something new..."}
           </span>
         </div>
       </section>

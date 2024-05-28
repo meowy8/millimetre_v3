@@ -3,7 +3,10 @@ import FilmNotesList from "@/components/film/FilmNotesList";
 import FilmNoteHeader from "@/components/film/FilmNoteHeader";
 import React, { useEffect } from "react";
 import { TMDBFilmDetails } from "@/types/filmTypes";
-import { fetchFilmDetails, fetchFilmNotes } from "@/utils/filmData";
+import {
+  fetchFilmDetails,
+  fetchFilmNotes,
+} from "@/utils/dataFetching/filmData";
 import { useParams } from "next/navigation";
 import Modal from "@/components/Modal";
 import AddFilmNote from "@/components/film/AddFilmNote";

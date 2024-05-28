@@ -9,11 +9,12 @@ const MembersSearchList = ({
   userListResults: User[] | null;
   noUsersFound: string;
 }) => {
+  console.log("userListResults", userListResults);
   return (
     <div className="flex flex-wrap justify-center gap-10 mt-14">
       {userListResults && userListResults.length > 0 ? (
-        userListResults.map((user: User) => (
-          <UserSearchResult key={user._id} username={user.username} />
+        userListResults.map((user: User, index: number) => (
+          <UserSearchResult key={index} username={user.username} />
         ))
       ) : (
         <p>{noUsersFound}</p>

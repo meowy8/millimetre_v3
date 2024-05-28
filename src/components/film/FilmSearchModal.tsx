@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import React from "react";
-import { fetchFilmSearch } from "@/utils/filmData";
+import { fetchFilmSearch } from "@/utils/dataFetching/filmData";
 import { TMDBFilmDetails } from "@/types/filmTypes";
 import { FavouriteFilms } from "@/types/userTypes";
 

@@ -3,7 +3,7 @@ import React from "react";
 import MembersSearchList from "@/components/members/MembersSearchList";
 import MembersSearchHeader from "@/components/members/MembersSearchHeader";
 import { useParams } from "next/navigation";
-import { fetchUserSearch } from "@/utils/userData";
+import { fetchUserSearch } from "@/utils/dataFetching/userData";
 
 const Members = () => {
   const [userListResults, setUserListResults] = React.useState([]);

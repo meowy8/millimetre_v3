@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import FilmCard from "./FilmCard";
-import { fetchFilmsByPopularityRange } from "@/utils/filmData";
+import { fetchFilmsByPopularityRange } from "@/utils/dataFetching/filmData";
 import { TMDBFilmDetails } from "@/types/filmTypes";
 
 const HomeFilmDisplay = () => {

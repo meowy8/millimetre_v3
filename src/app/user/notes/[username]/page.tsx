@@ -1,7 +1,7 @@
 "use client";
 import MediumUserAvatar from "@/components/user/MediumUserAvatar";
 import FilmNote from "@/components/film/FilmNote";
-import { fetchUserNoteData } from "@/utils/noteData";
+import { fetchUserNoteData } from "@/utils/dataFetching/noteData";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import { FilmNotes } from "@/types/filmTypes";

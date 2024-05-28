@@ -7,7 +7,10 @@ import Modal from "@/components/Modal";
 import FilmNotesContainer from "@/components/containers/FilmNotesContainer";
 import AddFilmNote from "@/components/film/AddFilmNote";
 import ImageModal from "@/components/ImageModal";
-import { fetchFilmPageData, fetchFilmNotes } from "@/utils/filmData";
+import {
+  fetchFilmPageData,
+  fetchFilmNotes,
+} from "@/utils/dataFetching/filmData";
 import { useParams, useRouter } from "next/navigation";
 import {
   TMDBFilmDetails,

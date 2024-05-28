@@ -10,15 +10,25 @@ import MembersIcon from "../icons/MembersIcon";
 import SettingsIcon from "../icons/SettingsIcon";
 import OpenSidebarBtn from "./OpenSidebarBtn";
 import { useState } from "react";
+import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const Sidebar = () => {
   const [showSidebar, setShowSidebar] = useState<boolean>(false);
+
+  const router = useRouter();
 
   const openSidebar = () => {
     setShowSidebar(true);
   };
   const closeSidebar = () => {
     setShowSidebar(false);
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+
+    closeSidebar();
   };
 
   return (
@@ -92,6 +102,12 @@ const Sidebar = () => {
               />,
             ]}
           />
+          <button
+            onClick={handleSignOut}
+            className="border border-[#01442C] rounded-lg py-4 px-10 bg-[#0B0618] hover:bg-[#093425]"
+          >
+            Sign Out
+          </button>
         </div>
       </nav>
     </aside>

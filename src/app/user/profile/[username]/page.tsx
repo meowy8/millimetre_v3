@@ -1,11 +1,12 @@
 "use client";
 import FilmBackdrop from "@/components/film/FilmBackdrop";
+import EmptyBackdrop from "@/components/film/EmptyBackdrop";
 import React, { useEffect } from "react";
 import { useParams } from "next/navigation";
 import Loading from "@/components/loading";
 import { useRouter } from "next/navigation";
-import { fetchUserData } from "@/utils/userData";
-import { fetchUserNoteData } from "@/utils/noteData";
+import { fetchUserData } from "@/utils/dataFetching/userData";
+import { fetchUserNoteData } from "@/utils/dataFetching/noteData";
 import ProfileDetailsContainer from "@/components/containers/ProfileDetailsContainer";
 
 const Profile = () => {
@@ -65,7 +66,7 @@ const Profile = () => {
   // set loading state
   useEffect(() => {
     // check if user and backdrop are not null
-    if (user && userBackdrop) {
+    if (user) {
       setLoading(false);
     }
   }, [user, userBackdrop]);
@@ -86,7 +87,11 @@ const Profile = () => {
         isVisible ? "opacity-100" : "opacity-0"
       } transition-opacity duration-500 ease-in-out`}
     >
-      {userBackdrop && <FilmBackdrop backdropImage={userBackdrop} />}
+      {userBackdrop ? (
+        <FilmBackdrop backdropImage={userBackdrop} />
+      ) : (
+        <EmptyBackdrop />
+      )}
       <ProfileDetailsContainer user={user} userNotes={userNotes} />
     </section>
   );

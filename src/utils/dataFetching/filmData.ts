@@ -128,9 +128,7 @@ export const fetchFilmsByPopularityRange = async (
 export const fetchFilmNotes = async (filmId: number, limit: number | null) => {
   try {
     const response = await fetch(
-      `/api/v1/notes/filmNotes?filmId=${filmId}${
-        limit ? `&limit=${limit}` : ""
-      }`
+      `/api/notes/filmNotes?filmId=${filmId}${limit ? `&limit=${limit}` : ""}`
     );
 
     const data = await response.json();

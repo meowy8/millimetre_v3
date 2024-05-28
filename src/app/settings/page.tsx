@@ -1,13 +1,34 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import SettingsToggle from "@/components/buttons/SettingsToggle";
 import DesktopSettingsForms from "@/components/settings/DesktopSettingsForms";
 import MobileSettingsForms from "@/components/settings/MobileSettingsForms";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { User } from "@/types/userTypes";
 
 const Settings = () => {
   const [section, setSection] = React.useState("account-settings");
-  const [showModal, setShowModal] = React.useState(false);
-  const [showFilmSearchModal, setShowFilmSearchModal] = React.useState(false);
+  const [sessionData, setSessionData] = React.useState<User | null>(null);
+
+  const router = useRouter();
+
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    //   console.log("session", session);
+    console.log("sessionData", sessionData);
+  }, [sessionData]);
+
+  useEffect(() => {
+    if (session) {
+      setSessionData(session.user || null); // Set user data from session
+    } else {
+      setSessionData(null); // Reset user data if session is null
+    }
+  }, [session]);
+
+  if (!session) return null;
 
   // changes section of settings page
   const changeSection = (section: string) => {
@@ -21,17 +42,10 @@ const Settings = () => {
         <SettingsToggle changeSection={changeSection} section={section} />
       </div>
       <div className="lg:hidden">
-        <MobileSettingsForms
-          section={section}
-          setShowModal={setShowModal}
-          setShowFilmSearchModal={setShowFilmSearchModal}
-        />
+        <MobileSettingsForms section={section} sessionData={sessionData} />
       </div>
       <div className="hidden lg:flex justify-between">
-        <DesktopSettingsForms
-          setShowModal={setShowModal}
-          setShowFilmSearchModal={setShowFilmSearchModal}
-        />
+        <DesktopSettingsForms sessionData={sessionData} />
       </div>
     </section>
   );

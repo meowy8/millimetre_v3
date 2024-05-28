@@ -5,12 +5,12 @@ import GeneralInput from "../GeneralInput";
 import Modal from "../Modal";
 import FilmSearchModal from "../film/FilmSearchModal";
 import SmallFilmPoster from "../film/SmallFilmPoster";
-import { fetchUserData } from "@/utils/userData";
+import { fetchUserData } from "@/utils/dataFetching/userData";
 import Loading from "../loading";
 import { FavouriteFilms, User } from "@/types/userTypes";
 import { TMDBFilmDetails } from "@/types/filmTypes";
 
-const AccountSettingsForm = () => {
+const AccountSettingsForm = (sessionData: any) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [avatarImage, setAvatarImage] = useState<string>(
     "/images/profilePicture.jpg"
@@ -23,25 +23,30 @@ const AccountSettingsForm = () => {
     null,
   ]);
   const [filmSlotIndex, setFilmSlotIndex] = useState<number>(0);
-  const [user, setUser] = useState<User | null>(null);
   const [favFilms, setFavFilms] = useState<FavouriteFilms[]>([]);
   const [usernameInput, setUsernameInput] = useState<string>("");
   const [bioInput, setBioInput] = useState<string>("");
+  const [user, setUser] = useState<User | null>(null);
+
+  // useEffect(() => {
+  //   console.log("favFilmSlots", favFilmSlots);
+  //   console.log("user", user);
+  //   console.log("favFilms", favFilms);
+  // }, [favFilmSlots, user, favFilms]);
 
   useEffect(() => {
-    console.log("favFilmSlots", favFilmSlots);
-    console.log("user", user);
-    console.log("favFilms", favFilms);
-  }, [favFilmSlots, user, favFilms]);
-
-  useEffect(() => {
+    if (!sessionData.sessionData) return;
+    // console.log("sessionData", sessionData);
     (async () => {
-      const data = await fetchUserData("cadaverinbloom");
+      const data = await fetchUserData(sessionData.sessionData.username);
+
+      if (!data) {
+        return;
+      }
+
       setUser(data);
-      setFavFilms(data.favouriteFilms);
-      setLoading(false);
     })();
-  }, []);
+  }, [sessionData]);
 
   useEffect(() => {
     if (!user) return;
@@ -50,7 +55,14 @@ const AccountSettingsForm = () => {
     setBioInput(user.bio || "");
   }, [user]);
 
+  useEffect(() => {
+    if (!user) return;
+    setLoading(false);
+  }, [user]);
+
   const handleSubmit = async (e: React.FormEvent) => {
+    if (!user) return;
+
     e.preventDefault();
 
     const updatedUser = {
@@ -58,25 +70,30 @@ const AccountSettingsForm = () => {
       bio: bioInput,
       favouriteFilms: favFilmSlots
         .map((film) => ({
-          filmId: film?.id,
+          filmId: film?.filmId,
           title: film?.title,
-          posterPath: film?.poster_path,
-          backdropPath: film?.backdrop_path,
+          posterPath: film?.posterPath,
+          backdropPath: film?.backdropPath,
         }))
-        .filter((film) => film.filmId !== undefined), // Filter out null values
+        .filter((film) => film.filmId !== null), // Filter out null values
     };
 
     console.log("updatedUser", updatedUser);
 
-    const response = await fetch("/api/v1/users/user?username=cadaverinbloom", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedUser),
-    });
+    // check if this is a security issue //
+    const response = await fetch(
+      `/api/users/user?userId=${sessionData.sessionData.id}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedUser),
+      }
+    );
 
     if (response.ok) {
       const data = await response.json();
-      setUser(data.result);
+      // setUser(data.result);
+      console.log("data", data);
     }
 
     window.location.reload();
@@ -107,7 +124,12 @@ const AccountSettingsForm = () => {
     if (!favFilmSlots.includes(null)) return;
 
     const updatedFavFilms = [...favFilmSlots];
-    updatedFavFilms[filmSlotIndex] = newFilm;
+    updatedFavFilms[filmSlotIndex] = {
+      filmId: newFilm.id,
+      title: newFilm.title,
+      posterPath: newFilm.poster_path,
+      backdropPath: newFilm.backdrop_path,
+    };
     setFavFilmSlots(updatedFavFilms);
     closeModal();
   };
@@ -215,7 +237,7 @@ const AccountSettingsForm = () => {
                 >
                   {film ? (
                     <SmallFilmPoster
-                      posterPath={film.poster_path}
+                      posterPath={film.posterPath || film.poster_path}
                       title={film.title}
                     />
                   ) : (

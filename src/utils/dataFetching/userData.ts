@@ -1,7 +1,7 @@
 export const fetchUserSearch = async (inputValue: string) => {
   try {
     const response = await fetch(
-      `/api/v1/users/userSearch?searchValue=${inputValue}`
+      `/api/users/userSearch?searchValue=${inputValue}`
     );
     const data = await response.json();
     // console.log(data);
@@ -16,7 +16,7 @@ export const fetchUserSearch = async (inputValue: string) => {
 
 export const fetchUserData = async (username: string | string[]) => {
   try {
-    const response = await fetch(`/api/v1/users/user?username=${username}`);
+    const response = await fetch(`/api/users/user?username=${username}`);
     const data = await response.json();
     // console.log(data);
 
