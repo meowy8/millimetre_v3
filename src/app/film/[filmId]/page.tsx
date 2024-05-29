@@ -20,6 +20,8 @@ import {
 } from "@/types/filmTypes";
 import Loading from "@/components/loading";
 import { ModalImageDataType } from "@/types/propTypes";
+import { useSession } from "next-auth/react";
+import { fetchUserWatchlist } from "@/utils/dataFetching/userData";
 
 const FilmDetail = () => {
   const [showModal, setShowModal] = useState(false);
@@ -34,10 +36,54 @@ const FilmDetail = () => {
   const [filmNotes, setFilmNotes] = useState([] as FilmNotes[]);
   const [loading, setLoading] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
+  const [watchlistButton, setWatchlistButton] = useState(false);
 
   let params = useParams<{ filmId: string }>();
   const filmId = parseInt(params.filmId);
   const router = useRouter();
+
+  const { data: session } = useSession();
+
+  const handleAddToWatchlist: () => Promise<void> = async () => {
+    const film = {
+      title: filmDetails.title,
+      posterPath: filmDetails.poster_path,
+      filmId: filmId,
+    };
+
+    const result = await fetch("/api/users/user/watchlist", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ film, userId: session?.user?.id }),
+    });
+
+    // console.log(result);
+  };
+
+  const handleRemoveFromWatchlist: () => Promise<void> = async () => {
+    const result = await fetch("/api/users/user/watchlist", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ filmId: filmId, userId: session?.user?.id }),
+    });
+
+    // console.log(result);
+  };
+
+  useEffect(() => {
+    if (!session?.user?.username) return;
+
+    (async () => {
+      const data = await fetchUserWatchlist(session?.user?.username);
+
+      console.log("watchlist", data);
+      if (data) {
+        if (data.some((film) => film.filmId === filmId)) {
+          setWatchlistButton(true);
+        }
+      }
+    })();
+  }, [session?.user?.username, filmId]);
 
   useEffect(() => {
     if (!filmId) {
@@ -98,7 +144,7 @@ const FilmDetail = () => {
   };
 
   // open or close modal
-  const handleClick = () => {
+  const closeModal = () => {
     toggleModal();
     toggleNotesModal();
   };
@@ -138,8 +184,11 @@ const FilmDetail = () => {
       {filmCredits && filmDetails && (
         <MainFilmInfo
           filmDetails={filmDetails}
-          handleClick={handleClick}
+          closeModal={closeModal}
           filmCredits={filmCredits}
+          handleAddToWatchlist={handleAddToWatchlist}
+          handleRemoveFromWatchlist={handleRemoveFromWatchlist}
+          watchlistButton={watchlistButton}
         />
       )}
       <div className="overflow-x-auto w-full lg:relative bottom-20 z-10">

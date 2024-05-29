@@ -7,13 +7,36 @@ export async function GET(req: Request) {
   const username = new URL(req.url).searchParams.get("username");
   const noteId = new URL(req.url).searchParams.get("noteId");
   const limit = new URL(req.url).searchParams.get("limit");
+  const includeContent =
+    new URL(req.url).searchParams.get("includeContent") === "true";
+  console.log("includeContent", includeContent);
 
-  if (limit) {
+  if (limit && includeContent) {
+    const result = (
+      await Note.find({ username: username }).limit(parseInt(limit)).sort({
+        createdAt: -1,
+      })
+    ).filter((note) => {
+      return note.content !== "";
+    });
+    return NextResponse.json({ message: "Success", result }, { status: 200 });
+  }
+
+  if (limit && !includeContent) {
     const result = await Note.find({ username: username })
       .limit(parseInt(limit))
       .sort({
         createdAt: -1,
       });
+    return NextResponse.json({ message: "Success", result }, { status: 200 });
+  }
+
+  if (includeContent) {
+    const result = (
+      await Note.find({ username: username }).sort({ createdAt: -1 })
+    ).filter((note) => {
+      return note.content !== "";
+    });
     return NextResponse.json({ message: "Success", result }, { status: 200 });
   }
 

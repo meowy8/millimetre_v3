@@ -162,7 +162,7 @@ const AccountSettingsForm = (sessionData: any) => {
           />
         )}
       </Modal>
-      <form onSubmit={handleSubmit} className="flex flex-col w-96">
+      <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col w-96">
         <span className="text-lg">Edit your account</span>
         <div className="m-4 flex flex-col gap-6">
           <label htmlFor="avatar" className="flex flex-col gap-4">

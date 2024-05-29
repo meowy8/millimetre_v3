@@ -7,9 +7,25 @@ export async function GET(req: Request) {
   await connectDB();
   const filmId = new URL(req.url).searchParams.get("filmId");
   const limit = new URL(req.url).searchParams.get("limit");
+  const includeContent =
+    new URL(req.url).searchParams.get("includeContent") === "true";
+  console.log("includeContent", includeContent);
 
-  if (limit) {
-    const result = await Note.find({ filmId: filmId }).limit(parseInt(limit));
+  if (limit && includeContent) {
+    const result = (
+      await Note.find({ filmId: filmId }).limit(parseInt(limit))
+    ).filter((note) => {
+      return note.content !== "";
+    });
+    return NextResponse.json({ message: "Success", result }, { status: 200 });
+  }
+
+  if (includeContent) {
+    const result = (
+      await Note.find({ filmId: filmId }).sort({ createdAt: -1 })
+    ).filter((note) => {
+      return note.content !== "";
+    });
     return NextResponse.json({ message: "Success", result }, { status: 200 });
   }
 

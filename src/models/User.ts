@@ -55,6 +55,12 @@ const userSchema = new mongoose.Schema(
       default: "",
     },
     favouriteFilms: [favFilmSchema],
+    watchlist: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Film",
+      },
+    ],
     notes: [
       {
         type: mongoose.Schema.Types.ObjectId,

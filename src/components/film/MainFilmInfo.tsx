@@ -9,11 +9,17 @@ import { Credits, FilmCredits, TMDBFilmDetails } from "@/types/filmTypes";
 const MainFilmInfo = ({
   filmDetails,
   filmCredits,
-  handleClick,
+  closeModal,
+  handleAddToWatchlist,
+  handleRemoveFromWatchlist,
+  watchlistButton,
 }: {
   filmDetails: TMDBFilmDetails;
   filmCredits: FilmCredits;
-  handleClick: () => void;
+  closeModal: () => void;
+  handleAddToWatchlist: () => void;
+  handleRemoveFromWatchlist: () => void;
+  watchlistButton: boolean;
 }) => {
   return (
     <div className="relative bottom-20 md:bottom-32 lg:bottom-44 m-6 z-10 flex flex-col lg:flex-row lg:gap-20">
@@ -31,8 +37,12 @@ const MainFilmInfo = ({
       </div>
       <div className="lg:flex flex-col w-full lg:w-auto">
         <div className="flex justify-between my-8 lg:gap-4">
-          <WatchedButton handleClick={handleClick} />
-          <AddToWatchlistBtn />
+          <WatchedButton closeModal={closeModal} />
+          <AddToWatchlistBtn
+            handleAddToWatchlist={handleAddToWatchlist}
+            handleRemoveFromWatchlist={handleRemoveFromWatchlist}
+            watchlistButton={watchlistButton}
+          />
         </div>
         <div className="flex flex-col gap-4">
           <FilmProductionDetails

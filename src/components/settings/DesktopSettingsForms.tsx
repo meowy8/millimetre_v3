@@ -6,7 +6,7 @@ import { User } from "@/types/userTypes";
 const DesktopSettingsForms = ({ sessionData }) => {
   return (
     <>
-      <ChangePasswordForm />
+      <ChangePasswordForm sessionData={sessionData} />
       <div className="border-r border-[#FBF7F4]"></div>
       <AccountSettingsForm sessionData={sessionData} />
     </>

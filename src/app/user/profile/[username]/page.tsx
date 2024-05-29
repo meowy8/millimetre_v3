@@ -15,6 +15,7 @@ const Profile = () => {
   const [loading, setLoading] = React.useState(true);
   const [isVisible, setIsVisible] = React.useState(false);
   const [userNotes, setUserNotes] = React.useState([]);
+  const [recentlyWatched, setRecentylWatched] = React.useState([]);
 
   const { username } = useParams();
 
@@ -48,9 +49,20 @@ const Profile = () => {
 
     // fetch user notes
     (async () => {
-      const data = await fetchUserNoteData(username, null, 3);
+      const data = await fetchUserNoteData(username, null, 3, true);
 
       setUserNotes(data);
+    })();
+  }, [user, username]);
+
+  // fetch recently watched
+  useEffect(() => {
+    if (!user) return;
+
+    (async () => {
+      const data = await fetchUserNoteData(username, null, 3, false);
+
+      setRecentylWatched(data);
     })();
   }, [user, username]);
 
@@ -92,7 +104,11 @@ const Profile = () => {
       ) : (
         <EmptyBackdrop />
       )}
-      <ProfileDetailsContainer user={user} userNotes={userNotes} />
+      <ProfileDetailsContainer
+        user={user}
+        userNotes={userNotes}
+        recentlyWatched={recentlyWatched}
+      />
     </section>
   );
 };

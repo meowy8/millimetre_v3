@@ -13,7 +13,7 @@ const MobileSettingsForms = ({
   return (
     <>
       {section === "change-password" ? (
-        <ChangePasswordForm />
+        <ChangePasswordForm sessionData={sessionData} />
       ) : (
         <AccountSettingsForm sessionData={sessionData} />
       )}
