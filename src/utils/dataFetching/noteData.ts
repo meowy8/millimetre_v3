@@ -1,5 +1,8 @@
 import { FilmNotes } from "@/types/filmTypes";
 
+// fetches user notes from database
+// limit is used for small displays of notes or watched films
+// includeContent depends on the note is to represent a logged film or the content of the note
 export const fetchUserNoteData = async (
   username: string | string[],
   noteId: string | string[] | null,
@@ -71,6 +74,8 @@ export const fetchUserNoteData = async (
   }
 };
 
+// post user note to database
+// userId is retrieved from session
 export const postNote = async (noteData: FilmNotes, userId: string) => {
   try {
     const response = await fetch(`/api/notes/filmNotes?userId=${userId}`, {
@@ -78,7 +83,21 @@ export const postNote = async (noteData: FilmNotes, userId: string) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(noteData),
     });
-    const data = await response.json();
+    // const data = await response.json();
+    // console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// delete user note from database
+// userId is retrieved from session
+export const deleteNote = async (noteId: string, userId: string) => {
+  try {
+    const response = await fetch(`/api/notes/filmNotes?noteId=${noteId}`, {
+      method: "DELETE",
+    });
+    // const data = await response.json();
     // console.log(data);
   } catch (error) {
     console.log(error);

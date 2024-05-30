@@ -8,9 +8,12 @@ const FilmImage = ({
   setModalImageData,
   image,
 }: FilmImageProps) => {
+  // open image modal
   const handleClick = () => {
     toggleModal();
     toggleImageModal();
+
+    // set image to be displayed
     setModalImageData({
       src: `https://image.tmdb.org/t/p/original${image.file_path}`,
       height: image.height,

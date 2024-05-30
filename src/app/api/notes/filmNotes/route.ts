@@ -7,10 +7,13 @@ export async function GET(req: Request) {
   await connectDB();
   const filmId = new URL(req.url).searchParams.get("filmId");
   const limit = new URL(req.url).searchParams.get("limit");
+  // check if request requires note to have content
+  // or if its for fetching general logs
   const includeContent =
     new URL(req.url).searchParams.get("includeContent") === "true";
   console.log("includeContent", includeContent);
 
+  // fetch first 3 notes without displaying empty content
   if (limit && includeContent) {
     const result = (
       await Note.find({ filmId: filmId }).limit(parseInt(limit))
@@ -20,6 +23,7 @@ export async function GET(req: Request) {
     return NextResponse.json({ message: "Success", result }, { status: 200 });
   }
 
+  // fetch all notes without display empty content
   if (includeContent) {
     const result = (
       await Note.find({ filmId: filmId }).sort({ createdAt: -1 })
@@ -29,6 +33,7 @@ export async function GET(req: Request) {
     return NextResponse.json({ message: "Success", result }, { status: 200 });
   }
 
+  // fetch all notes for displaying film logs
   const result = await Note.find({ filmId: filmId });
 
   return NextResponse.json({ message: "Success", result }, { status: 200 });
@@ -39,26 +44,52 @@ export async function POST(req: Request) {
   const data = await req.json();
   const userId = new URL(req.url).searchParams.get("userId");
 
+  // check if session exists
   if (!userId) {
-    return NextResponse.json({ message: "Requires user id" }, { status: 500 });
+    return NextResponse.json(
+      { message: "You need to be logged in" },
+      { status: 500 }
+    );
   }
 
+  // check if user exists
   const user = await User.findById(userId);
   if (!user) {
     return NextResponse.json({ message: "User not found" }, { status: 500 });
   }
 
+  // create note
   const result = await Note.create(data);
 
+  // add note reference to user
   await User.findOneAndUpdate(
     { _id: userId },
     { $push: { notes: result._id } },
     { new: true }
   );
 
+  // check if note was created
   if (!result) {
     return NextResponse.json({ message: "Error" }, { status: 500 });
   }
 
   return NextResponse.json({ message: "Success", result }, { status: 201 });
+}
+
+export async function DELETE(req: Request) {
+  await connectDB();
+  const noteId = new URL(req.url).searchParams.get("noteId");
+  const userId = new URL(req.url).searchParams.get("userId");
+  const result = await Note.findByIdAndDelete(noteId);
+  if (!result) {
+    return NextResponse.json({ message: "Error" }, { status: 500 });
+  }
+
+  // remove note reference from user
+  await User.findOneAndUpdate(
+    { _id: userId },
+    { $pull: { notes: noteId } },
+    { new: true }
+  );
+  return NextResponse.json({ message: "Success" }, { status: 200 });
 }

@@ -20,7 +20,10 @@ const FilmNoteHeader = ({
       </p>
       {filmData.poster_path && (
         <Link href={`/film/${filmId}`} className="hover:opacity-80">
-          <SmallFilmPoster posterPath={filmData.poster_path} />
+          <SmallFilmPoster
+            posterPath={filmData.poster_path}
+            title={filmData.title}
+          />
         </Link>
       )}
     </div>

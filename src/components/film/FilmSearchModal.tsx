@@ -17,12 +17,14 @@ const FilmSearchModal = ({
   const [searchResults, setSearchResults] = useState([] as TMDBFilmDetails[]);
   const [searchTerm, setSearchTerm] = useState("");
 
+  // fetch search results
   const fetchFilmTitles = async (searchTerm: string) => {
     const data = await fetchFilmSearch(searchTerm);
     setSearchResults(data.results);
     // console.log("searchResults", searchResults);
   };
 
+  // submit search
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!searchTerm) return;
@@ -30,6 +32,7 @@ const FilmSearchModal = ({
     fetchFilmTitles(searchTerm);
   };
 
+  // add film to favourites
   const handleClick = (film: TMDBFilmDetails) => {
     setSearchTerm("");
     addNewFavFilm(film as TMDBFilmDetails);

@@ -13,7 +13,7 @@ const FilmNotesList = ({
   };
 
   return (
-    <section className="flex flex-col gap-4 lg:flex-row flex-wrap">
+    <section className="flex flex-col gap-4 lg:flex-row flex-wrap z-10">
       {filmNotes && filmNotes.length > 0 ? (
         filmNotes.map((note) => {
           return <FilmNote key={note._id} note={note} />;

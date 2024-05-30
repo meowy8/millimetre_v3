@@ -4,9 +4,11 @@ import SearchIcon from "./icons/SearchIcon";
 import { useRouter } from "next/navigation";
 
 const SearchInput = ({ placeholder }: { placeholder: string }) => {
-  const router = useRouter();
   const [searchValue, setSearchValue] = React.useState("");
 
+  const router = useRouter();
+
+  // redirects to search page with search value
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!searchValue) return;

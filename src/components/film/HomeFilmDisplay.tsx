@@ -7,6 +7,7 @@ import { TMDBFilmDetails } from "@/types/filmTypes";
 const HomeFilmDisplay = () => {
   const [displayedFilms, setDisplayedFilms] = React.useState([]);
 
+  // fetch films by popularity range
   useEffect(() => {
     setDisplayedFilms([]);
     fetchFilmsByPopularityRange(100, 200).then((films) => {

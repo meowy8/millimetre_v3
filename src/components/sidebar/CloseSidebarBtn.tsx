@@ -17,6 +17,7 @@ const CloseSidebarBtn = ({
       openSidebar();
     }
   };
+
   return (
     <button
       onClick={handleClick}

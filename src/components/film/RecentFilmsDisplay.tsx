@@ -3,6 +3,7 @@ import Link from "next/link";
 import MediumFilmPoster from "./MediumFilmPoster";
 import { User } from "@/types/userTypes";
 import { FilmNotes } from "@/types/filmTypes";
+import EmptyFilmPoster from "./EmptyFilmPoster";
 
 const RecentFilmsDisplay = ({
   recentlyWatched,
@@ -18,7 +19,14 @@ const RecentFilmsDisplay = ({
             key={film._id}
             className="w-full h-full"
           >
-            <MediumFilmPoster posterPath={film.posterPath} title={film.title} />
+            {film.posterPath ? (
+              <MediumFilmPoster
+                posterPath={film.posterPath}
+                title={film.title}
+              />
+            ) : (
+              <EmptyFilmPoster />
+            )}
           </Link>
         ))
       ) : (

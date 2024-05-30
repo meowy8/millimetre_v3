@@ -16,8 +16,9 @@ const Note = () => {
   // fetch single note with id
   useEffect(() => {
     (async () => {
-      const data = await fetchUserNoteData(username, noteId, null);
+      const data = await fetchUserNoteData(username, noteId, null, false);
 
+      // check if note exists
       if (!data) {
         return router.push("/not-found");
       }
@@ -26,9 +27,9 @@ const Note = () => {
     })();
   }, [username, noteId, router]);
 
-  useEffect(() => {
-    console.log("noteData", noteData);
-  }, [noteData]);
+  // useEffect(() => {
+  //   console.log("noteData", noteData);
+  // }, [noteData]);
 
   return (
     <section className="m-4">

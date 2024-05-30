@@ -4,7 +4,7 @@ import React from "react";
 import ProfileIcon from "./icons/ProfileIcon";
 import Sidebar from "./sidebar/Sidebar";
 import SearchInput from "./SearchInput";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 
 const Navbar = () => {
@@ -20,9 +20,9 @@ const Navbar = () => {
         <div className="flex gap-4 lg:hidden items-center">
           {session?.user ? (
             <Link href={`/user/profile/${session?.user.username}`}>
-              <div className="w-10">
+              <div className="w-10 h-10">
                 <Image
-                  src={session?.user.image || "/images/profilePicture.jpg"}
+                  src={session?.user.profileImage}
                   alt="profile"
                   width={40}
                   height={40}
@@ -39,10 +39,15 @@ const Navbar = () => {
         </div>
         <div className="hidden lg:flex items-center gap-8 karla">
           <div className="flex gap-4 font-semibold">
-            <Link href={`/user/profile/cadaverinbloom`}>Profile</Link>
+            {session && (
+              <Link href={`/user/profile/${session?.user.username}`}>
+                Profile
+              </Link>
+            )}
             <Link href={"/"}>Home</Link>
             <Link href={"/members/memberSearch"}>Members</Link>
             {session && <Link href={"/settings"}>Settings</Link>}
+            {session && <button onClick={() => signOut()}>Sign Out</button>}
             {!session && <Link href={"/signin"}>Sign In</Link>}
           </div>
           <SearchInput placeholder={"Search for a film..."} />

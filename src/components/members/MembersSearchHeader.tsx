@@ -6,7 +6,7 @@ const MembersSearchHeader = ({
   inputValue,
 }: {
   setInputValue: Function;
-  handleSubmit: (e: React.FormEvent) => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   inputValue: string;
 }) => {
   return (

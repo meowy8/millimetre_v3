@@ -15,27 +15,30 @@ const handler = NextAuth({
       authorize: async (credentials) => {
         const client = await connectDB();
 
+        // find user with email
         const user = await User.findOne({ email: credentials.email })
           .select("+password")
           .select("+_id");
-        console.log("credentials", credentials);
-        console.log("user", user);
+        // console.log("credentials", credentials);
+        // console.log("user", user);
 
+        // if user not found
         if (!user) {
           throw new Error("User not found");
         }
 
+        // verify password
         const isMatch = await verifyPassword(
           credentials.password,
           user.password
         );
-        console.log("isMatch", isMatch);
+        // console.log("isMatch", isMatch);
 
         if (!isMatch) {
           throw new Error("Incorrect password");
         }
 
-        console.log("user from authorize", user);
+        // console.log("user from authorize", user);
 
         return user;
       },
@@ -43,15 +46,22 @@ const handler = NextAuth({
   ],
   callbacks: {
     async jwt({ token, user }) {
+      // assign user ID and username to token
       if (user) {
         token.id = user.id;
         token.username = user.username;
+        token.profileImage = user.profileImage;
       }
       return token;
     },
     async session({ session, token }) {
+      // assign user ID and username to session
       if (token) {
-        session.user = { id: token.id, username: token.username };
+        session.user = {
+          id: token.id,
+          username: token.username,
+          profileImage: token.profileImage,
+        };
       }
       return session;
     },

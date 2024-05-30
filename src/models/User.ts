@@ -17,11 +17,14 @@ const favFilmSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  backdropPath: {
+    type: String,
+    required: true,
+  },
 });
 
 const userSchema = new mongoose.Schema(
   {
-    _id: { type: mongoose.Schema.Types.ObjectId, select: false },
     email: {
       type: String,
       required: true,

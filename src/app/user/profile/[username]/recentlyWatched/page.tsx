@@ -13,6 +13,7 @@ const RecentlyWatched = () => {
   const params = useParams();
   const username = params.username;
 
+  // fetch all recently watched
   useEffect(() => {
     (async () => {
       const data = await fetchUserNoteData(username, null, null, false);
@@ -20,9 +21,9 @@ const RecentlyWatched = () => {
     })();
   }, [username]);
 
-  useEffect(() => {
-    console.log("recentlyWatched", recentlyWatched);
-  }, [recentlyWatched]);
+  // useEffect(() => {
+  //   console.log("recentlyWatched", recentlyWatched);
+  // }, [recentlyWatched]);
 
   return (
     <div>

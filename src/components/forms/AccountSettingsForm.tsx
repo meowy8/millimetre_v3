@@ -1,20 +1,19 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import GeneralBtn from "../buttons/GeneralBtn";
-import GeneralInput from "../GeneralInput";
 import Modal from "../Modal";
 import FilmSearchModal from "../film/FilmSearchModal";
 import SmallFilmPoster from "../film/SmallFilmPoster";
-import { fetchUserData } from "@/utils/dataFetching/userData";
+import { fetchUserData, updateUser } from "@/utils/dataFetching/userData";
 import Loading from "../loading";
 import { FavouriteFilms, User } from "@/types/userTypes";
 import { TMDBFilmDetails } from "@/types/filmTypes";
 
 const AccountSettingsForm = (sessionData: any) => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [avatarImage, setAvatarImage] = useState<string>(
-    "/images/profilePicture.jpg"
-  );
+  const [uploading, setUploading] = useState<boolean>(false);
+  const [profileImage, setProfileImage] = useState<string>("");
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [showFilmSearchModal, setFilmSearchModal] = useState<boolean>(false);
   const [favFilmSlots, setFavFilmSlots] = useState<(TMDBFilmDetails | null)[]>([
@@ -28,81 +27,106 @@ const AccountSettingsForm = (sessionData: any) => {
   const [bioInput, setBioInput] = useState<string>("");
   const [user, setUser] = useState<User | null>(null);
 
-  // useEffect(() => {
-  //   console.log("favFilmSlots", favFilmSlots);
-  //   console.log("user", user);
-  //   console.log("favFilms", favFilms);
-  // }, [favFilmSlots, user, favFilms]);
-
+  // Fetch user from session
   useEffect(() => {
     if (!sessionData.sessionData) return;
-    // console.log("sessionData", sessionData);
     (async () => {
       const data = await fetchUserData(sessionData.sessionData.username);
-
       if (!data) {
         return;
       }
-
       setUser(data);
     })();
   }, [sessionData]);
 
+  // Set user data to be displayed
   useEffect(() => {
     if (!user) return;
     setFavFilms(user.favouriteFilms || []);
     setUsernameInput(user.username || "");
     setBioInput(user.bio || "");
+    setProfileImage(user.profileImage || "");
   }, [user]);
 
+  // Check if user data has loaded
   useEffect(() => {
     if (!user) return;
     setLoading(false);
   }, [user]);
 
+  // Submit updated user data
   const handleSubmit = async (e: React.FormEvent) => {
     if (!user) return;
 
     e.preventDefault();
+    setUploading(true);
 
-    const updatedUser = {
-      username: usernameInput,
-      bio: bioInput,
-      favouriteFilms: favFilmSlots
-        .map((film) => ({
-          filmId: film?.filmId,
-          title: film?.title,
-          posterPath: film?.posterPath,
-          backdropPath: film?.backdropPath,
-        }))
-        .filter((film) => film.filmId !== null), // Filter out null values
-    };
+    try {
+      // Upload profile image if it exists
+      let profileImageUrl = user.profileImage;
+      if (avatarFile) {
+        const formData = new FormData();
+        formData.append("file", avatarFile as File);
+        formData.append("username", usernameInput);
 
-    console.log("updatedUser", updatedUser);
+        const response = await fetch("/api/s3-upload", {
+          method: "POST",
+          body: formData,
+        });
 
-    // check if this is a security issue //
-    const response = await fetch(
-      `/api/users/user?userId=${sessionData.sessionData.id}`,
-      {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedUser),
+        if (!response.ok) {
+          throw new Error("Failed to upload image");
+        }
+
+        const data = await response.json();
+        profileImageUrl = data.fileUrl;
+        console.log("profileImageUrl", profileImageUrl);
       }
-    );
 
-    if (response.ok) {
-      const data = await response.json();
-      // setUser(data.result);
-      console.log("data", data);
+      // Create updated user object
+      const updatedUser = {
+        username: usernameInput,
+        bio: bioInput,
+        profileImage: profileImageUrl,
+        favouriteFilms: favFilmSlots
+          .map((film) => ({
+            filmId: film?.filmId,
+            title: film?.title,
+            posterPath: film?.posterPath,
+            backdropPath: film?.backdropPath,
+          }))
+          .filter((film) => film.filmId !== null), // Filter out null values
+      };
+
+      // Update user
+      const updateResponse = await updateUser(
+        updatedUser,
+        sessionData.sessionData.id
+      );
+
+      if (!updateResponse.success) {
+        throw new Error("Failed to update user");
+      }
+
+      // Fetch updated user data
+      const updatedUserData = await fetchUserData(
+        sessionData.sessionData.username
+      );
+      setUser(updatedUserData);
+
+      setUploading(false);
+      window.location.reload();
+    } catch (error) {
+      console.error("Error during profile update:", error);
+      setUploading(false);
     }
-
-    window.location.reload();
   };
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setAvatarImage(URL.createObjectURL(file));
+    setAvatarFile(file);
+    setProfileImage(URL.createObjectURL(file));
   };
 
   const openModal = () => {
@@ -113,6 +137,13 @@ const AccountSettingsForm = (sessionData: any) => {
   const closeModal = () => {
     setShowModal(false);
     setFilmSearchModal(false);
+  };
+
+  const removeFavFilm = (filmSlotIndex: number) => {
+    const updatedFavFilmSlots = [...favFilmSlots];
+    updatedFavFilmSlots[filmSlotIndex] = null;
+    setFavFilmSlots(updatedFavFilmSlots);
+    closeModal();
   };
 
   const addNewFavFilm = (newFilm: TMDBFilmDetails) => {
@@ -172,7 +203,7 @@ const AccountSettingsForm = (sessionData: any) => {
               className="cursor-pointer flex justify-center"
             >
               <Image
-                src={avatarImage}
+                src={profileImage}
                 alt="avatar"
                 className="w-36 h-36 border border-[#FBF7F4] rounded-full flex justify-center items-center hover:bg-white/10 object-cover "
                 width={100}
@@ -185,19 +216,6 @@ const AccountSettingsForm = (sessionData: any) => {
               id="avatarfile"
               className="hidden"
               onChange={handleAvatarChange}
-            />
-          </label>
-          <label
-            htmlFor="change-profile-backdrop"
-            className="flex flex-col gap-2"
-          >
-            Change Profile Backdrop
-            <input
-              type="text"
-              name="change-profile-backdrop"
-              id="change-profile-backdrop"
-              placeholder="Film backdrop"
-              className="border border-[#FBF7F4] bg-transparent rounded-lg px-4 py-2 outline-none hover:bg-white/10 focus:bg-white/20 w-full"
             />
           </label>
           <label htmlFor="change-username" className="flex flex-col gap-2">
@@ -232,14 +250,25 @@ const AccountSettingsForm = (sessionData: any) => {
                 <button
                   key={index}
                   type="button"
-                  className="w-full rounded-lg flex justify-center items-center border overflow-hidden"
+                  className="w-full rounded-lg flex justify-center items-center border overflow-hidden relative"
                   onClick={() => handleClick(index)}
                 >
                   {film ? (
-                    <SmallFilmPoster
-                      posterPath={film.posterPath || film.poster_path}
-                      title={film.title}
-                    />
+                    <>
+                      <div
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          removeFavFilm(index);
+                        }}
+                        className="absolute top-0 right-0 px-2 bg-red-700 rounded-full z-10"
+                      >
+                        X
+                      </div>
+                      <SmallFilmPoster
+                        posterPath={film.posterPath || film.poster_path}
+                        title={film.title}
+                      />
+                    </>
                   ) : (
                     <span>+</span>
                   )}
@@ -248,7 +277,13 @@ const AccountSettingsForm = (sessionData: any) => {
             </div>
           </div>
           <div>
-            <GeneralBtn text="Save" />
+            {uploading ? (
+              <div className="flex justify-center">
+                <Loading />
+              </div>
+            ) : (
+              <GeneralBtn text="Save" />
+            )}
           </div>
         </div>
       </form>

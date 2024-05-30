@@ -1,14 +1,14 @@
 import React from "react";
 import Image from "next/image";
 
-const LargeUserAvatar = () => {
+const LargeUserAvatar = ({ user }) => {
   return (
     <Image
-      src={"/images/profilePicture.jpg"}
+      src={user.profileImage}
       alt="note"
       width={150}
       height={150}
-      className="rounded-full border border-black"
+      className="rounded-full border border-black object-cover w-36 h-36"
     />
   );
 };

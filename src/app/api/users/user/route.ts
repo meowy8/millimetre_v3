@@ -1,27 +1,37 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/utils/db";
 import User from "@/models/User";
-import bcrypt from "bcrypt";
 import { FavouriteFilms } from "@/types/userTypes";
 import { hashPassword } from "@/utils/auth";
 
 export async function GET(req: Request) {
+  const username = new URL(req.url).searchParams.get("username");
+
+  if (!username) {
+    return NextResponse.json(
+      { message: "Username not provided" },
+      { status: 401 }
+    );
+  }
+
   await connectDB();
 
-  const username = new URL(req.url).searchParams.get("username");
+  // check if user exists
   const result = await User.findOne({ username });
-
   if (!result) {
     return NextResponse.json({ message: "User not found" }, { status: 404 });
   }
 
+  // return user
   return NextResponse.json({ message: "Success", result }, { status: 200 });
 }
 
 export async function POST(req: Request) {
   try {
-    const { email, username, password, accountName, bio } = await req.json();
+    const { email, username, password, accountName, bio, profileImage } =
+      await req.json();
 
+    // check if required fields are not empty
     if (email === "") {
       return NextResponse.json(
         { message: "Email cannot be empty" },
@@ -50,7 +60,49 @@ export async function POST(req: Request) {
       );
     }
 
-    // Connect to the database
+    if (profileImage === "") {
+      return NextResponse.json(
+        { message: "Profile image cannot be empty" },
+        { status: 400 }
+      );
+    }
+
+    if (
+      (password && !/[!@#$%^&*(),.?":{}|<>]/.test(password)) ||
+      !/\d/.test(password) ||
+      password.length < 8
+    ) {
+      return NextResponse.json(
+        {
+          message:
+            "Password must be at least 8 characters long, contain at least one special character, and contain at least one number",
+        },
+        { status: 400 }
+      );
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        { message: "Email is not valid" },
+        { status: 400 }
+      );
+    }
+
+    if (
+      !/^[a-zA-Z0-9]+$/.test(username) ||
+      username?.length < 3 ||
+      username?.length > 20
+    ) {
+      return NextResponse.json(
+        {
+          message:
+            "Username must be between 3 and 20 characters long and contain only letters and numbers",
+        },
+        { status: 400 }
+      );
+    }
+
     await connectDB();
 
     // Check if email already exists
@@ -80,16 +132,19 @@ export async function POST(req: Request) {
     const hashedPassword = await hashPassword(password);
 
     // Create a new user object
-    const user = new User({
+    const newUser = new User({
       email,
       username,
       password: hashedPassword,
       accountName,
       bio,
+      profileImage,
     });
 
+    console.log("newUser", newUser);
+
     // Save the user to the database
-    const newUser = await user.save();
+    await newUser.save();
 
     return NextResponse.json({ message: "Success", newUser }, { status: 200 });
   } catch (error: any) {
@@ -99,11 +154,20 @@ export async function POST(req: Request) {
 }
 
 export async function PATCH(req: Request) {
-  const { username, favouriteFilms, bio } = await req.json();
+  const { username, favouriteFilms, bio, profileImage } = await req.json();
   const userId = new URL(req.url).searchParams.get("userId");
 
-  console.log("userId", userId);
+  // check if session exists
+  if (!userId) {
+    return NextResponse.json(
+      { message: "You need to be logged in" },
+      { status: 500 }
+    );
+  }
 
+  // console.log("userId", userId);
+
+  // filter out null values from favouriteFilms
   const filteredFavouriteFilms = favouriteFilms.filter(
     (film: FavouriteFilms) => {
       return film.filmId !== undefined;
@@ -111,16 +175,25 @@ export async function PATCH(req: Request) {
   );
 
   const db = await connectDB();
+
+  // check if user exists
+  const user = await User.findOne({ _id: userId });
+  if (!user) {
+    return NextResponse.json({ message: "User not found" }, { status: 404 });
+  }
+
+  // update user with favourite films
   const result = await User.findOneAndUpdate(
     { _id: userId },
-    { username, favouriteFilms: filteredFavouriteFilms, bio },
+    { username, favouriteFilms: filteredFavouriteFilms, bio, profileImage },
     { new: true }
   );
 
+  // check if user was updated
   if (!result) {
     return NextResponse.json({ message: "User not found" }, { status: 404 });
   }
 
-  console.log(result);
+  // console.log(result);
   return NextResponse.json({ message: "Success", result }, { status: 200 });
 }

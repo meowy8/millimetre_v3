@@ -12,15 +12,18 @@ const SignInForm = () => {
 
   const router = useRouter();
 
+  // submit sign in form
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // sign in
     const res = await signIn("credentials", {
       redirect: false,
       email,
       password,
     });
 
+    // check if error and set error message
     if (res?.error) {
       console.log(res.error);
       setError(res.error);
@@ -28,20 +31,6 @@ const SignInForm = () => {
     } else {
       router.push(`/`);
     }
-
-    // alert(res);
-
-    // const res = await fetch("/api/auth/login", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ email, password }),
-    // });
-
-    // if (res.ok) {
-    //   router.push(`/users/profile`);
-    // } else {
-    //   alert("Login failed");
-    // }
   };
 
   return (

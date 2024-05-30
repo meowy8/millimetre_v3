@@ -7,7 +7,7 @@ import MobileSignInForms from "@/components/signin/MobileSignInForms";
 import DesktopSignInForms from "@/components/signin/DesktopSignInForms";
 
 const SignIn = () => {
-  const [section, setSection] = React.useState("signup");
+  const [section, setSection] = React.useState("signin");
   const [signedUp, setSignedUp] = React.useState(false);
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");

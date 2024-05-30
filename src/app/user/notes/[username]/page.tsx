@@ -5,13 +5,18 @@ import { fetchUserNoteData } from "@/utils/dataFetching/noteData";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import { FilmNotes } from "@/types/filmTypes";
+import { useParams } from "next/navigation";
 
 const UserNotes = () => {
   const [userNotes, setUserNotes] = React.useState([]);
 
+  const params = useParams();
+  const username = params.username;
+
+  // fetch user notes
   useEffect(() => {
     (async () => {
-      const data = await fetchUserNoteData("cadaverinbloom", null, null);
+      const data = await fetchUserNoteData(username, null, null, true);
       console.log("data", data);
       setUserNotes(data);
     })();
@@ -20,16 +25,13 @@ const UserNotes = () => {
   return (
     <section>
       <div className="flex items-end gap-4">
-        <Link href={`/user/profile/cadaverinbloom`}>
+        <Link href={`/user/profile/${username}`}>
           <MediumUserAvatar />
         </Link>
         <p className="karla text-xl">
           Notes by{" "}
-          <Link
-            href={`/user/profile/cadaverinbloom`}
-            className="outfit font-bold"
-          >
-            cadaverinbloom
+          <Link href={`/user/profile/${username}`} className="outfit font-bold">
+            {username}
           </Link>
         </p>
       </div>

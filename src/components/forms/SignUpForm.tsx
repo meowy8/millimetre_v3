@@ -3,6 +3,7 @@ import GeneralBtn from "../buttons/GeneralBtn";
 import FormInput from "../FormInput";
 import { SignUp } from "@/types/formTypes";
 import { SignInFormProps } from "@/types/propTypes";
+import { createUser } from "@/utils/dataFetching/userData";
 
 const SignUpForm = ({
   setSignedUp,
@@ -13,14 +14,19 @@ const SignUpForm = ({
   setPassword,
   setConfirmPassword,
 }: SignInFormProps) => {
-  const [differentPasswords, setdifferentPasswords] = React.useState(false);
+  // error states
+  const [differentPasswords, setDifferentPasswords] = React.useState(false);
   const [emptyEmail, setEmptyEmail] = React.useState(false);
   const [emptyPassword, setEmptyPassword] = React.useState(false);
   const [duplicateEmail, setDuplicateEmail] = React.useState(false);
+  const [invalidPassword, setInvalidPassword] = React.useState(false);
+  const [invalidEmail, setInvalidEmail] = React.useState(false);
 
+  // submit sign up form
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // check if form fields are not empty
     if (!email) {
       setEmptyEmail(true);
       return;
@@ -35,27 +41,34 @@ const SignUpForm = ({
       setEmptyPassword(false);
     }
 
+    // check if password and confirm password are the same
     if (password !== confirmPassword) {
-      setdifferentPasswords(true);
+      setDifferentPasswords(true);
       return;
     } else if (password === confirmPassword) {
-      setdifferentPasswords(false);
+      setDifferentPasswords(false);
     }
 
     try {
-      const response = await fetch("/api/users/user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await createUser({ email, password });
       const data = await response.json();
+
+      // check if email already exists
       if (data.message === "Email is available") {
         setSignedUp(true);
-      } else {
+      } else if (data.message === "Email cannot be empty") {
+        setEmptyEmail(true);
+      } else if (data.message === "Email is not valid") {
+        setInvalidEmail(true);
+      } else if (data.message === "Email already in use") {
         setDuplicateEmail(true);
-        console.log(data);
+      } else if (data.message === "Password cannot be empty") {
+        setEmptyPassword(true);
+      } else if (
+        data.message ===
+        "Password must be at least 8 characters long, contain at least one special character, and contain at least one number"
+      ) {
+        setInvalidPassword(true);
       }
     } catch (error) {
       console.error(error);
@@ -81,6 +94,9 @@ const SignUpForm = ({
               Email is required!
             </span>
           )}
+          {invalidEmail && (
+            <span className="text-red-500 text-sm karla">Invalid email!</span>
+          )}
           <FormInput
             placeholder="Enter your email address"
             type="email"
@@ -99,6 +115,12 @@ const SignUpForm = ({
           {emptyPassword && (
             <span className="text-red-500 text-sm karla">
               Password is required!
+            </span>
+          )}
+          {invalidPassword && (
+            <span className="text-red-500 text-sm karla">
+              Password must be at least 8 characters long, contain at least one
+              special character, and contain at least one number
             </span>
           )}
           <FormInput

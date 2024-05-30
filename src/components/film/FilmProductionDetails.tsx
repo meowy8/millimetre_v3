@@ -14,6 +14,7 @@ const FilmProductionDetails = ({
 }) => {
   const [showDetails, setShowDetails] = React.useState(false);
 
+  // shows or hides credits
   const toggleDetails = () => {
     setShowDetails(!showDetails);
   };

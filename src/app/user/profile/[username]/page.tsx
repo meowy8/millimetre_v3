@@ -39,6 +39,11 @@ const Profile = () => {
 
       // set user data
       setUser(data);
+      if (data.favouriteFilms[0]) {
+        setUserBackdrop(
+          `https://image.tmdb.org/t/p/original${data.favouriteFilms[0].backdropPath}`
+        );
+      }
     })();
   }, [username, router]);
 

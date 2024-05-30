@@ -1,3 +1,4 @@
+// fetches film details with filmId from TMDB
 export const fetchFilmDetails = async (filmId: number) => {
   const options = {
     method: "GET",
@@ -21,6 +22,7 @@ export const fetchFilmDetails = async (filmId: number) => {
   }
 };
 
+// fetches film credits with filmId from TMDB
 export const fetchFilmCredits = async (filmId: number) => {
   const options = {
     method: "GET",
@@ -43,6 +45,7 @@ export const fetchFilmCredits = async (filmId: number) => {
   }
 };
 
+// fetches film images with filmId from TMDB
 export const fetchFilmImages = async (filmId: number) => {
   const options = {
     method: "GET",
@@ -65,6 +68,7 @@ export const fetchFilmImages = async (filmId: number) => {
   }
 };
 
+// fetches film search results with query from TMDB
 export const fetchFilmSearch = async (query: string) => {
   const options = {
     method: "GET",
@@ -80,13 +84,14 @@ export const fetchFilmSearch = async (query: string) => {
       options
     );
     const filmSearchData = await response.json();
-    console.log("filmSearchData:", filmSearchData);
+    // console.log("filmSearchData:", filmSearchData);
     return filmSearchData;
   } catch (error) {
     console.log(error);
   }
 };
 
+// fetches films by popularity range
 export const fetchFilmsByPopularityRange = async (
   minPopularity: number,
   maxPopularity: number
@@ -106,10 +111,14 @@ export const fetchFilmsByPopularityRange = async (
       }-01-01&vote_average.gte=7&sort_by=vote_average.desc&without_genres=comedy`,
       options
     );
+    // intial response to get total number of pages recieved
     const filmsData = await initialResponse.json();
 
+    // generate random page to retrieve
     const randomPage = Math.floor(Math.random() * filmsData.total_pages) + 1;
 
+    // fetch films from random page
+    // getting films from 10 years ago allows for more varied results
     const randomResponse = await fetch(
       `https://api.themoviedb.org/3/discover/movie?page=${randomPage}&sort_by=popularity.desc&vote_count.gte=${minPopularity}&vote_count.lte=${maxPopularity}&release_date.lte=${
         new Date().getFullYear() - 10
@@ -125,6 +134,8 @@ export const fetchFilmsByPopularityRange = async (
   }
 };
 
+// fetches film notes from database with filmId
+// limit is set when displaying a small number of notes
 export const fetchFilmNotes = async (filmId: number, limit: number | null) => {
   try {
     const response = await fetch(
@@ -145,6 +156,7 @@ export const fetchFilmNotes = async (filmId: number, limit: number | null) => {
   }
 };
 
+// uses previous functions to fetch multiple sets of data for a single film
 export const fetchFilmPageData = async (filmId: number) => {
   try {
     const [details, credits, images] = await Promise.all([
@@ -153,6 +165,7 @@ export const fetchFilmPageData = async (filmId: number) => {
       fetchFilmImages(filmId),
     ]);
 
+    // error handling
     if (
       details.success === false ||
       credits.success === false ||

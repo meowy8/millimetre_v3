@@ -4,6 +4,8 @@ import CloseModalBtn from "../buttons/CloseModalBtn";
 import Image from "next/image";
 import FormInput from "../FormInput";
 import { useRouter } from "next/navigation";
+import { createUser } from "@/utils/dataFetching/userData";
+import Loading from "../loading";
 
 const CreateAccountForm = ({
   toggleModal,
@@ -16,16 +18,23 @@ const CreateAccountForm = ({
   email: string;
   password: string;
 }) => {
+  // form states
   const [avatarImage, setAvatarImage] = React.useState<string>("");
   const [accountName, setAccountName] = React.useState<string>("");
   const [username, setUsername] = React.useState<string>("");
   const [bio, setBio] = React.useState<string>("");
 
+  const [avatarFile, setAvatarFile] = React.useState<File | null>(null);
+
+  const [uploading, setUploading] = React.useState<boolean>(false);
+
+  // error states
   const [emptyAccountName, setEmptyAccountName] =
     React.useState<boolean>(false);
   const [emptyUsername, setEmptyUsername] = React.useState<boolean>(false);
   const [duplicateUsername, setDuplicateUsername] =
     React.useState<boolean>(false);
+  const [invalidUsername, setInvalidUsername] = React.useState<boolean>(false);
 
   const router = useRouter();
 
@@ -33,6 +42,7 @@ const CreateAccountForm = ({
     const file = e.target.files?.[0];
     if (!file) return;
 
+    setAvatarFile(file);
     setAvatarImage(URL.createObjectURL(file));
   };
 
@@ -41,9 +51,12 @@ const CreateAccountForm = ({
     toggleModal();
   };
 
+  // submit create account form
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setUploading(true);
 
+    // check if form fields are not empty
     if (!accountName) {
       setEmptyAccountName(true);
       return;
@@ -58,41 +71,60 @@ const CreateAccountForm = ({
       setEmptyUsername(false);
     }
 
+    // upload avatar to S3
+    const formData = new FormData();
+    formData.append("file", avatarFile as File);
+    formData.append("username", username);
+    const response = await fetch("api/s3-upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await response.json();
+    console.log(data);
+    const profileImage = data.fileUrl;
+
+    // create user object
     const userData = {
       accountName,
       email,
       password,
       username,
       bio,
+      profileImage,
     };
 
     try {
-      const response = await fetch("/api/users/user", {
-        method: "POST",
-        body: JSON.stringify(userData),
-      });
+      const response = await createUser(userData);
       const data = await response.json();
+
+      // success handling
       if (data.message === "Success") {
         toggleCreateAccountModal();
         toggleModal();
 
-        router.push("/");
+        window.location.reload();
+        return;
       }
 
+      // error handling
       if (data.message === "Username cannot be empty") {
         setEmptyUsername(true);
-      }
-
-      if (data.message === "Account name cannot be empty") {
+      } else if (data.message === "Account name cannot be empty") {
         setEmptyAccountName(true);
-      }
-
-      if (data.message === "Username already in use") {
+      } else if (data.message === "Username already in use") {
         setDuplicateUsername(true);
+      } else if (
+        data.message ===
+        "Username must be between 3 and 20 characters long and contain only letters and numbers"
+      ) {
+        setInvalidUsername(true);
       }
     } catch (error) {
       console.error(error);
     }
+
+    setUploading(false);
   };
 
   return (
@@ -124,14 +156,22 @@ const CreateAccountForm = ({
           <label htmlFor="username">
             Username
             <span className="text-red-500"> *</span>
-            {emptyUsername && (
-              <span className="text-red-500 text-sm">Required</span>
-            )}
-            {duplicateUsername && (
-              <span className="text-red-500 text-sm">
-                Username already in use
-              </span>
-            )}
+            <div className="flex flex-col">
+              {emptyUsername && (
+                <span className="text-red-500 text-sm">Required</span>
+              )}
+              {duplicateUsername && (
+                <span className="text-red-500 text-sm">
+                  Username already in use
+                </span>
+              )}
+              {invalidUsername && (
+                <span className="text-red-500 text-sm">
+                  Username must be between 3 and 20 characters long and contain
+                  only letters and numbers
+                </span>
+              )}
+            </div>
             <FormInput
               value={username}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -181,7 +221,13 @@ const CreateAccountForm = ({
               value={bio}
             ></textarea>
           </label>
-          <GeneralBtn text="Create an Account" />
+          {uploading ? (
+            <div className="flex justify-center">
+              <Loading />
+            </div>
+          ) : (
+            <GeneralBtn text="Create an Account" />
+          )}
         </form>
       </div>
     </div>

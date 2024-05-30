@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import MediumFilmPoster from "./MediumFilmPoster";
 import { User } from "@/types/userTypes";
+import EmptyFilmPoster from "./EmptyFilmPoster";
 
 const FavFilmsDisplay = ({ user }: { user: User }) => {
   return (
@@ -14,10 +15,14 @@ const FavFilmsDisplay = ({ user }: { user: User }) => {
               key={film.filmId}
               className="hover:opacity-80"
             >
-              <MediumFilmPoster
-                posterPath={film.posterPath}
-                title={film.title}
-              />
+              {film.posterPath ? (
+                <MediumFilmPoster
+                  posterPath={film.posterPath}
+                  title={film.title}
+                />
+              ) : (
+                <EmptyFilmPoster />
+              )}
             </Link>
           );
         })

@@ -21,19 +21,28 @@ import {
 import Loading from "@/components/loading";
 import { ModalImageDataType } from "@/types/propTypes";
 import { useSession } from "next-auth/react";
-import { fetchUserWatchlist } from "@/utils/dataFetching/userData";
+import {
+  fetchUserWatchlist,
+  removeFromUserWatchlist,
+  updateUserWatchlist,
+} from "@/utils/dataFetching/userData";
+import EmptyBackdrop from "@/components/film/EmptyBackdrop";
 
 const FilmDetail = () => {
+  // image modal state
   const [showModal, setShowModal] = useState(false);
   const [showNotesModal, setShowNotesModal] = useState(false);
   const [showImageModal, setShowImageModal] = useState(false);
   const [modalImageData, setModalImageData] = useState(
     {} as ModalImageDataType
   );
+
+  // film state
   const [filmDetails, setFilmDetails] = useState({} as TMDBFilmDetails);
   const [filmCredits, setFilmCredits] = useState({} as FilmCredits);
   const [filmImages, setFilmImages] = useState({} as FilmImages);
   const [filmNotes, setFilmNotes] = useState([] as FilmNotes[]);
+
   const [loading, setLoading] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
   const [watchlistButton, setWatchlistButton] = useState(false);
@@ -44,39 +53,34 @@ const FilmDetail = () => {
 
   const { data: session } = useSession();
 
+  // add film to watchlist
   const handleAddToWatchlist: () => Promise<void> = async () => {
+    // create film object
     const film = {
       title: filmDetails.title,
       posterPath: filmDetails.poster_path,
       filmId: filmId,
     };
 
-    const result = await fetch("/api/users/user/watchlist", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ film, userId: session?.user?.id }),
-    });
-
-    // console.log(result);
+    // add film to watchlist and send session id
+    await updateUserWatchlist(film, session?.user?.id);
   };
 
+  // remove film from watchlist
   const handleRemoveFromWatchlist: () => Promise<void> = async () => {
-    const result = await fetch("/api/users/user/watchlist", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ filmId: filmId, userId: session?.user?.id }),
-    });
-
-    // console.log(result);
+    await removeFromUserWatchlist(filmId, session?.user?.id);
   };
 
+  // check if film is in session user's watchlist
   useEffect(() => {
     if (!session?.user?.username) return;
 
     (async () => {
       const data = await fetchUserWatchlist(session?.user?.username);
 
-      console.log("watchlist", data);
+      // console.log("watchlist", data);
+
+      // check if film is in watchlist and set watchlist button state
       if (data) {
         if (data.some((film) => film.filmId === filmId)) {
           setWatchlistButton(true);
@@ -85,6 +89,7 @@ const FilmDetail = () => {
     })();
   }, [session?.user?.username, filmId]);
 
+  // check if film exists
   useEffect(() => {
     if (!filmId) {
       router.push("/not-found");
@@ -153,7 +158,7 @@ const FilmDetail = () => {
 
   return (
     <section
-      className={`relative -top-24 overflow-x-hidden flex flex-col items-center w-full ${
+      className={`relative -top-24 overflow-x-hidden overflow-y-hidden flex flex-col items-center w-full ${
         isVisible ? "opacity-100" : "opacity-0"
       } transition-opacity duration-500 ease-in-out`}
     >
@@ -176,10 +181,12 @@ const FilmDetail = () => {
           />
         )}
       </Modal>
-      {filmDetails.backdrop_path && (
+      {filmDetails.backdrop_path ? (
         <FilmBackdrop
           backdropImage={`https://image.tmdb.org/t/p/original${filmDetails.backdrop_path}`}
         />
+      ) : (
+        <EmptyBackdrop />
       )}
       {filmCredits && filmDetails && (
         <MainFilmInfo

@@ -1,6 +1,7 @@
 import React from "react";
 import GeneralBtn from "../buttons/GeneralBtn";
 import FormInput from "../FormInput";
+import { updateUserPassword } from "@/utils/dataFetching/userData";
 
 const ChangePasswordForm = ({ sessionData }: { sessionData: any }) => {
   const [currentPassword, setCurrentPassword] = React.useState("");
@@ -8,35 +9,20 @@ const ChangePasswordForm = ({ sessionData }: { sessionData: any }) => {
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [error, setError] = React.useState("");
 
+  // submit updated password
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // check if session exists
     if (!sessionData) return;
 
+    // check if passwords match
     if (newPassword !== confirmPassword) {
       setError("New passwords do not match");
       return;
     }
 
-    const res = await fetch("/api/auth/password", {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: sessionData.id,
-        currentPassword,
-        newPassword,
-      }),
-    });
-
-    const data = await res.json();
-
-    if (data.message === "Success") {
-      alert("Password changed");
-    } else {
-      setError(data.message);
-    }
+    await updateUserPassword(sessionData.id, currentPassword, newPassword);
   };
 
   return (

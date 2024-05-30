@@ -14,6 +14,7 @@ const Watchlist = () => {
   const params = useParams();
   const { username } = params;
 
+  // fetch user watchlist
   useEffect(() => {
     (async () => {
       const data = await fetchUserWatchlist(username);
@@ -21,14 +22,20 @@ const Watchlist = () => {
     })();
   }, [username]);
 
-  useEffect(() => {
-    console.log("watchlist", watchlist);
-  }, [watchlist]);
+  // useEffect(() => {
+  //   console.log("watchlist", watchlist);
+  // }, [watchlist]);
 
   return (
     <div>
-      <h1 className="text-3xl mb-8 karla underline-offset-2 underline">
-        <span className="font-bold outfit">{username}&apos;s</span> watchlist
+      <h1 className="text-xl mb-8 karla flex flex-col">
+        Watchlist for{" "}
+        <Link
+          href={`/user/profile/${username}`}
+          className="outfit font-bold text-2xl"
+        >
+          {username}
+        </Link>
       </h1>
       <div className="flex flex-wrap gap-4">
         {watchlist.map((film) => (

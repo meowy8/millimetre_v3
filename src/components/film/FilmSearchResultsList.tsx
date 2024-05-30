@@ -11,7 +11,7 @@ const FilmSearchResultsList = ({
 }) => {
   return (
     <div className="flex flex-wrap justify-center gap-4">
-      {searchResults &&
+      {searchResults?.length > 0 &&
         searchResults.map((film) => (
           <Link
             href={`/film/${film.id}`}
