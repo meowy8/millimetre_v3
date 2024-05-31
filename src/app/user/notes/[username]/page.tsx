@@ -6,6 +6,7 @@ import Link from "next/link";
 import React, { useEffect } from "react";
 import { FilmNotes } from "@/types/filmTypes";
 import { useParams } from "next/navigation";
+import { fetchUserData } from "@/utils/dataFetching/userData";
 
 const UserNotes = () => {
   const [userNotes, setUserNotes] = React.useState([]);
@@ -26,7 +27,7 @@ const UserNotes = () => {
     <section>
       <div className="flex items-end gap-4">
         <Link href={`/user/profile/${username}`}>
-          <MediumUserAvatar />
+          <MediumUserAvatar profileImage={userNotes[0]?.profileImage} />
         </Link>
         <p className="karla text-xl">
           Notes by{" "}
@@ -39,7 +40,13 @@ const UserNotes = () => {
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center">
         {userNotes && userNotes.length > 0 ? (
           userNotes.map((note: FilmNotes) => {
-            return <FilmNote key={note._id} note={note} />;
+            return (
+              <FilmNote
+                key={note._id}
+                note={note}
+                profileImage={userNotes.profileImage}
+              />
+            );
           })
         ) : (
           <p className="karla">No notes yet.</p>

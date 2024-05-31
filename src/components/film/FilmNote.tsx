@@ -5,11 +5,11 @@ import { FilmNotes } from "@/types/filmTypes";
 
 const FilmNote = ({ note }: { note: FilmNotes }) => {
   return (
-    <div className="bg-[#001F24] w-full max-w-[400px] h-48 rounded-md border border-[#184249] karla p-4 flex flex-col gap-2">
-      <div className="flex justify-between">
-        <div className="flex gap-2 items-end">
+    <div className=" w-full max-w-[400px] h-48 rounded-t-lg border-t-2 border-x-2 border-[#3a1c42] karla flex flex-col">
+      <div className="flex justify-between bg-[#3a1c42] p-4">
+        <div className="flex gap-4 items-end">
           <Link href={`/user/profile/${note.username}`}>
-            <SmallUserAvatar />
+            <SmallUserAvatar profileImage={note.profileImage} />
           </Link>
           <Link
             href={`/user/profile/${note.username}`}
@@ -18,14 +18,17 @@ const FilmNote = ({ note }: { note: FilmNotes }) => {
             {note.username}
           </Link>
         </div>
-        <div>
-          <span className="italic font-light text-sm">
+        <div className="flex justify-end">
+          <span className="italic font-light text-sm text-right">
             {new Date(note.createdAt as string).toDateString()}
           </span>
         </div>
       </div>
-      <Link href={`/user/notes/${note.username}/${note._id}`}>
-        <p className=" line-clamp-4 hover:opacity-80">{note.content}</p>
+      <Link
+        href={`/user/notes/${note.username}/${note._id}`}
+        className="hover:opacity-80 h-full p-4 bg-[#3a1c42]/10"
+      >
+        <p className=" line-clamp-4">{note.content}</p>
       </Link>
     </div>
   );

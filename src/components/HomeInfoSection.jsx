@@ -4,7 +4,7 @@ import React from "react";
 const HomeInfoSection = () => {
   return (
     <div className="bg-[#560A38]/25 rounded-2xl flex p-4 gap-4 items-center max-w-[700px]">
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center min-w-24">
         <Image
           src="/images/cigarette.jpg"
           alt="cigarette"
@@ -13,7 +13,7 @@ const HomeInfoSection = () => {
           className="rounded-2xl w-full h-full"
         />
       </div>
-      <p className="flex flex-col gap-2 karla">
+      {/* <p className="flex flex-col gap-2 karla">
         <span className="block">
           The focus of Millimetre is to discover new and lesser seen films.
         </span>
@@ -21,7 +21,7 @@ const HomeInfoSection = () => {
           When a film becomes popular enough, it becomes archived but you can
           still view it and add notes and lists.
         </span>
-      </p>
+      </p> */}
     </div>
   );
 };

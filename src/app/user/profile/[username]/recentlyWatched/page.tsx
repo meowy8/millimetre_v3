@@ -27,19 +27,24 @@ const RecentlyWatched = () => {
 
   return (
     <div>
-      <h1 className="text-3xl karla">
-        <span className="outfit text-2xl">{username}&apos;s</span> recently
+      <h1 className="text-xl karla flex flex-col">
+        <span className="outfit text-2xl mr-2">{username}&apos;s</span> recently
         watched
       </h1>
       <hr className="mb-8" />
       <div className="flex flex-wrap gap-4 karla">
         {recentlyWatched &&
           recentlyWatched.map((film: FilmNotes) => (
-            <div key={film._id} className="flex bg-[#001F24] w-full rounded-md">
+            <div
+              key={film._id}
+              className="flex bg-[#001F24] w-full rounded-md "
+            >
               <div className="w-full m-4">
                 <div className="flex justify-between w-full">
                   <Link href={`/film/${film.filmId}`}>
-                    <span className="outfit text-lg">{film.title}</span>
+                    <span className="outfit text-lg line-clamp-1">
+                      {film.title}
+                    </span>
                   </Link>
                   {film.content && (
                     <Link
@@ -51,8 +56,8 @@ const RecentlyWatched = () => {
                   )}
                 </div>
                 <hr />
-                <div className="flex m-2">
-                  <span className="italic font-light text-2xl">
+                <div className="flex mt-4 items-center">
+                  <span className="italic font-light text-2xl line-clamp-1">
                     {new Date(film.createdAt as string).toDateString()}
                   </span>
                 </div>

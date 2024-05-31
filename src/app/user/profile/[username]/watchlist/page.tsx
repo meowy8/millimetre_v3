@@ -28,7 +28,7 @@ const Watchlist = () => {
 
   return (
     <div>
-      <h1 className="text-xl mb-8 karla flex flex-col">
+      <h1 className="text-xl karla flex flex-col">
         Watchlist for{" "}
         <Link
           href={`/user/profile/${username}`}
@@ -37,7 +37,8 @@ const Watchlist = () => {
           {username}
         </Link>
       </h1>
-      <div className="flex flex-wrap gap-4">
+      <hr />
+      <div className="flex flex-wrap gap-4 mt-6">
         {watchlist.map((film) => (
           <Link
             key={film.filmId}

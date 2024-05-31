@@ -1,17 +1,11 @@
 TODO:
-- improve ui design
+- make sure everything works
+  - show if film is watched on teh film page
+  - check if users can delete another users note
 
 - fix types
 
 - only upload small images or crop them
 
-
-
 Done:
-- clean up code
-- add empty film posters and backdrops where needed
-- add ability to remove a note, a logged film, fav film etc
-- improve user data input validity
-  - strong passwords, valid emails, limit length of usernames etc
-- add user backdrops
-- add image storage for avatars
+- improve ui design

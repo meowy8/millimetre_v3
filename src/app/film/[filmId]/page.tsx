@@ -55,6 +55,7 @@ const FilmDetail = () => {
 
   // add film to watchlist
   const handleAddToWatchlist: () => Promise<void> = async () => {
+    setWatchlistButton(true);
     // create film object
     const film = {
       title: filmDetails.title,
@@ -68,6 +69,7 @@ const FilmDetail = () => {
 
   // remove film from watchlist
   const handleRemoveFromWatchlist: () => Promise<void> = async () => {
+    setWatchlistButton(false);
     await removeFromUserWatchlist(filmId, session?.user?.id);
   };
 
@@ -154,11 +156,16 @@ const FilmDetail = () => {
     toggleNotesModal();
   };
 
-  if (loading) return <Loading />;
+  if (loading)
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        <Loading />
+      </div>
+    );
 
   return (
     <section
-      className={`relative -top-24 overflow-x-hidden overflow-y-hidden flex flex-col items-center w-full ${
+      className={`relative overflow-x-hidden overflow-y-hidden flex flex-col items-center w-full ${
         isVisible ? "opacity-100" : "opacity-0"
       } transition-opacity duration-500 ease-in-out`}
     >
@@ -198,7 +205,7 @@ const FilmDetail = () => {
           watchlistButton={watchlistButton}
         />
       )}
-      <div className="overflow-x-auto w-full lg:relative bottom-20 z-10">
+      <div className="overflow-x-auto w-full relative bottom-20 z-10">
         <FilmImagesDisplay
           toggleImageModal={toggleImageModal}
           toggleModal={toggleModal}

@@ -29,7 +29,11 @@ const Settings = () => {
     }
   }, [session]);
 
-  if (!session) return null;
+  useEffect(() => {
+    if (!session) {
+      router.push("/");
+    }
+  });
 
   // changes section of settings page
   const changeSection = (section: string) => {

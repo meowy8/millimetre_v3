@@ -96,11 +96,16 @@ const Profile = () => {
   }, [loading]);
 
   // wait for data to load before displaying page
-  if (loading) return <Loading />;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center w-full h-screen">
+        <Loading />
+      </div>
+    );
 
   return (
     <section
-      className={`relative -top-24 overflow-x-hidden flex flex-col items-center w-full ${
+      className={`relative overflow-x-hidden flex flex-col items-center w-full ${
         isVisible ? "opacity-100" : "opacity-0"
       } transition-opacity duration-500 ease-in-out`}
     >

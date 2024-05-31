@@ -43,6 +43,7 @@ export async function POST(req: Request) {
   await connectDB();
   const data = await req.json();
   const userId = new URL(req.url).searchParams.get("userId");
+  // console.log("data", data);
 
   // check if session exists
   if (!userId) {

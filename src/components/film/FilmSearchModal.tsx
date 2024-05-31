@@ -41,7 +41,7 @@ const FilmSearchModal = ({
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-[#001F24] border border-[#184249] w-[500px] max-h-[300px] flex flex-col rounded-lg p-4 overflow-hidden"
+      className="bg-[#001F24] border border-[#184249] w-[500px] max-h-[300px] flex flex-col rounded-lg p-4 overflow-hidden m-4"
     >
       <div className="flex w-full justify-end">
         <button

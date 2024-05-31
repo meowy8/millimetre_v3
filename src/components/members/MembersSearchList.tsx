@@ -14,7 +14,11 @@ const MembersSearchList = ({
     <div className="flex flex-wrap justify-center gap-10 mt-14">
       {userListResults && userListResults.length > 0 ? (
         userListResults.map((user: User, index: number) => (
-          <UserSearchResult key={index} username={user.username} />
+          <UserSearchResult
+            key={index}
+            username={user.username}
+            profileImage={user.profileImage}
+          />
         ))
       ) : (
         <p>{noUsersFound}</p>

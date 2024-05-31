@@ -3,7 +3,13 @@ import React from "react";
 import SearchIcon from "./icons/SearchIcon";
 import { useRouter } from "next/navigation";
 
-const SearchInput = ({ placeholder }: { placeholder: string }) => {
+const SearchInput = ({
+  placeholder,
+  closeSidebar,
+}: {
+  placeholder: string;
+  closeSidebar: () => void;
+}) => {
   const [searchValue, setSearchValue] = React.useState("");
 
   const router = useRouter();
@@ -13,6 +19,7 @@ const SearchInput = ({ placeholder }: { placeholder: string }) => {
     e.preventDefault();
     if (!searchValue) return;
 
+    closeSidebar();
     router.push(`/search/${searchValue.replace(/\s/g, "-")}`);
   };
 

@@ -180,10 +180,15 @@ const AccountSettingsForm = (sessionData: any) => {
     );
   }, [favFilms]);
 
-  if (loading) return <Loading />;
+  if (loading)
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        <Loading />
+      </div>
+    );
 
   return (
-    <div className="flex flex-col justify-center items-center mt-10 karla">
+    <div className="flex flex-col justify-center items-center mt-10 karla w-full">
       <Modal showModal={showModal}>
         {showFilmSearchModal && (
           <FilmSearchModal
@@ -193,7 +198,10 @@ const AccountSettingsForm = (sessionData: any) => {
           />
         )}
       </Modal>
-      <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col w-96">
+      <form
+        onSubmit={(e) => handleSubmit(e)}
+        className="flex flex-col max-w-96 items-center"
+      >
         <span className="text-lg">Edit your account</span>
         <div className="m-4 flex flex-col gap-6">
           <label htmlFor="avatar" className="flex flex-col gap-4">
@@ -235,7 +243,7 @@ const AccountSettingsForm = (sessionData: any) => {
             <textarea
               name="change-bio"
               id="change-bio"
-              cols={30}
+              cols={20}
               rows={10}
               className="border border-[#FBF7F4] bg-transparent rounded-lg px-4 py-2 outline-none hover:bg-white/10 focus:bg-white/20 w-full"
               placeholder="Bio"
@@ -270,7 +278,7 @@ const AccountSettingsForm = (sessionData: any) => {
                       />
                     </>
                   ) : (
-                    <span>+</span>
+                    <span className="h-32 flex items-center">+</span>
                   )}
                 </button>
               ))}

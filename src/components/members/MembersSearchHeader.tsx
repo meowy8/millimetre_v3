@@ -11,7 +11,7 @@ const MembersSearchHeader = ({
 }) => {
   return (
     <div className="flex flex-col gap-4">
-      <select
+      {/* <select
         name="filter"
         id="filter"
         className="bg-white/20 p-2 rounded-md hover:bg-white/30 border-[#FBF7F4] border w-32 text-sm"
@@ -19,7 +19,7 @@ const MembersSearchHeader = ({
         <option value="search-by">Search by --</option>
         <option value="name">Name</option>
         <option value="fav-film">Favourite Film</option>
-      </select>
+      </select> */}
       <form onSubmit={handleSubmit}>
         <input
           type="text"

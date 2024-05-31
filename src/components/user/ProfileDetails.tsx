@@ -29,12 +29,26 @@ const ProfileDetails = ({
           <span className="karla font-semibold ml-2">Recently Watched</span>
           <RecentFilmsDisplay recentlyWatched={recentlyWatched} />
         </div>
-        <Link
-          href={`/user/profile/${user.username}/watchlist`}
-          className="karla border border-[#184249] px-4 py-2 mt-4 bg-[#001F24] rounded-md hover:bg-[#184249] w-full"
-        >
-          Watchlist
-        </Link>
+        <div className="w-full flex flex-col gap-2 mt-4">
+          <Link
+            href={`/user/profile/${user.username}/watchlist`}
+            className="karla border border-[#184249] px-4 py-2 bg-[#001F24]/60 rounded-sm hover:bg-[#184249] w-full"
+          >
+            Watchlist
+          </Link>
+          <Link
+            href={`/user/profile/${user.username}/recentlyWatched`}
+            className="karla border border-[#184249] px-4 py-2 bg-[#001F24]/60 rounded-sm hover:bg-[#184249] w-full"
+          >
+            Recently Watched
+          </Link>
+          <Link
+            href={`/user/notes/${user.username}`}
+            className="karla border border-[#184249] px-4 py-2 bg-[#001F24]/60 rounded-sm hover:bg-[#184249] w-full"
+          >
+            Notes
+          </Link>
+        </div>
       </div>
     </>
   );

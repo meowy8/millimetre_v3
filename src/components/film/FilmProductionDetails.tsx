@@ -29,7 +29,11 @@ const FilmProductionDetails = ({
         <span>{showDetails ? <DownArrow /> : <UpArrow />}</span>
       </button>
       <hr />
-      <CreditsList showDetails={showDetails} credits={credits} />
+      <CreditsList
+        showDetails={showDetails}
+        credits={credits}
+        setShowDetails={setShowDetails}
+      />
     </div>
   );
 };

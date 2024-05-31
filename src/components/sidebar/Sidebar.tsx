@@ -70,7 +70,7 @@ const Sidebar = () => {
             closeSidebar={closeSidebar}
             showSidebar={showSidebar}
           />
-          <SidebarInputContainer />
+          <SidebarInputContainer closeSidebar={closeSidebar} />
         </div>
         <div className="flex flex-col gap-1">
           <SidebarNavSection

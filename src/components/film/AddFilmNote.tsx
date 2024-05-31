@@ -17,7 +17,7 @@ const AddFilmNote = ({
   title,
   filmId,
 }: AddFilmNoteProps) => {
-  const [enableDate, setEnableDate] = React.useState(false);
+  // const [enableDate, setEnableDate] = React.useState(false);
   const [noteContent, setNoteContent] = React.useState("");
 
   const router = useRouter();
@@ -51,7 +51,10 @@ const AddFilmNote = ({
       filmId,
       backdropPath,
       posterPath,
+      profileImage: session?.user?.profileImage,
     };
+
+    console.log("profileImage", session?.user?.profileImage);
 
     // post note
     await postNote(note as FilmNotes, session?.user?.id);
@@ -62,18 +65,21 @@ const AddFilmNote = ({
   };
 
   return (
-    <div className="bg-[#001F24] p-4 m-2 border border-[#137150] rounded-lg flex flex-col justify-center items-center gap-4 md:w-[700px] w-full">
+    <div className="bg-[#001F24] p-8 m-2 border border-[#137150] rounded-lg flex flex-col justify-center items-center gap-4 md:w-[700px] ">
       <form onSubmit={handleSubmit}>
-        <div className="flex gap-4 lg:w-4/5 justify-between">
-          <div>
+        <div className="flex flex-col md:flex-row gap-4 lg:w-4/5 justify-between">
+          <div className="flex justify-between ">
             {posterPath ? (
               <SmallFilmPoster posterPath={posterPath} title={title} />
             ) : (
               <EmptyFilmPoster />
             )}
+            <div className="md:hidden">
+              <CloseModalBtn handleClick={handleClick} />
+            </div>
           </div>
           <div className="flex flex-col gap-4 lg:w-full">
-            <div className="flex justify-between">
+            <div className="justify-between hidden md:flex">
               <span className="outfit text-2xl line-clamp-1">{title}</span>
               <CloseModalBtn handleClick={handleClick} />
             </div>
@@ -92,7 +98,7 @@ const AddFilmNote = ({
             </label>
           </div>
         </div>
-        <div className="flex justify-end md:w-2/3 w-full px-4">
+        <div className="flex justify-end w-full ">
           {/* <div className="flex gap-2">
           <input
             type="checkbox"
@@ -109,8 +115,8 @@ const AddFilmNote = ({
             }`}
             disabled={!enableDate}
           />
-        </div> */}
-          <div>
+         </div> */}
+          <div className="my-4">
             <button
               type="submit"
               className="bg-[#01442C] rounded-md border border-[#137150] px-4 py-2 karla hover:bg-[#137150]"

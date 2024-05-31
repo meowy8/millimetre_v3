@@ -4,9 +4,12 @@ import SearchInput from "../SearchInput";
 
 const FilmSearchHeader = ({ searchValue }: { searchValue: string }) => {
   return (
-    <div>
-      <div className="w-full mx-4 flex flex-col">
-        <SearchInput placeholder={"Search for a film"} />
+    <div className="w-full">
+      <div className="w-full flex flex-col mb-8">
+        <SearchInput
+          placeholder={"Search for a film"}
+          closeSidebar={() => {}}
+        />
       </div>
       <div className="flex flex-col w-full">
         <span className="karla">Results for...</span>
@@ -14,9 +17,9 @@ const FilmSearchHeader = ({ searchValue }: { searchValue: string }) => {
           {searchValue.replace(/-/g, " ")}
         </span>
       </div>
-      <div className="w-full">
+      {/* <div className="w-full">
         <GeneralBtn text={"Show archived"} />
-      </div>
+      </div> */}
     </div>
   );
 };

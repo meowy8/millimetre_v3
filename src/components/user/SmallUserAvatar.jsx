@@ -1,15 +1,17 @@
 import React from "react";
 import Image from "next/image";
 
-const SmallUserAvatar = () => {
+const SmallUserAvatar = ({ profileImage }) => {
   return (
-    <Image
-      src={"/images/profilePicture.jpg"}
-      alt="note"
-      width={50}
-      height={50}
-      className="rounded-full"
-    />
+    <div className="w-[50px] h-[50px]">
+      <Image
+        src={profileImage}
+        alt="note"
+        width={50}
+        height={50}
+        className="rounded-full object-cover w-full h-full"
+      />
+    </div>
   );
 };
 

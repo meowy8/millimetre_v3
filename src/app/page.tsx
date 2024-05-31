@@ -14,7 +14,7 @@ export default function Home() {
         <FilmBackdrop backdropImage={"/images/homePageBackdrop.jpeg"} />
         <div className="flex flex-col justify-between lg:flex-row lg:relative bottom-24">
           <div className="bg-[#0B0618]/30 h-[100px] bottom-56 md:bottom-64 absolute blur-lg lg:bottom-0"></div>
-          <h1 className="oranienbaumRegular text-3xl relative lg:static bottom-24 md:bottom-44 md:left-10 mx-10 drop-shadow-lg w-96 lg:w-1/2 ">
+          <h1 className="oranienbaumRegular mx-4 text-2xl relative lg:static bottom-24  drop-shadow-lg lg:w-1/2 ">
             <span className="block">
               Welcome to <span className="text-5xl">millimetre</span>,
             </span>{" "}

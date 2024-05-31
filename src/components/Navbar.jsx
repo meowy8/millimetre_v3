@@ -13,11 +13,11 @@ const Navbar = () => {
 
   return (
     <nav className="bg-[#0B0618] rounded-b-md shadow-xl fixed top-0 left-0 right-0 z-50">
-      <div className="flex justify-between items-end px-6 py-4 max-w-[1440px] mx-auto">
+      <div className="flex justify-between items-center px-6 py-4 max-w-[1440px] mx-2">
         <Link href={"/"} className="oranienbaumRegular text-red-700 text-4xl">
           mm
         </Link>
-        <div className="flex gap-4 lg:hidden items-center">
+        <div className="flex gap-4 lg:hidden ">
           {session?.user ? (
             <Link href={`/user/profile/${session?.user.username}`}>
               <div className="w-10 h-10">

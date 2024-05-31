@@ -15,12 +15,17 @@ const noteSchema = new mongoose.Schema(
     },
     username: {
       type: String,
+      required: true,
     },
     posterPath: {
       type: String,
     },
     backdropPath: {
       type: String,
+    },
+    profileImage: {
+      type: String,
+      required: true,
     },
   },
   {

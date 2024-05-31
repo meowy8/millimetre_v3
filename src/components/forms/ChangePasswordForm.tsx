@@ -26,10 +26,10 @@ const ChangePasswordForm = ({ sessionData }: { sessionData: any }) => {
   };
 
   return (
-    <div className="flex flex-col items-center mt-10">
+    <div className="flex flex-col items-center mt-10 w-full">
       <form
         onSubmit={(e) => handleSubmit(e)}
-        className="flex flex-col items-center gap-6 w-96"
+        className="flex flex-col items-center gap-6 w-full max-w-96"
       >
         <span className="karla text-lg">Change your password</span>
         <div className="w-full">
@@ -60,7 +60,7 @@ const ChangePasswordForm = ({ sessionData }: { sessionData: any }) => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
-        <div>
+        <div className="w-full">
           <GeneralBtn text="Save" />
         </div>
       </form>

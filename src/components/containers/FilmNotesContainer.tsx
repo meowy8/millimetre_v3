@@ -15,7 +15,7 @@ const FilmNotesContainer = ({
   filmId: number;
 }) => {
   return (
-    <div className="flex flex-col gap-2 my-8 w-full">
+    <div className="flex flex-col gap-2 my-20 lg:my-8 w-full">
       <div className="flex justify-end">
         {filmNotes?.length > 0 && (
           <Link

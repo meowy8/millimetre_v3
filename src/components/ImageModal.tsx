@@ -13,7 +13,7 @@ const ImageModal = ({
   };
 
   return (
-    <div className="w-[1000px] h-[600px]">
+    <div className="w-[1000px] h-[600px] flex justify-center items-center mx-4">
       <Image
         src={modalImageData.src}
         alt="film images display"

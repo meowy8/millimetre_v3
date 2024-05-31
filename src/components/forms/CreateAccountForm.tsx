@@ -19,7 +19,7 @@ const CreateAccountForm = ({
   password: string;
 }) => {
   // form states
-  const [avatarImage, setAvatarImage] = React.useState<string>("");
+  const [avatarImage, setAvatarImage] = React.useState<string>();
   const [accountName, setAccountName] = React.useState<string>("");
   const [username, setUsername] = React.useState<string>("");
   const [bio, setBio] = React.useState<string>("");
@@ -35,6 +35,7 @@ const CreateAccountForm = ({
   const [duplicateUsername, setDuplicateUsername] =
     React.useState<boolean>(false);
   const [invalidUsername, setInvalidUsername] = React.useState<boolean>(false);
+  const [emptyAvatar, setEmptyAvatar] = React.useState<boolean>(false);
 
   const router = useRouter();
 
@@ -59,16 +60,20 @@ const CreateAccountForm = ({
     // check if form fields are not empty
     if (!accountName) {
       setEmptyAccountName(true);
+      setUploading(false);
       return;
-    } else if (accountName) {
-      setEmptyAccountName(false);
     }
 
     if (!username) {
       setEmptyUsername(true);
+      setUploading(false);
       return;
-    } else if (username) {
-      setEmptyUsername(false);
+    }
+
+    if (!avatarFile) {
+      setEmptyAvatar(true);
+      setUploading(false);
+      return;
     }
 
     // upload avatar to S3
@@ -184,6 +189,9 @@ const CreateAccountForm = ({
           <label htmlFor="avatar" className="">
             Choose Avatar
             <span className="text-red-500"> *</span>
+            {emptyAvatar && (
+              <span className="text-red-500 text-sm">Required</span>
+            )}
             <label
               htmlFor="avatarfile"
               className="cursor-pointer flex justify-center"
