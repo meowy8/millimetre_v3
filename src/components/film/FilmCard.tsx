@@ -10,10 +10,7 @@ const FilmCard = ({
   filmId,
 }: FilmCardProps) => {
   return (
-    <Link
-      href={`/film/${filmId}`}
-      className="relative rounded-lg shadow-lg -z-10"
-    >
+    <Link href={`/film/${filmId}`} className="relative rounded-lg shadow-lg">
       <div className="bg-black w-full h-[20%] absolute bottom-0 blur-lg"></div>
       <div className="absolute bottom-5 flex items-end gap-4 outfit mx-4">
         <span className="text-2xl line-clamp-1">{title}</span>

@@ -1,5 +1,5 @@
 TODO:
-*- fix types
+*- create demo account
 
 - when a user changes their username, it has to update every note theyve made with the new username
 
