@@ -27,11 +27,19 @@ const AccountSettingsForm = ({ sessionData }: { sessionData: any }) => {
   const [bioInput, setBioInput] = useState<string>("");
   const [user, setUser] = useState<User | null>(null);
 
+  // useEffect(() => {
+  //   console.log("sessionData", sessionData);
+  // }, [sessionData]);
+
+  useEffect(() => {
+    console.log("user", user);
+  }, [user]);
+
   // Fetch user from session
   useEffect(() => {
-    if (!sessionData.sessionData) return;
+    if (!sessionData) return;
     (async () => {
-      const data = await fetchUserData(sessionData.sessionData.username);
+      const data = await fetchUserData(sessionData.name);
       if (!data) {
         return;
       }
@@ -100,7 +108,7 @@ const AccountSettingsForm = ({ sessionData }: { sessionData: any }) => {
       // Update user
       const updateResponse = await updateUser(
         updatedUser as User,
-        sessionData.sessionData.id
+        sessionData.name
       );
 
       if (!updateResponse.success) {
@@ -108,9 +116,7 @@ const AccountSettingsForm = ({ sessionData }: { sessionData: any }) => {
       }
 
       // Fetch updated user data
-      const updatedUserData = await fetchUserData(
-        sessionData.sessionData.username
-      );
+      const updatedUserData = await fetchUserData(sessionData.name);
       setUser(updatedUserData);
 
       setUploading(false);

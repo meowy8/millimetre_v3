@@ -37,10 +37,10 @@ export const fetchUserData = async (username: string | string[]) => {
 };
 
 // updates user data
-// userId is retrieved from session
-export const updateUser = async (updatedUser: User, userId: string) => {
+// username is retrieved from session
+export const updateUser = async (updatedUser: User, username: string) => {
   try {
-    const response = await fetch(`/api/users/user?userId=${userId}`, {
+    const response = await fetch(`/api/users/user?username=${username}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedUser),
@@ -79,14 +79,14 @@ export const fetchUserWatchlist = async (username: string | string[]) => {
 };
 
 // updates user watchlist
-// userId is retrieved from session
+// username is retrieved from session
 // film is the film object being added to the user watchlist
-export const updateUserWatchlist = async (film: FilmType, userId: string) => {
+export const updateUserWatchlist = async (film: FilmType, username: string) => {
   try {
     await fetch(`/api/users/user/watchlist`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ film, userId }),
+      body: JSON.stringify({ film, username }),
     });
   } catch (error) {
     console.error(error);
@@ -96,18 +96,18 @@ export const updateUserWatchlist = async (film: FilmType, userId: string) => {
 // removes film from user watchlist
 export const removeFromUserWatchlist = async (
   filmId: number,
-  userId: string
+  username: string
 ) => {
   await fetch("/api/users/user/watchlist", {
     method: "DELETE",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ filmId: filmId, userId }),
+    body: JSON.stringify({ filmId: filmId, username }),
   });
 };
 
 // updates user password
 export const updateUserPassword = async (
-  userId: string,
+  username: string,
   currentPassword: string,
   newPassword: string
 ) => {
@@ -118,7 +118,7 @@ export const updateUserPassword = async (
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userId,
+        username,
         currentPassword,
         newPassword,
       }),

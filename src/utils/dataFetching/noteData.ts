@@ -75,10 +75,10 @@ export const fetchUserNoteData = async (
 };
 
 // post user note to database
-// userId is retrieved from session
-export const postNote = async (noteData: FilmNotes, userId: string) => {
+// username is retrieved from session
+export const postNote = async (noteData: FilmNotes, username: string) => {
   try {
-    const response = await fetch(`/api/notes/filmNotes?userId=${userId}`, {
+    const response = await fetch(`/api/notes/filmNotes?username=${username}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(noteData),
@@ -91,12 +91,15 @@ export const postNote = async (noteData: FilmNotes, userId: string) => {
 };
 
 // delete user note from database
-// userId is retrieved from session
-export const deleteNote = async (noteId: string, userId: string) => {
+// username is retrieved from session
+export const deleteNote = async (noteId: string, username: string) => {
   try {
-    const response = await fetch(`/api/notes/filmNotes?noteId=${noteId}`, {
-      method: "DELETE",
-    });
+    const response = await fetch(
+      `/api/notes/filmNotes?noteId=${noteId}&username=${username}`,
+      {
+        method: "DELETE",
+      }
+    );
     // const data = await response.json();
     // console.log(data);
   } catch (error) {

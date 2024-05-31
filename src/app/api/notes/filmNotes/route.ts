@@ -42,11 +42,11 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   await connectDB();
   const data = await req.json();
-  const userId = new URL(req.url).searchParams.get("userId");
+  const username = new URL(req.url).searchParams.get("username");
   // console.log("data", data);
 
   // check if session exists
-  if (!userId) {
+  if (!username) {
     return NextResponse.json(
       { message: "You need to be logged in" },
       { status: 500 }
@@ -54,7 +54,7 @@ export async function POST(req: Request) {
   }
 
   // check if user exists
-  const user = await User.findById(userId);
+  const user = await User.findOne({ username });
   if (!user) {
     return NextResponse.json({ message: "User not found" }, { status: 500 });
   }
@@ -64,7 +64,7 @@ export async function POST(req: Request) {
 
   // add note reference to user
   await User.findOneAndUpdate(
-    { _id: userId },
+    { username },
     { $push: { notes: result._id } },
     { new: true }
   );
@@ -80,7 +80,7 @@ export async function POST(req: Request) {
 export async function DELETE(req: Request) {
   await connectDB();
   const noteId = new URL(req.url).searchParams.get("noteId");
-  const userId = new URL(req.url).searchParams.get("userId");
+  const username = new URL(req.url).searchParams.get("username");
   const result = await Note.findByIdAndDelete(noteId);
   if (!result) {
     return NextResponse.json({ message: "Error" }, { status: 500 });
@@ -88,7 +88,7 @@ export async function DELETE(req: Request) {
 
   // remove note reference from user
   await User.findOneAndUpdate(
-    { _id: userId },
+    { username },
     { $pull: { notes: noteId } },
     { new: true }
   );

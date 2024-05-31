@@ -155,17 +155,15 @@ export async function POST(req: Request) {
 
 export async function PATCH(req: Request) {
   const { username, favouriteFilms, bio, profileImage } = await req.json();
-  const userId = new URL(req.url).searchParams.get("userId");
+  const usernameParam = new URL(req.url).searchParams.get("username");
 
   // check if session exists
-  if (!userId) {
+  if (!usernameParam) {
     return NextResponse.json(
       { message: "You need to be logged in" },
       { status: 500 }
     );
   }
-
-  // console.log("userId", userId);
 
   // filter out null values from favouriteFilms
   const filteredFavouriteFilms = favouriteFilms.filter(
@@ -177,14 +175,14 @@ export async function PATCH(req: Request) {
   const db = await connectDB();
 
   // check if user exists
-  const user = await User.findOne({ _id: userId });
+  const user = await User.findOne({ username: usernameParam });
   if (!user) {
     return NextResponse.json({ message: "User not found" }, { status: 404 });
   }
 
   // update user with favourite films
   const result = await User.findOneAndUpdate(
-    { _id: userId },
+    { username: usernameParam },
     { username, favouriteFilms: filteredFavouriteFilms, bio, profileImage },
     { new: true }
   );

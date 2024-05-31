@@ -59,8 +59,8 @@ const handler = NextAuth({
       if (token) {
         session.user = {
           id: token.id,
-          username: token.username,
-          profileImage: token.profileImage,
+          name: token.username,
+          image: token.profileImage,
         };
       }
       return session;

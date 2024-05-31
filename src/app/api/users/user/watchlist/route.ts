@@ -31,10 +31,10 @@ export async function GET(req: Request) {
 }
 
 export async function PATCH(req: Request) {
-  const { film, userId } = await req.json();
+  const { film, username } = await req.json();
 
   // check if session exists
-  if (!userId) {
+  if (!username) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
@@ -46,7 +46,7 @@ export async function PATCH(req: Request) {
   }
 
   // check if user exists
-  const user = await User.findOne({ _id: userId });
+  const user = await User.findOne({ username });
   if (!user) {
     return NextResponse.json({ message: "User not found" }, { status: 404 });
   }
@@ -67,7 +67,7 @@ export async function PATCH(req: Request) {
 
     // add film reference to user
     const result = await User.findOneAndUpdate(
-      { _id: userId },
+      { username },
       { $push: { watchlist: addedFilm._id } },
       { new: true }
     );
@@ -80,7 +80,7 @@ export async function PATCH(req: Request) {
   } else {
     // if the film exists in the database, add a reference to the user's watchlist
     const result = await User.findOneAndUpdate(
-      { _id: userId },
+      { username },
       { $push: { watchlist: existingFilmData._id } },
       { new: true }
     );
@@ -94,12 +94,12 @@ export async function PATCH(req: Request) {
 }
 
 export async function DELETE(req: Request) {
-  const { filmId, userId } = await req.json();
+  const { filmId, username } = await req.json();
   // console.log("filmId", filmId);
   // console.log("userId", userId);
 
   // check if session exists
-  if (!userId) {
+  if (!username) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
@@ -111,7 +111,7 @@ export async function DELETE(req: Request) {
   }
 
   // check if user exists and populate watchlist data
-  const user = await User.findOne({ _id: userId }).populate("watchlist");
+  const user = await User.findOne({ username }).populate("watchlist");
   if (!user) {
     return NextResponse.json({ message: "User not found" }, { status: 404 });
   }
@@ -133,7 +133,7 @@ export async function DELETE(req: Request) {
 
   // remove film reference from user
   const result = await User.findOneAndUpdate(
-    { _id: userId },
+    { username },
     { $pull: { watchlist: filmToRemove._id } },
     { new: true }
   );

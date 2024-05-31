@@ -54,7 +54,7 @@ export interface FilmNotesListProps {
 }
 
 export interface FilmCardProps {
-  posterPath: string;
+  backdropPath: string;
   title: string;
   releaseDate: string;
   filmId: number;

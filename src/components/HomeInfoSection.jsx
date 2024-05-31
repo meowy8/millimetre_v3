@@ -3,14 +3,14 @@ import React from "react";
 
 const HomeInfoSection = () => {
   return (
-    <div className="bg-[#560A38]/25 rounded-2xl flex p-4 gap-4 items-center max-w-[700px]">
+    <div className=" flex p-4 gap-4 items-center max-w-[700px]">
       <div className="flex items-center justify-center min-w-24">
         <Image
           src="/images/cigarette.jpg"
           alt="cigarette"
           width={150}
           height={150}
-          className="rounded-2xl w-full h-full"
+          className="rounded-lg w-full h-full"
         />
       </div>
       {/* <p className="flex flex-col gap-2 karla">

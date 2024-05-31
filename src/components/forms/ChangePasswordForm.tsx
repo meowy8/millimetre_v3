@@ -26,7 +26,7 @@ const ChangePasswordForm = ({ sessionData }: { sessionData: any }) => {
     }
 
     const data = await updateUserPassword(
-      sessionData.id,
+      sessionData.name,
       currentPassword,
       newPassword
     );

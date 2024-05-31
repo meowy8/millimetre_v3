@@ -16,16 +16,16 @@ const HomeFilmDisplay = () => {
   }, []);
 
   return (
-    <section className="flex flex-wrap max-w-[1000px] mx-auto justify-center mt-8 gap-4">
+    <section className="relative flex flex-wrap max-w-[1000px] mx-auto justify-center mt-8 gap-4 z-10">
       {displayedFilms &&
         displayedFilms.map((film: TMDBFilmDetails) => (
           <div
             key={film.id}
-            className="rounded-lg overflow-hidden hover:opacity-80"
+            className="rounded-lg overflow-hidden hover:opacity-80 w-[390px] h-[224px] cursor-pointer"
           >
             <FilmCard
               filmId={film.id}
-              posterPath={film.poster_path}
+              backdropPath={film.backdrop_path}
               title={film.title}
               releaseDate={film.release_date}
             />

@@ -31,7 +31,7 @@ export default function Home() {
             </section>
           )}
         </div>
-        <div className="flex justify-center">
+        <div className="relative flex justify-center z-10">
           <span className="oranienbaumRegular text-xl text-center">
             {session
               ? "Discover something new!"

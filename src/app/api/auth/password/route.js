@@ -4,7 +4,7 @@ import User from "@/models/User";
 import { verifyPassword, hashPassword } from "@/utils/auth";
 
 export async function PATCH(req) {
-  const { newPassword, userId, currentPassword } = await req.json();
+  const { newPassword, username, currentPassword } = await req.json();
 
   // Check if password is empty
   if (newPassword === "") {
@@ -17,7 +17,7 @@ export async function PATCH(req) {
   const db = await connectDB();
 
   // Check if user exists and include password
-  const user = await User.findOne({ _id: userId }).select("+password");
+  const user = await User.findOne({ username }).select("+password");
   if (!user) {
     return NextResponse.json({ message: "User not found" }, { status: 404 });
   }
@@ -44,7 +44,7 @@ export async function PATCH(req) {
 
   // Update password
   const result = await User.findOneAndUpdate(
-    { _id: userId },
+    { username },
     { password: passwordHash },
     { new: true }
   );

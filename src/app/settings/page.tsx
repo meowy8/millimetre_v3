@@ -15,15 +15,15 @@ const Settings = () => {
 
   const { data: session } = useSession();
 
-  // useEffect(() => {
-  //   //   console.log("session", session);
-  //   console.log("sessionData", sessionData);
-  // }, [sessionData]);
+  useEffect(() => {
+    //   console.log("session", session);
+    console.log("sessionData", sessionData);
+  }, [sessionData]);
 
   // Set user data from session
   useEffect(() => {
     if (session) {
-      setSessionData((session.user as User) || null);
+      setSessionData(session.user as User);
     } else {
       setSessionData(null);
     }

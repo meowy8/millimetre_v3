@@ -29,7 +29,9 @@ export default function RootLayout({
       >
         <AuthProvider>
           <Navbar />
-          <main className="max-w-[1000px] mx-auto px-4 my-24">{children}</main>
+          <main className="max-w-[1000px] mx-auto px-4 my-24 min-h-screen bg-[#0B0618]">
+            {children}
+          </main>
         </AuthProvider>
       </body>
     </html>
