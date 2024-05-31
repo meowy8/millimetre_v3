@@ -55,5 +55,6 @@ export async function GET(req: Request) {
   const result = await Note.find({ username: username }).sort({
     createdAt: -1,
   });
+  console.log("result", result);
   return NextResponse.json({ message: "Success", result }, { status: 200 });
 }

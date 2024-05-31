@@ -6,6 +6,13 @@ import { verifyPassword, hashPassword } from "@/utils/auth";
 export async function PATCH(req) {
   const { newPassword, username, currentPassword } = await req.json();
 
+  if (username === "demouser") {
+    return NextResponse.json(
+      { message: "Demo users cannot change password" },
+      { status: 400 }
+    );
+  }
+
   // Check if password is empty
   if (newPassword === "") {
     return NextResponse.json(

@@ -1,9 +1,16 @@
 import { FormInputType } from "@/types/formTypes";
 import React from "react";
 
-const FormInput = ({ value, type, onChange, placeholder }: FormInputType) => {
+const FormInput = ({
+  value,
+  type,
+  onChange,
+  placeholder,
+  demoRestricted,
+}: FormInputType) => {
   return (
     <input
+      disabled={demoRestricted}
       type={type}
       onChange={onChange}
       value={value}

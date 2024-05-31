@@ -15,4 +15,5 @@ export interface GeneralInputType {
 export interface FormInputType extends GeneralInputType {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  demoRestricted?: boolean;
 }

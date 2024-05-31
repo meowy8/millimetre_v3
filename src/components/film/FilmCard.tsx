@@ -24,7 +24,6 @@ const FilmCard = ({
       <Image
         src={`https://image.tmdb.org/t/p/w500${backdropPath}`}
         alt="film poster"
-        layout="responsive"
         width={500}
         height={281}
         className="w-full h-full object-cover"

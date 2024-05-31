@@ -17,4 +17,6 @@ TODO:
 
 - fix avatar not updating 
 
+- fix text appearing on film card on mobile device
+
 Done:

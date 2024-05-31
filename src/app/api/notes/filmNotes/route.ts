@@ -45,6 +45,13 @@ export async function POST(req: Request) {
   const username = new URL(req.url).searchParams.get("username");
   // console.log("data", data);
 
+  if (username === "demouser") {
+    return NextResponse.json(
+      { message: "Demo users cannot create notes" },
+      { status: 500 }
+    );
+  }
+
   // check if session exists
   if (!username) {
     return NextResponse.json(
@@ -84,6 +91,13 @@ export async function DELETE(req: Request) {
   const result = await Note.findByIdAndDelete(noteId);
   if (!result) {
     return NextResponse.json({ message: "Error" }, { status: 500 });
+  }
+
+  if (username === "demouser") {
+    return NextResponse.json(
+      { message: "Demo users cannot delete notes" },
+      { status: 400 }
+    );
   }
 
   // remove note reference from user

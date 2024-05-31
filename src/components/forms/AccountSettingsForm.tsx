@@ -9,7 +9,13 @@ import Loading from "../loading";
 import { FavouriteFilms, User } from "@/types/userTypes";
 import { FilmType, TMDBFilmDetails } from "@/types/filmTypes";
 
-const AccountSettingsForm = ({ sessionData }: { sessionData: any }) => {
+const AccountSettingsForm = ({
+  sessionData,
+  demoRestricted,
+}: {
+  sessionData: User;
+  demoRestricted: boolean;
+}) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [uploading, setUploading] = useState<boolean>(false);
   const [profileImage, setProfileImage] = useState<string>("");
@@ -31,15 +37,19 @@ const AccountSettingsForm = ({ sessionData }: { sessionData: any }) => {
   //   console.log("sessionData", sessionData);
   // }, [sessionData]);
 
+  // useEffect(() => {
+  //   console.log("user", user);
+  // }, [user]);
+
   useEffect(() => {
-    console.log("user", user);
-  }, [user]);
+    console.log("demoRestricted", demoRestricted);
+  }, [demoRestricted]);
 
   // Fetch user from session
   useEffect(() => {
     if (!sessionData) return;
     (async () => {
-      const data = await fetchUserData(sessionData.name);
+      const data = await fetchUserData(sessionData.name as string);
       if (!data) {
         return;
       }
@@ -108,7 +118,7 @@ const AccountSettingsForm = ({ sessionData }: { sessionData: any }) => {
       // Update user
       const updateResponse = await updateUser(
         updatedUser as User,
-        sessionData.name
+        sessionData.name as string
       );
 
       if (!updateResponse.success) {
@@ -116,7 +126,7 @@ const AccountSettingsForm = ({ sessionData }: { sessionData: any }) => {
       }
 
       // Fetch updated user data
-      const updatedUserData = await fetchUserData(sessionData.name);
+      const updatedUserData = await fetchUserData(sessionData.name as string);
       setUser(updatedUserData);
 
       setUploading(false);
@@ -214,6 +224,11 @@ const AccountSettingsForm = ({ sessionData }: { sessionData: any }) => {
         className="flex flex-col max-w-96 items-center"
       >
         <span className="text-lg">Edit your account</span>
+        {demoRestricted && (
+          <span className="text-sm font-extralight">
+            Demo users can only change favourite films
+          </span>
+        )}
         <div className="m-4 flex flex-col gap-6">
           <label htmlFor="avatar" className="flex flex-col gap-4">
             Choose Avatar
@@ -230,6 +245,7 @@ const AccountSettingsForm = ({ sessionData }: { sessionData: any }) => {
               />
             </label>
             <input
+              disabled={demoRestricted}
               type="file"
               name="avatarfile"
               id="avatarfile"
@@ -240,6 +256,7 @@ const AccountSettingsForm = ({ sessionData }: { sessionData: any }) => {
           <label htmlFor="change-bio">
             Change Bio
             <textarea
+              disabled={demoRestricted}
               name="change-bio"
               id="change-bio"
               cols={20}

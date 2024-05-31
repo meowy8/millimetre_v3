@@ -33,6 +33,22 @@ const SignInForm = () => {
     }
   };
 
+  const logInAsDemoUser = async () => {
+    const res = await signIn("credentials", {
+      redirect: false,
+      email: "demo@demo.com",
+      password: "password123*",
+    });
+
+    if (res?.error) {
+      // console.log(res.error);
+      setError(res.error);
+      return;
+    } else {
+      router.push(`/`);
+    }
+  };
+
   return (
     <div className="flex flex-col justify-center items-center">
       <h1 className="karla text-3xl m-10">Sign In</h1>
@@ -68,6 +84,12 @@ const SignInForm = () => {
           <GeneralBtn text="Sign In" />
         </div>
       </form>
+      <button
+        onClick={logInAsDemoUser}
+        className="karla bg-[#314b83] px-4 py-2 mt-4 border border-[#496fc0] rounded-md"
+      >
+        Demo Account
+      </button>
     </div>
   );
 };

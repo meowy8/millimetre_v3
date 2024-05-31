@@ -180,6 +180,17 @@ export async function PATCH(req: Request) {
     return NextResponse.json({ message: "User not found" }, { status: 404 });
   }
 
+  if (
+    (username === "demouser" && username !== user.username) ||
+    bio !== user.bio ||
+    profileImage !== user.profileImage
+  ) {
+    return NextResponse.json(
+      { message: "Demo users can only update favourite films" },
+      { status: 400 }
+    );
+  }
+
   // update user with favourite films
   const result = await User.findOneAndUpdate(
     { username: usernameParam },

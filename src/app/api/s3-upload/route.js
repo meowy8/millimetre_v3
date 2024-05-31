@@ -44,6 +44,13 @@ export async function POST(request) {
     const file = formData.get("file");
     const username = formData.get("username");
 
+    if (username === "demouser") {
+      return NextResponse.json(
+        { error: "Demo users cannot upload profile images." },
+        { status: 400 }
+      );
+    }
+
     if (!file || !username) {
       return NextResponse.json(
         { error: "File and username are required." },

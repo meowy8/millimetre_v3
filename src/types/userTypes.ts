@@ -8,6 +8,7 @@ export interface User {
   favouriteFilms: FavouriteFilms[];
   recentlyWatched: RecentlyWatched[];
   profileImage: string;
+  name?: string;
 }
 
 export interface FavouriteFilms {

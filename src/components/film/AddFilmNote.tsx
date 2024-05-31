@@ -20,6 +20,7 @@ const AddFilmNote = ({
 }: AddFilmNoteProps) => {
   // const [enableDate, setEnableDate] = React.useState(false);
   const [noteContent, setNoteContent] = React.useState("");
+  const [demoRestricted, setDemoRestricted] = React.useState(false);
 
   const router = useRouter();
 
@@ -29,6 +30,14 @@ const AddFilmNote = ({
   useEffect(() => {
     if (!session) return router.push("/signin");
   }, [session, router]);
+
+  useEffect(() => {
+    if (session && session.user) {
+      if (session.user.name === "demouser") {
+        setDemoRestricted(true);
+      }
+    }
+  }, [session]);
 
   // date picker not implemented //
   // const handleChange = () => {
@@ -90,12 +99,15 @@ const AddFilmNote = ({
             <label htmlFor="note" className="flex flex-col karla">
               Note
               <textarea
+                disabled={demoRestricted}
                 name="note"
                 id="note"
                 cols={30}
                 rows={5}
                 className="bg-white/10 p-2 rounded-lg border hover:bg-white/20 focus:bg-white/30"
-                placeholder="Add a note"
+                placeholder={
+                  demoRestricted ? "Demo users cannot create notes" : "Note"
+                }
                 value={noteContent}
                 onChange={(e) => setNoteContent(e.target.value)}
               />
@@ -120,14 +132,16 @@ const AddFilmNote = ({
             disabled={!enableDate}
           />
          </div> */}
-          <div className="my-4">
-            <button
-              type="submit"
-              className="bg-[#01442C] rounded-md border border-[#137150] px-4 py-2 karla hover:bg-[#137150]"
-            >
-              Add to Watched
-            </button>
-          </div>
+          {!demoRestricted && (
+            <div className="my-4">
+              <button
+                type="submit"
+                className="bg-[#01442C] rounded-md border border-[#137150] px-4 py-2 karla hover:bg-[#137150]"
+              >
+                Add to Watched
+              </button>
+            </div>
+          )}
         </div>
       </form>
     </div>

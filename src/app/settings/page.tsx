@@ -10,15 +10,24 @@ import { User } from "@/types/userTypes";
 const Settings = () => {
   const [section, setSection] = React.useState("account-settings");
   const [sessionData, setSessionData] = React.useState<User | null>(null);
+  const [demoRestricted, setDemoRestricted] = React.useState(false);
 
   const router = useRouter();
 
   const { data: session } = useSession();
 
+  // useEffect(() => {
+  //   console.log("session", session);
+  //   // console.log("sessionData", sessionData);
+  // }, [sessionData]);
+
   useEffect(() => {
-    //   console.log("session", session);
-    console.log("sessionData", sessionData);
-  }, [sessionData]);
+    if (session && session.user) {
+      if (session.user.name === "demouser") {
+        setDemoRestricted(true);
+      }
+    }
+  }, [session]);
 
   // Set user data from session
   useEffect(() => {
@@ -33,7 +42,7 @@ const Settings = () => {
     if (!session) {
       router.push("/");
     }
-  });
+  }, [session, router]);
 
   // changes section of settings page
   const changeSection = (section: string) => {
@@ -50,10 +59,14 @@ const Settings = () => {
         <MobileSettingsForms
           section={section}
           sessionData={sessionData as User}
+          demoRestricted={demoRestricted}
         />
       </div>
       <div className="hidden lg:flex justify-between">
-        <DesktopSettingsForms sessionData={sessionData as User} />
+        <DesktopSettingsForms
+          sessionData={sessionData as User}
+          demoRestricted={demoRestricted}
+        />
       </div>
     </section>
   );

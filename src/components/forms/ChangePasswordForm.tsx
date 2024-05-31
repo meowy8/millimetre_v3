@@ -3,8 +3,15 @@ import GeneralBtn from "../buttons/GeneralBtn";
 import FormInput from "../FormInput";
 import { updateUserPassword } from "@/utils/dataFetching/userData";
 import { useRouter } from "next/navigation";
+import { User } from "@/types/userTypes";
 
-const ChangePasswordForm = ({ sessionData }: { sessionData: any }) => {
+const ChangePasswordForm = ({
+  sessionData,
+  demoRestricted,
+}: {
+  sessionData: User;
+  demoRestricted: boolean;
+}) => {
   const [currentPassword, setCurrentPassword] = React.useState("");
   const [newPassword, setNewPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
@@ -26,7 +33,7 @@ const ChangePasswordForm = ({ sessionData }: { sessionData: any }) => {
     }
 
     const data = await updateUserPassword(
-      sessionData.name,
+      sessionData.name as string,
       currentPassword,
       newPassword
     );
@@ -43,9 +50,15 @@ const ChangePasswordForm = ({ sessionData }: { sessionData: any }) => {
         className="flex flex-col items-center gap-6 w-full max-w-96"
       >
         <span className="karla text-lg">Change your password</span>
+        {demoRestricted && (
+          <span className="karla text-sm font-extralight">
+            Demo users cannot change password
+          </span>
+        )}
         <div className="w-full">
           {error && <span className="text-red-500 text-sm">{error}</span>}
           <FormInput
+            demoRestricted={demoRestricted}
             placeholder="Current Password"
             type="password"
             value={currentPassword}
@@ -57,6 +70,7 @@ const ChangePasswordForm = ({ sessionData }: { sessionData: any }) => {
             <span className="text-red-500 text-sm">{error}</span>
           )}
           <FormInput
+            demoRestricted={demoRestricted}
             placeholder="New Password"
             type="password"
             value={newPassword}
@@ -65,15 +79,18 @@ const ChangePasswordForm = ({ sessionData }: { sessionData: any }) => {
         </div>
         <div className="w-full">
           <FormInput
+            demoRestricted={demoRestricted}
             placeholder="Confirm New Password"
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
-        <div className="w-full">
-          <GeneralBtn text="Save" />
-        </div>
+        {!demoRestricted && (
+          <div className="w-full">
+            <GeneralBtn text="Save" />
+          </div>
+        )}
       </form>
     </div>
   );

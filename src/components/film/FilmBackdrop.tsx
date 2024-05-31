@@ -11,7 +11,7 @@ const FilmBackdrop = ({ backdropImage }: { backdropImage: string }) => {
         alt="film backdrop"
         width={1920}
         height={1080}
-        priority
+        priority={true}
         className="w-full h-full object-cover rounded-t-2xl rounded-b-[10%]"
       />
       <div className="absolute bottom-0 w-full h-56 bg-gradient-to-t from-[#0B0618] via-[#0b0618a5] to-transparent "></div>
