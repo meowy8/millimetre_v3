@@ -17,6 +17,7 @@ import {
   FilmCredits,
   FilmImages,
   FilmNotes,
+  FilmType,
 } from "@/types/filmTypes";
 import Loading from "@/components/loading";
 import { ModalImageDataType } from "@/types/propTypes";
@@ -63,16 +64,17 @@ const FilmDetail = () => {
       title: filmDetails.title,
       posterPath: filmDetails.poster_path,
       filmId: filmId,
+      backdropPath: filmDetails.backdrop_path,
     };
 
     // add film to watchlist and send session id
-    await updateUserWatchlist(film, session?.user?.id);
+    await updateUserWatchlist(film, session?.user?.name as string);
   };
 
   // remove film from watchlist
   const handleRemoveFromWatchlist: () => Promise<void> = async () => {
     setWatchlistButton(false);
-    await removeFromUserWatchlist(filmId, session?.user?.id);
+    await removeFromUserWatchlist(filmId, session?.user?.name as string);
   };
 
   // check if film is in session user's watchlist
@@ -80,35 +82,35 @@ const FilmDetail = () => {
     if (!session?.user?.name) return;
 
     (async () => {
-      const data = await fetchUserWatchlist(session?.user?.username);
+      const data = await fetchUserWatchlist(session?.user?.name as string);
 
       // console.log("watchlist", data);
 
       // check if film is in watchlist and set watchlist button state
       if (data) {
-        if (data.some((film) => film.filmId === filmId)) {
+        if (data.some((film: FilmType) => film.filmId === filmId)) {
           setWatchlistButton(true);
         }
       }
     })();
-  }, [session?.user?.username, filmId]);
+  }, [session?.user?.name, filmId]);
 
   useEffect(() => {
-    if (!session?.user?.username) return;
+    if (!session?.user?.name) return;
 
     (async () => {
       const data = await fetchUserNoteData(
-        session?.user?.username,
+        session?.user?.name as string,
         null,
         null,
         false
       );
 
-      if (data.some((film) => film.filmId === filmId)) {
+      if (data.some((film: FilmType) => film.filmId === filmId)) {
         setWatchedButton(true);
       }
     })();
-  }, [session?.user?.username, filmId]);
+  }, [session?.user?.name, filmId]);
 
   // check if film exists
   useEffect(() => {

@@ -1,5 +1,6 @@
 import Film from "@/models/Film";
 import User from "@/models/User";
+import { FilmType } from "@/types/filmTypes";
 import connectDB from "@/utils/db";
 import { NextResponse } from "next/server";
 
@@ -116,7 +117,7 @@ export async function DELETE(req: Request) {
   }
 
   // check if film is in watchlist
-  if (!user.watchlist.some((film) => film.filmId === filmId)) {
+  if (!user.watchlist.some((film: FilmType) => film.filmId === filmId)) {
     return NextResponse.json(
       { message: "Film not in watchlist" },
       { status: 400 }
@@ -124,7 +125,9 @@ export async function DELETE(req: Request) {
   }
 
   // remove film from watchlist
-  const filmToRemove = user.watchlist.find((film) => film.filmId === filmId);
+  const filmToRemove = user.watchlist.find(
+    (film: FilmType) => film.filmId === filmId
+  );
   // console.log("filmToRemove", filmToRemove);
   // console.log("watchlist", user.watchlist);
 

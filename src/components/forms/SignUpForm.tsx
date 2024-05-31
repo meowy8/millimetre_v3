@@ -3,7 +3,7 @@ import GeneralBtn from "../buttons/GeneralBtn";
 import FormInput from "../FormInput";
 import { SignUp } from "@/types/formTypes";
 import { SignInFormProps } from "@/types/propTypes";
-import { createUser } from "@/utils/dataFetching/userData";
+import { checkSignUp, createUser } from "@/utils/dataFetching/userData";
 
 const SignUpForm = ({
   setSignedUp,
@@ -50,7 +50,7 @@ const SignUpForm = ({
     }
 
     try {
-      const response = await createUser({ email, password });
+      const response = await checkSignUp({ email, password });
       const data = await response.json();
 
       // check if email already exists

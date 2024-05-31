@@ -28,7 +28,7 @@ const FullFilmNote = ({ noteData }: { noteData: FilmNotes }) => {
     if (!noteData) return;
 
     // delete note
-    await deleteNote(noteData._id, session?.user?.id);
+    await deleteNote(noteData._id as string, session?.user?.name as string);
 
     setShowModal(false);
 
@@ -40,7 +40,7 @@ const FullFilmNote = ({ noteData }: { noteData: FilmNotes }) => {
   };
 
   useEffect(() => {
-    if (session?.user?.username === noteData.username) {
+    if (session?.user?.name === noteData.username) {
       setDeleteNoteBtn(true);
     }
   }, [session, noteData.username]);

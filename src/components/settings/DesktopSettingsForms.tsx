@@ -3,7 +3,7 @@ import AccountSettingsForm from "@/components/forms/AccountSettingsForm";
 import ChangePasswordForm from "@/components/forms/ChangePasswordForm";
 import { User } from "@/types/userTypes";
 
-const DesktopSettingsForms = ({ sessionData }) => {
+const DesktopSettingsForms = ({ sessionData }: { sessionData: User }) => {
   return (
     <>
       <ChangePasswordForm sessionData={sessionData} />

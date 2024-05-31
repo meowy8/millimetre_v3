@@ -7,16 +7,16 @@ import SmallFilmPoster from "../film/SmallFilmPoster";
 import { fetchUserData, updateUser } from "@/utils/dataFetching/userData";
 import Loading from "../loading";
 import { FavouriteFilms, User } from "@/types/userTypes";
-import { TMDBFilmDetails } from "@/types/filmTypes";
+import { FilmType, TMDBFilmDetails } from "@/types/filmTypes";
 
-const AccountSettingsForm = (sessionData: any) => {
+const AccountSettingsForm = ({ sessionData }: { sessionData: any }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [uploading, setUploading] = useState<boolean>(false);
   const [profileImage, setProfileImage] = useState<string>("");
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [showFilmSearchModal, setFilmSearchModal] = useState<boolean>(false);
-  const [favFilmSlots, setFavFilmSlots] = useState<(TMDBFilmDetails | null)[]>([
+  const [favFilmSlots, setFavFilmSlots] = useState<(FilmType | null)[]>([
     null,
     null,
     null,
@@ -80,7 +80,6 @@ const AccountSettingsForm = (sessionData: any) => {
 
         const data = await response.json();
         profileImageUrl = data.fileUrl;
-        console.log("profileImageUrl", profileImageUrl);
       }
 
       // Create updated user object
@@ -100,7 +99,7 @@ const AccountSettingsForm = (sessionData: any) => {
 
       // Update user
       const updateResponse = await updateUser(
-        updatedUser,
+        updatedUser as User,
         sessionData.sessionData.id
       );
 
@@ -153,7 +152,7 @@ const AccountSettingsForm = (sessionData: any) => {
   };
 
   const addNewFavFilm = (newFilm: TMDBFilmDetails) => {
-    if (favFilmSlots.some((film) => film?.id === newFilm.id)) {
+    if (favFilmSlots.some((film) => film?.filmId === newFilm.id)) {
       closeModal();
       return;
     }
@@ -232,18 +231,6 @@ const AccountSettingsForm = (sessionData: any) => {
               onChange={(e) => handleAvatarChange(e)}
             />
           </label>
-          {/* <label htmlFor="change-username" className="flex flex-col gap-2">
-            Change Username
-            <input
-              type="text"
-              name="change-username"
-              id="change-username"
-              placeholder="Username"
-              className="border border-[#FBF7F4] bg-transparent rounded-lg px-4 py-2 outline-none hover:bg-white/10 focus:bg-white/20 w-full"
-              value={usernameInput}
-              onChange={(e) => setUsernameInput(e.target.value)}
-            />
-          </label> */}
           <label htmlFor="change-bio">
             Change Bio
             <textarea
@@ -279,7 +266,9 @@ const AccountSettingsForm = (sessionData: any) => {
                         X
                       </div>
                       <SmallFilmPoster
-                        posterPath={film.posterPath || film.poster_path}
+                        posterPath={
+                          film.posterPath || (film.poster_path as string)
+                        }
                         title={film.title}
                       />
                     </>
@@ -291,9 +280,6 @@ const AccountSettingsForm = (sessionData: any) => {
             </div>
           </div>
           <div className="flex flex-col gap-2 items-end">
-            {/* <span className="text-xs mx-2">
-              Some changes require you to sign in again
-            </span> */}
             {uploading ? (
               <div className="flex justify-center">
                 <Loading />

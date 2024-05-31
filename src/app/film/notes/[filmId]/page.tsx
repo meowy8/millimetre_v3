@@ -51,6 +51,7 @@ const FilmNotes = () => {
             toggleNotesModal={toggleNotesModal}
             title={filmData.title}
             filmId={filmId}
+            setWatchedButton={() => null}
           />
         )}
       </Modal>

@@ -23,7 +23,7 @@ const Settings = () => {
   // Set user data from session
   useEffect(() => {
     if (session) {
-      setSessionData(session.user || null);
+      setSessionData((session.user as User) || null);
     } else {
       setSessionData(null);
     }
@@ -47,10 +47,13 @@ const Settings = () => {
         <SettingsToggle changeSection={changeSection} section={section} />
       </div>
       <div className="lg:hidden">
-        <MobileSettingsForms section={section} sessionData={sessionData} />
+        <MobileSettingsForms
+          section={section}
+          sessionData={sessionData as User}
+        />
       </div>
       <div className="hidden lg:flex justify-between">
-        <DesktopSettingsForms sessionData={sessionData} />
+        <DesktopSettingsForms sessionData={sessionData as User} />
       </div>
     </section>
   );

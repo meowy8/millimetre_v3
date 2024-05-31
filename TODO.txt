@@ -16,5 +16,3 @@ TODO:
 - when a film is logged make sure it isnt already in the film collection of the database so it can be reused
 
 Done:
-- show if film is watched on the film page
-- add on hover properties to links and buttons

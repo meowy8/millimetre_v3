@@ -45,20 +45,20 @@ const AddFilmNote = ({
     e.preventDefault();
 
     // create note object
-    const note = {
+    const note: FilmNotes = {
       title,
       content: noteContent,
-      username: session?.user?.username,
+      username: session?.user?.name as string,
       filmId,
       backdropPath,
       posterPath,
-      profileImage: session?.user?.profileImage,
+      profileImage: session?.user?.image as string,
     };
 
-    console.log("profileImage", session?.user?.profileImage);
+    // console.log("profileImage", session?.user?.image);
 
     // post note
-    await postNote(note as FilmNotes, session?.user?.id);
+    await postNote(note as FilmNotes, session?.user?.name as string);
 
     // close modal
     setWatchedButton(true);

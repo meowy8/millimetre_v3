@@ -1,5 +1,6 @@
 "use client";
 import MediumFilmPoster from "@/components/film/MediumFilmPoster";
+import { FilmType } from "@/types/filmTypes";
 import { User } from "@/types/userTypes";
 import {
   fetchUserData,
@@ -39,7 +40,7 @@ const Watchlist = () => {
       </h1>
       <hr />
       <div className="flex flex-wrap gap-4 mt-6">
-        {watchlist.map((film) => (
+        {watchlist.map((film: FilmType) => (
           <Link
             key={film.filmId}
             href={`/film/${film.filmId}`}

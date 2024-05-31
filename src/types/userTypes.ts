@@ -7,6 +7,7 @@ export interface User {
   bio: string;
   favouriteFilms: FavouriteFilms[];
   recentlyWatched: RecentlyWatched[];
+  profileImage: string;
 }
 
 export interface FavouriteFilms {
@@ -23,4 +24,9 @@ export interface RecentlyWatched {
   title: string;
   posterPath: string;
   backdropPath: string;
+}
+
+export interface CheckSignUp {
+  email: string;
+  password: string;
 }

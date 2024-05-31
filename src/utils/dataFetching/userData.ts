@@ -1,3 +1,6 @@
+import { FilmType } from "@/types/filmTypes";
+import { CheckSignUp, User } from "@/types/userTypes";
+
 // fetches user search results with query from database
 export const fetchUserSearch = async (inputValue: string) => {
   try {
@@ -35,7 +38,7 @@ export const fetchUserData = async (username: string | string[]) => {
 
 // updates user data
 // userId is retrieved from session
-export const updateUser = async (updatedUser, userId) => {
+export const updateUser = async (updatedUser: User, userId: string) => {
   try {
     const response = await fetch(`/api/users/user?userId=${userId}`, {
       method: "PATCH",
@@ -49,7 +52,7 @@ export const updateUser = async (updatedUser, userId) => {
 
     const data = await response.json();
     return { success: true, user: data };
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error updating user:", error);
     return { success: false, message: error.message };
   }
@@ -78,7 +81,7 @@ export const fetchUserWatchlist = async (username: string | string[]) => {
 // updates user watchlist
 // userId is retrieved from session
 // film is the film object being added to the user watchlist
-export const updateUserWatchlist = async (film, userId) => {
+export const updateUserWatchlist = async (film: FilmType, userId: string) => {
   try {
     await fetch(`/api/users/user/watchlist`, {
       method: "PATCH",
@@ -91,7 +94,10 @@ export const updateUserWatchlist = async (film, userId) => {
 };
 
 // removes film from user watchlist
-export const removeFromUserWatchlist = async (filmId, userId) => {
+export const removeFromUserWatchlist = async (
+  filmId: number,
+  userId: string
+) => {
   await fetch("/api/users/user/watchlist", {
     method: "DELETE",
     headers: { "Content-Type": "application/json" },
@@ -101,9 +107,9 @@ export const removeFromUserWatchlist = async (filmId, userId) => {
 
 // updates user password
 export const updateUserPassword = async (
-  userId,
-  currentPassword,
-  newPassword
+  userId: string,
+  currentPassword: string,
+  newPassword: string
 ) => {
   try {
     const res = await fetch("/api/auth/password", {
@@ -129,7 +135,15 @@ export const updateUserPassword = async (
 };
 
 // creates new user
-export const createUser = async (userData) => {
+export const createUser = async (userData: User) => {
+  const response = await fetch("/api/users/user", {
+    method: "POST",
+    body: JSON.stringify(userData),
+  });
+  return response;
+};
+
+export const checkSignUp = async (userData: CheckSignUp) => {
   const response = await fetch("/api/users/user", {
     method: "POST",
     body: JSON.stringify(userData),

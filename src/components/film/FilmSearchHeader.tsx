@@ -6,10 +6,7 @@ const FilmSearchHeader = ({ searchValue }: { searchValue: string }) => {
   return (
     <div className="w-full">
       <div className="w-full flex flex-col mb-8">
-        <SearchInput
-          placeholder={"Search for a film"}
-          closeSidebar={() => {}}
-        />
+        <SearchInput placeholder={"Search for a film"} />
       </div>
       <div className="flex flex-col w-full">
         <span className="karla">Results for...</span>

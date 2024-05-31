@@ -6,6 +6,7 @@ import FormInput from "../FormInput";
 import { useRouter } from "next/navigation";
 import { createUser } from "@/utils/dataFetching/userData";
 import Loading from "../loading";
+import { User } from "@/types/userTypes";
 
 const CreateAccountForm = ({
   toggleModal,
@@ -100,7 +101,7 @@ const CreateAccountForm = ({
     };
 
     try {
-      const response = await createUser(userData);
+      const response = await createUser(userData as User);
       const data = await response.json();
 
       // success handling

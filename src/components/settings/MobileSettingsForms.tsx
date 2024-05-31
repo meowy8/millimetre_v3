@@ -8,7 +8,7 @@ const MobileSettingsForms = ({
   sessionData,
 }: {
   section: string;
-  sessionData: any;
+  sessionData: User;
 }) => {
   return (
     <>

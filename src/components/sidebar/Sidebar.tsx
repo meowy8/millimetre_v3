@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { ReactElement } from "react";
 import CloseSidebarBtn from "./CloseSidebarBtn";
 import SidebarInputContainer from "./SidebarInputContainer";
 import SidebarNavSection from "./SidebarNavSection";
@@ -76,7 +76,7 @@ const Sidebar = () => {
           <SidebarNavSection
             section="General"
             buttons={[
-              sideBarProfileBtn,
+              sideBarProfileBtn as ReactElement,
               <SidebarNavBtn
                 icon={<HomeIcon />}
                 name="Home"

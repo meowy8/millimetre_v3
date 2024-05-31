@@ -1,4 +1,4 @@
-export interface TMDBFilmDetails {
+export interface TMDBFilmDetails extends FilmType {
   backdrop_path: string;
   runtime: number;
   id: number;
@@ -9,6 +9,14 @@ export interface TMDBFilmDetails {
   poster_path: string;
   release_date: string;
   title: string;
+}
+
+export interface FilmType {
+  filmId: number;
+  title: string;
+  posterPath: string;
+  backdropPath: string;
+  poster_path?: string;
 }
 
 export interface FilmDescriptionType
@@ -56,6 +64,7 @@ export interface FilmNotes {
   username: string;
   posterPath: string;
   backdropPath: string;
+  profileImage: string;
 }
 
 export interface Credits {

@@ -48,13 +48,7 @@ const UserNotes = () => {
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center">
         {userNotes && userNotes.length > 0 ? (
           userNotes.map((note: FilmNotes) => {
-            return (
-              <FilmNote
-                key={note._id}
-                note={note}
-                profileImage={userNotes.profileImage}
-              />
-            );
+            return <FilmNote key={note._id} note={note} />;
           })
         ) : (
           <p className="karla">No notes yet.</p>

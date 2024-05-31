@@ -4,6 +4,7 @@ import { SignUp } from "./formTypes";
 export interface AddFilmNoteProps {
   toggleModal: () => void;
   toggleNotesModal: () => void;
+  setWatchedButton: React.Dispatch<React.SetStateAction<boolean>>;
   title: string;
   posterPath: string;
   backdropPath: string;
@@ -13,6 +14,7 @@ export interface AddFilmNoteProps {
 export interface CreditsListProps {
   showDetails: boolean;
   credits: Credits[];
+  setShowDetails: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface FilmImageProps {
