@@ -32,7 +32,7 @@ const RecentFilmsDisplay = ({
           ))}
         </div>
       ) : (
-        <span className="text-sm font-extralight">
+        <span className="text-sm font-extralight ml-2">
           No recently watched films
         </span>
       )}

@@ -29,7 +29,9 @@ const FavFilmsDisplay = ({ user }: { user: User }) => {
           })}
         </div>
       ) : (
-        <span className="text-sm font-extralight">No favourite films yet</span>
+        <span className="text-sm font-extralight ml-2">
+          No favourite films yet
+        </span>
       )}
     </>
   );

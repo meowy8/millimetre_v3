@@ -15,4 +15,6 @@ TODO:
 
 - when a film is logged make sure it isnt already in the film collection of the database so it can be reused
 
+- fix avatar not updating 
+
 Done:
