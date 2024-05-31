@@ -3,6 +3,7 @@ import MediumFilmPoster from "@/components/film/MediumFilmPoster";
 import SmallFilmPoster from "@/components/film/SmallFilmPoster";
 import { FilmNotes } from "@/types/filmTypes";
 import { fetchUserNoteData } from "@/utils/dataFetching/noteData";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import React, { useEffect } from "react";
@@ -12,6 +13,8 @@ const RecentlyWatched = () => {
 
   const params = useParams();
   const username = params.username;
+
+  const { data: session } = useSession();
 
   // fetch all recently watched
   useEffect(() => {
@@ -33,7 +36,7 @@ const RecentlyWatched = () => {
       </h1>
       <hr className="mb-8" />
       <div className="flex flex-wrap gap-4 karla">
-        {recentlyWatched &&
+        {recentlyWatched?.length > 0 ? (
           recentlyWatched.map((film: FilmNotes) => (
             <div
               key={film._id}
@@ -72,7 +75,10 @@ const RecentlyWatched = () => {
                 />
               </Link>
             </div>
-          ))}
+          ))
+        ) : (
+          <p className="text-center">No films added yet</p>
+        )}
       </div>
     </div>
   );

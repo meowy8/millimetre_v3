@@ -19,7 +19,10 @@ const HomeFilmDisplay = () => {
     <section className="flex flex-wrap max-w-[1000px] mx-auto justify-center mt-8 gap-4">
       {displayedFilms &&
         displayedFilms.map((film: TMDBFilmDetails) => (
-          <div key={film.id} className="rounded-lg overflow-hidden">
+          <div
+            key={film.id}
+            className="rounded-lg overflow-hidden hover:opacity-80"
+          >
             <FilmCard
               filmId={film.id}
               posterPath={film.poster_path}

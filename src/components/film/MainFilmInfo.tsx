@@ -14,6 +14,7 @@ const MainFilmInfo = ({
   handleAddToWatchlist,
   handleRemoveFromWatchlist,
   watchlistButton,
+  watchedButton,
 }: {
   filmDetails: TMDBFilmDetails;
   filmCredits: FilmCredits;
@@ -21,9 +22,10 @@ const MainFilmInfo = ({
   handleAddToWatchlist: () => void;
   handleRemoveFromWatchlist: () => void;
   watchlistButton: boolean;
+  watchedButton: boolean;
 }) => {
   return (
-    <div className="relative bottom-32 m-6 z-10 flex flex-col lg:flex-row lg:gap-20">
+    <div className="relative bottom-24 m-6 z-10 flex flex-col lg:flex-row lg:gap-20">
       <div className="bg-black/40 rounded-lg w-full h-[700px] absolute blur-lg -z-10"></div>
       <div className="lg:flex-row flex flex-col items-center lg:items-start gap-10 ">
         {filmDetails.poster_path ? (
@@ -40,7 +42,10 @@ const MainFilmInfo = ({
       </div>
       <div className="lg:flex flex-col w-full lg:w-auto">
         <div className="flex justify-between my-8 lg:gap-4">
-          <WatchedButton closeModal={closeModal} />
+          <WatchedButton
+            closeModal={closeModal}
+            watchedButton={watchedButton}
+          />
           <AddToWatchlistBtn
             handleAddToWatchlist={handleAddToWatchlist}
             handleRemoveFromWatchlist={handleRemoveFromWatchlist}

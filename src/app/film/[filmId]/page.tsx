@@ -27,6 +27,7 @@ import {
   updateUserWatchlist,
 } from "@/utils/dataFetching/userData";
 import EmptyBackdrop from "@/components/film/EmptyBackdrop";
+import { fetchUserNoteData } from "@/utils/dataFetching/noteData";
 
 const FilmDetail = () => {
   // image modal state
@@ -46,6 +47,7 @@ const FilmDetail = () => {
   const [loading, setLoading] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
   const [watchlistButton, setWatchlistButton] = useState(false);
+  const [watchedButton, setWatchedButton] = useState(false);
 
   let params = useParams<{ filmId: string }>();
   const filmId = parseInt(params.filmId);
@@ -75,7 +77,7 @@ const FilmDetail = () => {
 
   // check if film is in session user's watchlist
   useEffect(() => {
-    if (!session?.user?.username) return;
+    if (!session?.user?.name) return;
 
     (async () => {
       const data = await fetchUserWatchlist(session?.user?.username);
@@ -87,6 +89,23 @@ const FilmDetail = () => {
         if (data.some((film) => film.filmId === filmId)) {
           setWatchlistButton(true);
         }
+      }
+    })();
+  }, [session?.user?.username, filmId]);
+
+  useEffect(() => {
+    if (!session?.user?.username) return;
+
+    (async () => {
+      const data = await fetchUserNoteData(
+        session?.user?.username,
+        null,
+        null,
+        false
+      );
+
+      if (data.some((film) => film.filmId === filmId)) {
+        setWatchedButton(true);
       }
     })();
   }, [session?.user?.username, filmId]);
@@ -178,6 +197,7 @@ const FilmDetail = () => {
             toggleNotesModal={toggleNotesModal}
             title={filmDetails.title}
             filmId={filmId}
+            setWatchedButton={setWatchedButton}
           />
         )}
         {showImageModal && (
@@ -203,6 +223,7 @@ const FilmDetail = () => {
           handleAddToWatchlist={handleAddToWatchlist}
           handleRemoveFromWatchlist={handleRemoveFromWatchlist}
           watchlistButton={watchlistButton}
+          watchedButton={watchedButton}
         />
       )}
       <div className="overflow-x-auto w-full relative bottom-20 z-10">

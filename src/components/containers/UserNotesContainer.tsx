@@ -14,8 +14,12 @@ const UserNotesContainer = ({
   return (
     <>
       <div className="my-4 flex flex-col lg:items-end gap-2 mt-8 lg:mt-32 w-full z-10">
-        <Link href={`/user/notes/${user.username}`} className="karla ml-2">
-          Notes by <span className="outfit font-semibold">{user.username}</span>
+        <Link
+          href={`/user/notes/${user.username}`}
+          className="karla ml-2 hover:underline"
+        >
+          Notes by{" "}
+          <span className="outfit font-semibold ">{user.username}</span>
         </Link>
         <UserNotesList userNotes={userNotes} />
       </div>

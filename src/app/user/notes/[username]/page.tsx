@@ -10,6 +10,7 @@ import { fetchUserData } from "@/utils/dataFetching/userData";
 
 const UserNotes = () => {
   const [userNotes, setUserNotes] = React.useState([]);
+  const [profileImage, setProfileImage] = React.useState("");
 
   const params = useParams();
   const username = params.username;
@@ -21,13 +22,20 @@ const UserNotes = () => {
       console.log("data", data);
       setUserNotes(data);
     })();
-  }, []);
+  }, [username]);
+
+  useEffect(() => {
+    (async () => {
+      const data = await fetchUserData(username);
+      setProfileImage(data.profileImage);
+    })();
+  }, [username]);
 
   return (
     <section>
       <div className="flex items-end gap-4">
         <Link href={`/user/profile/${username}`}>
-          <MediumUserAvatar profileImage={userNotes[0]?.profileImage} />
+          <MediumUserAvatar profileImage={profileImage} />
         </Link>
         <p className="karla text-xl">
           Notes by{" "}

@@ -90,14 +90,14 @@ const FullFilmNote = ({ noteData }: { noteData: FilmNotes }) => {
               Note by{" "}
               <Link
                 href={"/user/profile/cadaverinbloom"}
-                className="font-bold text-lg text-[#cabeff]"
+                className="font-bold text-lg text-[#9081ff] hover:text-white"
               >
                 {noteData.username}
               </Link>{" "}
               for{" "}
               <Link
                 href={`/film/${noteData.filmId}`}
-                className="outfit text-2xl text-[#cabeff]"
+                className="outfit text-2xl text-[#9081ff] hover:text-white"
               >
                 {noteData.title}
               </Link>

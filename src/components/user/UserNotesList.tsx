@@ -10,7 +10,9 @@ const UserNotesList = ({ userNotes }: { userNotes: FilmNotes[] }) => {
           return <FilmNote key={note._id} note={note} />;
         })
       ) : (
-        <span className="karla ml-2">User has no notes</span>
+        <span className="karla ml-2 w-full font-extralight text-sm">
+          User has no notes
+        </span>
       )}
     </section>
   );

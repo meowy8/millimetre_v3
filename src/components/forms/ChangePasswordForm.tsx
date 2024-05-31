@@ -2,12 +2,15 @@ import React from "react";
 import GeneralBtn from "../buttons/GeneralBtn";
 import FormInput from "../FormInput";
 import { updateUserPassword } from "@/utils/dataFetching/userData";
+import { useRouter } from "next/navigation";
 
 const ChangePasswordForm = ({ sessionData }: { sessionData: any }) => {
   const [currentPassword, setCurrentPassword] = React.useState("");
   const [newPassword, setNewPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [error, setError] = React.useState("");
+
+  const router = useRouter();
 
   // submit updated password
   const handleSubmit = async (e: React.FormEvent) => {
@@ -22,7 +25,15 @@ const ChangePasswordForm = ({ sessionData }: { sessionData: any }) => {
       return;
     }
 
-    await updateUserPassword(sessionData.id, currentPassword, newPassword);
+    const data = await updateUserPassword(
+      sessionData.id,
+      currentPassword,
+      newPassword
+    );
+
+    if (data) {
+      router.push("/");
+    }
   };
 
   return (

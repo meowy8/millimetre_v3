@@ -1,11 +1,20 @@
 TODO:
-- make sure everything works
-  - show if film is watched on teh film page
-  - check if users can delete another users note
+*- fix types
 
-- fix types
+- when a user changes their username, it has to update every note theyve made with the new username
+
+- check if users can delete another users note
+
+- add elements for an empty profile
+
+- be able to delete note content and delete film log
+
+- fix profile image updating
 
 - only upload small images or crop them
 
+- when a film is logged make sure it isnt already in the film collection of the database so it can be reused
+
 Done:
-- improve ui design
+- show if film is watched on the film page
+- add on hover properties to links and buttons

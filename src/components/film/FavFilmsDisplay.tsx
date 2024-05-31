@@ -6,30 +6,32 @@ import EmptyFilmPoster from "./EmptyFilmPoster";
 
 const FavFilmsDisplay = ({ user }: { user: User }) => {
   return (
-    <div className="grid grid-cols-3 gap-4">
+    <>
       {user.favouriteFilms && user.favouriteFilms.length > 0 ? (
-        user.favouriteFilms.map((film) => {
-          return (
-            <Link
-              href={`/film/${film.filmId}`}
-              key={film.filmId}
-              className="hover:opacity-80"
-            >
-              {film.posterPath ? (
-                <MediumFilmPoster
-                  posterPath={film.posterPath}
-                  title={film.title}
-                />
-              ) : (
-                <EmptyFilmPoster />
-              )}
-            </Link>
-          );
-        })
+        <div className="grid grid-cols-3 gap-4">
+          {user.favouriteFilms.map((film) => {
+            return (
+              <Link
+                href={`/film/${film.filmId}`}
+                key={film.filmId}
+                className="hover:opacity-80"
+              >
+                {film.posterPath ? (
+                  <MediumFilmPoster
+                    posterPath={film.posterPath}
+                    title={film.title}
+                  />
+                ) : (
+                  <EmptyFilmPoster />
+                )}
+              </Link>
+            );
+          })}
+        </div>
       ) : (
-        <span className="karla ml-2">No films added</span>
+        <span className="text-sm font-extralight">No favourite films yet</span>
       )}
-    </div>
+    </>
   );
 };
 

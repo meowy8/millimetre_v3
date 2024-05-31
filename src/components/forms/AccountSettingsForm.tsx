@@ -126,8 +126,14 @@ const AccountSettingsForm = (sessionData: any) => {
     const file = e.target.files?.[0];
     if (!file) return;
     setAvatarFile(file);
-    setProfileImage(URL.createObjectURL(file));
+    const url = URL.createObjectURL(file);
+    setProfileImage(url);
   };
+
+  useEffect(() => {
+    console.log("avatar file", avatarFile);
+    console.log("profileImage", profileImage);
+  }, [profileImage, avatarFile]);
 
   const openModal = () => {
     setShowModal(true);
@@ -223,10 +229,10 @@ const AccountSettingsForm = (sessionData: any) => {
               name="avatarfile"
               id="avatarfile"
               className="hidden"
-              onChange={handleAvatarChange}
+              onChange={(e) => handleAvatarChange(e)}
             />
           </label>
-          <label htmlFor="change-username" className="flex flex-col gap-2">
+          {/* <label htmlFor="change-username" className="flex flex-col gap-2">
             Change Username
             <input
               type="text"
@@ -237,7 +243,7 @@ const AccountSettingsForm = (sessionData: any) => {
               value={usernameInput}
               onChange={(e) => setUsernameInput(e.target.value)}
             />
-          </label>
+          </label> */}
           <label htmlFor="change-bio">
             Change Bio
             <textarea
@@ -284,7 +290,10 @@ const AccountSettingsForm = (sessionData: any) => {
               ))}
             </div>
           </div>
-          <div>
+          <div className="flex flex-col gap-2 items-end">
+            {/* <span className="text-xs mx-2">
+              Some changes require you to sign in again
+            </span> */}
             {uploading ? (
               <div className="flex justify-center">
                 <Loading />

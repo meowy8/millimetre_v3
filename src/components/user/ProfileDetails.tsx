@@ -15,17 +15,17 @@ const ProfileDetails = ({
 }) => {
   return (
     <>
-      <div className="flex flex-col items-center gap-4 lg:items-start w-full z-10">
+      <div className="flex flex-col items-center gap-4 lg:items-start md:min-w-96 z-10">
         {user.profileImage && <LargeUserAvatar user={user} />}
         <span className="outfit text-xl font-bold">{user.username}</span>
         <p className="karla text-center px-6 mb-4 lg:text-left lg:p-0 max-w-96 ml-2">
           {user.bio}
         </p>
-        <div className="my-4 flex flex-col gap-2">
+        <div className="my-4 flex flex-col gap-2 w-full min-h-32">
           <span className="karla font-semibold ml-2">Favourite Films</span>
           <FavFilmsDisplay user={user} />
         </div>
-        <div className="my-4 flex flex-col gap-2 lg:my-0">
+        <div className="my-4 flex flex-col gap-2 lg:my-0 w-full min-h-32">
           <span className="karla font-semibold ml-2">Recently Watched</span>
           <RecentFilmsDisplay recentlyWatched={recentlyWatched} />
         </div>

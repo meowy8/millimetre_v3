@@ -16,6 +16,7 @@ const AddFilmNote = ({
   backdropPath,
   title,
   filmId,
+  setWatchedButton,
 }: AddFilmNoteProps) => {
   // const [enableDate, setEnableDate] = React.useState(false);
   const [noteContent, setNoteContent] = React.useState("");
@@ -60,6 +61,7 @@ const AddFilmNote = ({
     await postNote(note as FilmNotes, session?.user?.id);
 
     // close modal
+    setWatchedButton(true);
     toggleNotesModal();
     toggleModal();
   };
@@ -70,7 +72,9 @@ const AddFilmNote = ({
         <div className="flex flex-col md:flex-row gap-4 lg:w-4/5 justify-between">
           <div className="flex justify-between ">
             {posterPath ? (
-              <SmallFilmPoster posterPath={posterPath} title={title} />
+              <div className="w-[150px]">
+                <SmallFilmPoster posterPath={posterPath} title={title} />
+              </div>
             ) : (
               <EmptyFilmPoster />
             )}
@@ -121,7 +125,7 @@ const AddFilmNote = ({
               type="submit"
               className="bg-[#01442C] rounded-md border border-[#137150] px-4 py-2 karla hover:bg-[#137150]"
             >
-              Save
+              Add to Watched
             </button>
           </div>
         </div>

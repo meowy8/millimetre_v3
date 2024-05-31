@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import MembersSearchList from "@/components/members/MembersSearchList";
 import MembersSearchHeader from "@/components/members/MembersSearchHeader";
 import { useParams } from "next/navigation";
@@ -11,6 +11,10 @@ const Members = () => {
   const [noUsersFound, setNoUsersFound] = React.useState("");
 
   const params = useParams();
+
+  useEffect(() => {
+    (async () => setUserListResults(await fetchUserSearch(inputValue)))();
+  }, [inputValue]);
 
   // fetch user search results on submit
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

@@ -10,7 +10,11 @@ const FilmSearchResultsList = ({
   searchResults: TMDBFilmDetails[];
 }) => {
   return (
-    <div className="flex flex-wrap justify-center gap-4">
+    <div
+      className={`flex flex-wrap justify-center gap-4 ${
+        searchResults.length > 0 ? "opacity-100" : "opacity-0"
+      } transition-all duration-500`}
+    >
       {searchResults?.length > 0 &&
         searchResults.map((film) => (
           <Link

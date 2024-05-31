@@ -117,6 +117,12 @@ export const updateUserPassword = async (
         newPassword,
       }),
     });
+
+    if (!res.ok) {
+      throw new Error("Failed to update password");
+    }
+
+    return res.json();
   } catch (error) {
     console.error(error);
   }
