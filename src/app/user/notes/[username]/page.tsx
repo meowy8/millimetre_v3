@@ -19,7 +19,7 @@ const UserNotes = () => {
   useEffect(() => {
     (async () => {
       const data = await fetchUserNoteData(username, null, null, true);
-      console.log("data", data);
+      // console.log("data", data);
       setUserNotes(data);
     })();
   }, [username]);

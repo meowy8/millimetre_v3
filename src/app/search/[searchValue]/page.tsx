@@ -23,9 +23,9 @@ const FilmSearch = () => {
     })();
   }, [searchValue]);
 
-  useEffect(() => {
-    console.log("searchResults", searchResults);
-  }, [searchResults]);
+  // useEffect(() => {
+  //   console.log("searchResults", searchResults);
+  // }, [searchResults]);
 
   return (
     <section className="relative m-4 flex flex-col items-center gap-8">

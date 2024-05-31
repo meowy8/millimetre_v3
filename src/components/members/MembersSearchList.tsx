@@ -9,7 +9,7 @@ const MembersSearchList = ({
   userListResults: User[] | null;
   noUsersFound: string;
 }) => {
-  console.log("userListResults", userListResults);
+  // console.log("userListResults", userListResults);
   return (
     <div className="flex flex-wrap justify-center gap-10 mt-14">
       {userListResults && userListResults.length > 0 ? (

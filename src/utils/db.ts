@@ -6,7 +6,7 @@ export default async function connectDB() {
     await mongoose.connect(
       `mongodb+srv://${process.env.MILLIMETRE_DATABASE_USERNAME}:${process.env.MILLIMETRE_DATABASE_PASSWORD}@millimetre.ekdx02k.mongodb.net/millimetre`
     );
-    console.log("Connected to MongoDB");
+    // console.log("Connected to MongoDB");
   } catch (err) {
     console.log(err);
   }

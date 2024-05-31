@@ -30,7 +30,7 @@ const Profile = () => {
     (async () => {
       const data = await fetchUserData(username);
 
-      console.log(data);
+      // console.log(data);
 
       // check if user data is null
       if (!data) {

@@ -25,7 +25,7 @@ const SignInForm = () => {
 
     // check if error and set error message
     if (res?.error) {
-      console.log(res.error);
+      // console.log(res.error);
       setError(res.error);
       return;
     } else {

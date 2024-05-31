@@ -10,7 +10,7 @@ import SmallUserAvatar from "./user/SmallUserAvatar";
 
 const Navbar = () => {
   const { data: session } = useSession();
-  console.log("session", session);
+  // console.log("session", session);
 
   return (
     <nav className="bg-[#0B0618] rounded-b-md shadow-xl fixed top-0 left-0 right-0 z-50">

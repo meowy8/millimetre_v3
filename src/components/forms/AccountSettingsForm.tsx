@@ -129,10 +129,10 @@ const AccountSettingsForm = ({ sessionData }: { sessionData: any }) => {
     setProfileImage(url);
   };
 
-  useEffect(() => {
-    console.log("avatar file", avatarFile);
-    console.log("profileImage", profileImage);
-  }, [profileImage, avatarFile]);
+  // useEffect(() => {
+  //   console.log("avatar file", avatarFile);
+  //   console.log("profileImage", profileImage);
+  // }, [profileImage, avatarFile]);
 
   const openModal = () => {
     setShowModal(true);

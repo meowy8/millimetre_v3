@@ -87,7 +87,7 @@ const CreateAccountForm = ({
     });
 
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     const profileImage = data.fileUrl;
 
     // create user object
