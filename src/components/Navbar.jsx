@@ -7,10 +7,17 @@ import SearchInput from "./SearchInput";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import SmallUserAvatar from "./user/SmallUserAvatar";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
+  const router = useRouter();
   const { data: session } = useSession();
   // console.log("session navbar", session);
+
+  const handleSignOut = async () => {
+    await signOut();
+    router.push("/");
+  };
 
   return (
     <nav className="bg-[#0B0618] rounded-b-md shadow-xl fixed top-0 left-0 right-0 z-50 flex justify-center">
@@ -80,7 +87,7 @@ const Navbar = () => {
               </Link>
             )}
             {session && (
-              <button onClick={() => signOut()} className="hover:opacity-90">
+              <button onClick={handleSignOut} className="hover:opacity-90">
                 Sign Out
               </button>
             )}

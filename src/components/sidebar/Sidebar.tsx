@@ -17,6 +17,8 @@ import LogoutIcon from "../icons/LogoutIcon";
 const Sidebar = () => {
   const [showSidebar, setShowSidebar] = useState<boolean>(false);
 
+  const router = useRouter();
+
   const { data: session } = useSession();
 
   // handles opening and closing sidebar
@@ -30,6 +32,9 @@ const Sidebar = () => {
   // handles sign out
   const handleSignOut = async () => {
     await signOut();
+
+    // redirect to home
+    router.push("/");
 
     closeSidebar();
   };
