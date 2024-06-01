@@ -41,9 +41,9 @@ const AccountSettingsForm = ({
   //   console.log("user", user);
   // }, [user]);
 
-  useEffect(() => {
-    console.log("demoRestricted", demoRestricted);
-  }, [demoRestricted]);
+  // useEffect(() => {
+  //   console.log("demoRestricted", demoRestricted);
+  // }, [demoRestricted]);
 
   // Fetch user from session
   useEffect(() => {
