@@ -11,7 +11,7 @@ export async function GET(req: Request) {
   // or if its for fetching general logs
   const includeContent =
     new URL(req.url).searchParams.get("includeContent") === "true";
-  console.log("includeContent", includeContent);
+  // console.log("includeContent", includeContent);
 
   // fetch first 3 notes without displaying empty content
   if (limit && includeContent) {

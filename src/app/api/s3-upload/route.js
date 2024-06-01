@@ -8,16 +8,16 @@ import User from "@/models/User";
 import connectDB from "@/utils/db";
 
 const s3Client = new S3Client({
-  region: process.env.AWS_REGION,
+  region: process.env.S3_REGION,
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    accessKeyId: process.env.S3_ACCESS_KEY_ID,
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
   },
 });
 
 async function uploadFileToS3(fileBuffer, fileName) {
   const params = {
-    Bucket: process.env.AWS_BUCKET_NAME,
+    Bucket: process.env.S3_BUCKET_NAME,
     Key: fileName,
     Body: fileBuffer,
     ContentType: "image/jpg",
@@ -25,12 +25,12 @@ async function uploadFileToS3(fileBuffer, fileName) {
 
   const command = new PutObjectCommand(params);
   await s3Client.send(command);
-  return `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${fileName}`;
+  return `https://${process.env.S3_BUCKET_NAME}.s3.amazonaws.com/${fileName}`;
 }
 
 async function deleteFileFromS3(fileName) {
   const params = {
-    Bucket: process.env.AWS_BUCKET_NAME,
+    Bucket: process.env.S3_BUCKET_NAME,
     Key: fileName,
   };
 
