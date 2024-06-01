@@ -9,7 +9,7 @@ const MediumFilmPoster = ({
   title: string;
 }) => {
   return (
-    <div className="flex justify-center max-w-[150px] h-full">
+    <div className="flex justify-center max-w-[150px]">
       <Image
         src={`https://image.tmdb.org/t/p/w500${posterPath}`}
         alt={`${title} poster`}
