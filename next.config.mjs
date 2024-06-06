@@ -8,7 +8,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "s3.amazonaws.com",
+        hostname: "millimetre-bucket.s3.amazonaws.com",
       },
     ],
   },
