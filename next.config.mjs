@@ -8,7 +8,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "aws.amazon.com",
+        hostname: "s3.amazonaws.com",
       },
     ],
   },
