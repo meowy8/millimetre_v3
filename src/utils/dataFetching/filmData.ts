@@ -84,7 +84,7 @@ export const fetchFilmSearch = async (query: string) => {
       options
     );
     const filmSearchData = await response.json();
-    // console.log("filmSearchData:", filmSearchData);
+    console.log("filmSearchData:", filmSearchData);
     return filmSearchData;
   } catch (error) {
     console.log(error);

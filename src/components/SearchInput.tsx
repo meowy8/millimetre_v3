@@ -17,7 +17,12 @@ const SearchInput = ({ placeholder }: { placeholder: string }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} action="submit" className="relative">
+    <form
+      id="searchForm"
+      onSubmit={handleSubmit}
+      action="submit"
+      className="relative"
+    >
       <input
         className="border border-[#FBF7F4] bg-transparent rounded-lg px-4 py-2 outline-none karla hover:bg-white/10 focus:bg-white/20 w-full"
         placeholder={placeholder}

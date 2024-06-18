@@ -3,7 +3,15 @@ import SearchInput from "../SearchInput";
 import SparkleIcon from "../icons/SparkleIcon";
 import AISearchInput from "../AISearch";
 
-const FilmSearchHeader = ({ searchValue }: { searchValue: string }) => {
+const FilmSearchHeader = ({
+  searchValue,
+  handleAISearch,
+  aiResults,
+}: {
+  searchValue: string;
+  handleAISearch: Function;
+  aiResults: any;
+}) => {
   const [smartSearch, setSmartSearch] = React.useState(false);
 
   return (
@@ -12,22 +20,42 @@ const FilmSearchHeader = ({ searchValue }: { searchValue: string }) => {
         {!smartSearch ? (
           <SearchInput placeholder={"Search for a film"} />
         ) : (
-          <AISearchInput placeholder={"dark, noir, ambiguous, ..."} />
+          <AISearchInput handleAISearch={handleAISearch} />
         )}
-        <button
-          onClick={() => setSmartSearch(!smartSearch)}
-          className="flex gap-2 items-center karla text-sm p-2 border-2 border-[#184249] bg-[#001F24] rounded-md hover:bg-[#184249] hover:text-white"
-        >
-          Search with AI
-          <SparkleIcon />
-        </button>
+        <div className="flex justify-between w-full">
+          {!smartSearch ? (
+            <button
+              onClick={() => setSmartSearch(!smartSearch)}
+              className="flex gap-2 items-center karla text-sm p-2 border-2 border-[#184249] bg-[#001F24] rounded-md hover:bg-[#184249] hover:text-white"
+            >
+              Search with AI
+              <SparkleIcon />
+            </button>
+          ) : (
+            <button
+              onClick={() => setSmartSearch(!smartSearch)}
+              className="flex gap-2 items-center karla text-sm p-2 border-2 border-[#184249] bg-[#001F24] rounded-md hover:bg-[#184249] hover:text-white"
+            >
+              Manual search
+            </button>
+          )}
+          {/* <button
+            type="submit"
+            form="searchForm"
+            className="flex gap-2 items-center karla text-sm py-2 px-4 border-2 border-[#184249] bg-[#001F24] rounded-md hover:bg-[#184249] hover:text-white"
+          >
+            Go
+          </button> */}
+        </div>
       </div>
-      <div className="flex flex-col w-full">
-        <span className="karla">Results for...</span>
-        <span className="outfit text-3xl">
-          {searchValue.replace(/-/g, " ")}
-        </span>
-      </div>
+      {!aiResults && (
+        <div className="flex flex-col w-full">
+          <span className="karla">Results for...</span>
+          <span className="outfit text-3xl">
+            {searchValue.replace(/-/g, " ")}
+          </span>
+        </div>
+      )}
       {/* <div className="w-full">
         <GeneralBtn text={"Show archived"} />
       </div> */}
