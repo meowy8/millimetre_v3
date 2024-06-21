@@ -4,13 +4,16 @@ import MediumFilmPoster from "./MediumFilmPoster";
 import EmptyFilmPoster from "./EmptyFilmPoster";
 import { TMDBFilmDetails } from "@/types/filmTypes";
 import AIResultBtn from "../buttons/AIResultBtn";
+import Loading from "../Loading";
 
 const FilmSearchResultsList = ({
   searchResults,
   aiResults,
+  loading,
 }: {
   searchResults: TMDBFilmDetails[];
   aiResults: any;
+  loading: boolean;
 }) => {
   // useEffect(() => {
   //   console.log("aiResults", aiResults);
@@ -42,7 +45,7 @@ const FilmSearchResultsList = ({
           </Link>
         ))}
       {aiResults?.films?.length > 0 && (
-        <div className="w-full flex flex-col rounded-md border border-[#FBF7F4]">
+        <div className="w-full flex flex-col rounded-md border border-[#FBF7F4] overflow-hidden">
           {aiResults.films.map((film: any, index: number) => (
             <AIResultBtn film={film} index={index} key={index} />
           ))}

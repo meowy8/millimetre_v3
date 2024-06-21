@@ -1,11 +1,12 @@
 import React from "react";
 import { useRouter } from "next/navigation";
+import Loading from "../Loading";
 
 const AIResultBtn = ({ film, index }: { film: any; index: number }) => {
   const router = useRouter();
 
   const handleClick = async () => {
-    return router.push(`/search/${film.title.replace(/\s/g, "-")}`);
+    return router.push(`/search?searchValue=${film.title.replace(/\s/g, "-")}`);
   };
 
   return (

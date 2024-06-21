@@ -5,7 +5,7 @@ import Image from "next/image";
 import FormInput from "../FormInput";
 import { useRouter } from "next/navigation";
 import { createUser } from "@/utils/dataFetching/userData";
-import Loading from "../loading";
+import Loading from "../Loading";
 import { User } from "@/types/userTypes";
 
 const CreateAccountForm = ({

@@ -19,7 +19,7 @@ import {
   FilmNotes,
   FilmType,
 } from "@/types/filmTypes";
-import Loading from "@/components/loading";
+import Loading from "@/components/Loading";
 import { ModalImageDataType } from "@/types/propTypes";
 import { useSession } from "next-auth/react";
 import {

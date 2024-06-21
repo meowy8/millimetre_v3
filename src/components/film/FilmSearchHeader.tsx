@@ -7,10 +7,12 @@ const FilmSearchHeader = ({
   searchValue,
   handleAISearch,
   aiResults,
+  setLoading,
 }: {
   searchValue: string;
   handleAISearch: Function;
   aiResults: any;
+  setLoading: Function;
 }) => {
   const [smartSearch, setSmartSearch] = React.useState(false);
 
@@ -20,7 +22,10 @@ const FilmSearchHeader = ({
         {!smartSearch ? (
           <SearchInput placeholder={"Search for a film"} />
         ) : (
-          <AISearchInput handleAISearch={handleAISearch} />
+          <AISearchInput
+            handleAISearch={handleAISearch}
+            setLoading={setLoading}
+          />
         )}
         <div className="flex justify-between w-full">
           {!smartSearch ? (

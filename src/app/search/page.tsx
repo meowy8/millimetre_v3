@@ -1,32 +1,48 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import FilmSearchHeader from "@/components/film/FilmSearchHeader";
-import { useParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import FilmSearchResultsList from "@/components/film/FilmSearchResultsList";
 import { fetchFilmSearch } from "@/utils/dataFetching/filmData";
 import { FilmSearchResults, TMDBFilmDetails } from "@/types/filmTypes";
+import Loading from "@/components/Loading";
 
 const FilmSearch = () => {
   const [searchResults, setSearchResults] = React.useState<TMDBFilmDetails[]>(
     []
   );
   const [aiResults, setAIResults] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
 
   // get search value from url
-  const params = useParams();
-  const { searchValue } = params as { searchValue: string };
+  const searchParams = useSearchParams();
+  const searchValue = searchParams.get("searchValue");
 
   // fetch search results
   useEffect(() => {
+    if (!searchValue) return;
+
     (async () => {
-      const data = await fetchFilmSearch(searchValue);
-      setSearchResults(data.results);
+      try {
+        setLoading(true);
+        setAIResults([]);
+        setSearchResults([]);
+
+        const data = await fetchFilmSearch(searchValue);
+        setSearchResults(data.results);
+      } catch (error) {
+        console.error("Error fetching search results:", error);
+      } finally {
+        setLoading(false);
+      }
     })();
   }, [searchValue]);
 
   const handleAISearch = async (results: any) => {
+    setLoading(true);
     setSearchResults([]);
     setAIResults(results);
+    setLoading(false);
   };
 
   // useEffect(() => {
@@ -36,14 +52,20 @@ const FilmSearch = () => {
   return (
     <section className="relative m-4 flex flex-col items-center gap-8">
       <FilmSearchHeader
-        searchValue={searchValue}
+        searchValue={searchValue || ""}
         handleAISearch={handleAISearch}
         aiResults={aiResults}
+        setLoading={setLoading}
       />
-      <FilmSearchResultsList
-        searchResults={searchResults}
-        aiResults={aiResults}
-      />
+      {loading ? (
+        <Loading />
+      ) : (
+        <FilmSearchResultsList
+          searchResults={searchResults}
+          aiResults={aiResults}
+          loading={loading}
+        />
+      )}
     </section>
   );
 };

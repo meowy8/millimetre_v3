@@ -78,6 +78,9 @@ const Navbar = () => {
             <Link href={"/"} className="hover:opacity-90">
               Home
             </Link>
+            <Link href={"/search/"} className="hover:opacity-90">
+              Search
+            </Link>
             <Link href={"/members/memberSearch"} className="hover:opacity-90">
               Members
             </Link>

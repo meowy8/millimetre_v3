@@ -30,6 +30,9 @@ const FilmImage = ({
         height={200}
         className="rounded-md object-cover w-full h-full"
         loading="lazy"
+        placeholder="blur"
+        blurDataURL={`data:https://image.tmdb.org/t/p/w500${image.file_path}`}
+        loader={({ src }) => src}
       />
     </button>
   );

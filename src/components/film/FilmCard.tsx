@@ -13,6 +13,7 @@ const FilmCard = ({
     <Link
       href={`/film/${filmId}`}
       className="rounded-lg shadow-lg overflow-hidden"
+      rel="preload"
     >
       <div className="relative">
         <div className="absolute bottom-0 w-full h-1/3 bg-gradient-to-t from-black to-transparent pointer-events-none"></div>
@@ -30,6 +31,8 @@ const FilmCard = ({
           width={500}
           height={281}
           className="w-full h-full object-cover"
+          placeholder="blur"
+          blurDataURL={`https://image.tmdb.org/t/p/w500${backdropPath}`}
         />
       </div>
     </Link>

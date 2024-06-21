@@ -13,7 +13,7 @@ const SearchInput = ({ placeholder }: { placeholder: string }) => {
     e.preventDefault();
     if (!searchValue) return;
 
-    router.push(`/search/${searchValue.replace(/\s/g, "-")}`);
+    router.push(`/search?searchValue=${searchValue.replace(/\s/g, "-")}`);
   };
 
   return (

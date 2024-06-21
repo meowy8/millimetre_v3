@@ -1,7 +1,13 @@
 import React, { useEffect } from "react";
 import { aiSearch } from "@/utils/aiSearch";
 
-const AISearch = ({ handleAISearch }: { handleAISearch: Function }) => {
+const AISearch = ({
+  handleAISearch,
+  setLoading,
+}: {
+  handleAISearch: Function;
+  setLoading: Function;
+}) => {
   const [searchValue1, setSearchValue1] = React.useState("");
   const [searchValue2, setSearchValue2] = React.useState("");
   const [searchValue3, setSearchValue3] = React.useState("");
@@ -9,6 +15,8 @@ const AISearch = ({ handleAISearch }: { handleAISearch: Function }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      setLoading(true);
+
       const response = await aiSearch(
         searchValue1 + " " + searchValue2 + " " + searchValue3
       );
@@ -16,6 +24,8 @@ const AISearch = ({ handleAISearch }: { handleAISearch: Function }) => {
       handleAISearch(response);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
 
     setSearchValue1("");
