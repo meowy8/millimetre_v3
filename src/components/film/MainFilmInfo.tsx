@@ -25,7 +25,7 @@ const MainFilmInfo = ({
   watchedButton: boolean;
 }) => {
   return (
-    <div className="relative bottom-24 m-6 z-10 flex flex-col lg:flex-row lg:gap-20">
+    <div className="relative bottom-0 m-6 z-10 flex flex-col lg:flex-row lg:gap-20">
       <div className="lg:flex-row flex flex-col items-center lg:items-start gap-10 ">
         {filmDetails.poster_path ? (
           <LargeFilmPoster posterPath={filmDetails.poster_path} />
