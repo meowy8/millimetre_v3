@@ -17,7 +17,7 @@ const FilmSearchHeader = ({
   const [smartSearch, setSmartSearch] = React.useState(false);
 
   return (
-    <div className="w-full">
+    <div className="w-full max-w-[400px]">
       <div className="w-full flex flex-col items-start mb-8 gap-4">
         {!smartSearch ? (
           <SearchInput placeholder={"Search for a film"} />

@@ -3,44 +3,78 @@ import React, { useEffect } from "react";
 import ColorThief from "colorthief";
 
 const FilmBackdrop = ({ backdropImage }: { backdropImage: string }) => {
-  const [backgroundColor, setBackgroundColor] = React.useState<string>("");
+  const [dominantColor, setDominantColor] = React.useState<string>("");
+  const imageRef = React.useRef<HTMLImageElement>(null);
+
+  function darkenColor(color, percent) {
+    const [red, green, blue] = color;
+    return [
+      Math.round(red * (1 - percent)),
+      Math.round(green * (1 - percent)),
+      Math.round(blue * (1 - percent)),
+    ];
+  }
+
+  const handleImageLoad = () => {
+    const colorThief = new ColorThief();
+    const color = colorThief.getColor(imageRef.current);
+    const darkenedColor = darkenColor(color, 0.1);
+
+    setDominantColor(`rgb(${darkenedColor})`);
+  };
 
   useEffect(() => {
-    const img = document.getElementById("filmBackdrop");
-    if (!img || !backdropImage) return;
+    if (!backdropImage) return;
+    const currentImage = imageRef.current;
 
-    const colorThief = new ColorThief();
-    const color = colorThief.getColor(img);
+    if (imageRef.current && imageRef.current.complete) {
+      handleImageLoad();
+    } else {
+      imageRef.current?.addEventListener("load", handleImageLoad);
+    }
 
-    setBackgroundColor(`rgb(${color})`);
+    // Clean up event listener on unmount
+    return () => {
+      if (currentImage) {
+        // Check if image element still exists
+        currentImage.removeEventListener("load", handleImageLoad);
+      }
+    };
   }, [backdropImage]);
 
   return (
-    <div className="relative -z-0 w-full">
+    <div className="relative -z-0 w-full ">
       {/* <div className="bg-[#0B0618] w-[10%] h-[750px] absolute bottom-0 -left-10 blur-md"></div>
       <div className="bg-[#0B0618] w-[10%] h-[750px] absolute bottom-0 -right-5 lg:-right-10 blur-md"></div> */}
-      <Image
-        id="filmBackdrop"
-        src={backdropImage}
-        alt="film backdrop"
-        width={1920}
-        height={1080}
-        priority={true}
-        className="w-full h-full object-cover rounded-3xl max-w-[900px] mx-auto mt-10"
-      />
-      {/* <div
-        className="absolute bottom-0 w-full h-24 md:h-56 "
-        style={{
-          backgroundImage: `linear-gradient(0deg, ${backgroundColor} 0%, rgba(0, 0, 0, 0) 100%)`,
-        }}
-      ></div> */}
-      <div className="flex justify-center">
-        {/* <div className="bg-[#0B0618] w-screen lg:w-[1000px] h-[30%] absolute top-[90%] blur-md"></div> */}
+      <div className="relative lg:max-w-[900px] md:max-w-[90%] w-full mx-auto">
+        <Image
+          ref={imageRef}
+          id="filmBackdrop"
+          src={backdropImage}
+          alt="film backdrop"
+          width={1920}
+          height={1080}
+          priority={true}
+          className="w-full h-full object-cover rounded-3xl mt-16 shadow-black shadow-lg"
+        />
+        {/* <div
+          className="absolute bottom-0 w-full h-24 md:h-56 rounded-b-3xl opacity-100 transition-all duration-[2s] ease-in-out"
+          style={{
+            backgroundImage: `linear-gradient(0deg, ${dominantColor} 0%, rgba(0, 0, 0, 0) 100%)`,
+          }}
+        ></div> */}
+        <div className="flex justify-center">
+          <div className="bg-[#0B0618] w-screen lg:w-[1000px] h-[30%] absolute top-[90%] blur-xl"></div>
+        </div>
       </div>
       <div
-        className="absolute top-0 w-full h-screen -z-10 blur-3xl opacity-10 scale-150 transition-all duration-[2s] ease-in-out"
-        style={{ backgroundColor }}
-      ></div>
+        className="absolute top-0 w-full h-72 -z-10 transition-all duration-[2s] ease-in-out"
+        style={{
+          backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0) 5%, ${dominantColor} 160%)`,
+        }}
+      >
+        {/* <div className="absolute w-full h-[20%] bottom-0 -z-10 opacity-100 transition-all duration-[2s] ease-in-out bg-gradient-to-t from-[#0B0618] to-transparent"></div> */}
+      </div>
     </div>
   );
 };

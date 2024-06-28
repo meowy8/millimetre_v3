@@ -20,7 +20,7 @@ const FilmNotesContainer = ({
   };
 
   return (
-    <div className="flex flex-col gap-8 my-20 lg:my-8 w-full z-10">
+    <div className="flex flex-col gap-8 my-20 lg:my-14 w-full max-w-[1000px] z-10">
       <div className="flex justify-end mx-10 gap-10 items-center">
         <button
           onClick={handleClick}

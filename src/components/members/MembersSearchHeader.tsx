@@ -20,7 +20,7 @@ const MembersSearchHeader = ({
         <option value="name">Name</option>
         <option value="fav-film">Favourite Film</option>
       </select> */}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="w-full">
         <input
           type="text"
           placeholder="Search for a member..."

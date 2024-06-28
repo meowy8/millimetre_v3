@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import AuthProvider from "@/components/providers/AuthProvider";
 import { Suspense } from "react";
 import Loading from "@/components/Loading";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,10 +29,20 @@ export default function RootLayout({
       >
         <AuthProvider>
           <Navbar />
-          <main className="mx-auto my-22 min-h-screen bg-[#0B0618]">
-            {children}
-          </main>
+          <main className="mx-auto min-h-screen bg-[#0B0618]">{children}</main>
         </AuthProvider>
+        <footer className="h-[50px] flex justify-center items-center">
+          <p className="text-white font-thin text-sm">
+            Film data provided by{" "}
+            <Link
+              target="_blank"
+              href={"https://www.themoviedb.org/"}
+              className="underline"
+            >
+              TMDB
+            </Link>
+          </p>
+        </footer>
       </body>
     </html>
   );

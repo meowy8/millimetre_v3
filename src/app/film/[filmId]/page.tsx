@@ -29,6 +29,7 @@ import {
 } from "@/utils/dataFetching/userData";
 import EmptyBackdrop from "@/components/film/EmptyBackdrop";
 import { fetchUserNoteData } from "@/utils/dataFetching/noteData";
+import FilmProductionDetails from "@/components/film/FilmProductionDetails";
 
 const FilmDetail = () => {
   // image modal state
@@ -217,31 +218,33 @@ const FilmDetail = () => {
       ) : (
         <EmptyBackdrop />
       )}
-      {filmCredits && filmDetails && (
-        <MainFilmInfo
-          filmDetails={filmDetails}
-          closeModal={closeModal}
-          filmCredits={filmCredits}
-          handleAddToWatchlist={handleAddToWatchlist}
-          handleRemoveFromWatchlist={handleRemoveFromWatchlist}
-          watchlistButton={watchlistButton}
-          watchedButton={watchedButton}
-        />
-      )}
-      <div className="overflow-x-auto w-full relative bottom-0 z-10">
-        <FilmImagesDisplay
-          toggleImageModal={toggleImageModal}
+      <div className="relative overflow-x-hidden overflow-y-hidden flex flex-col items-center w-full bottom-20">
+        {filmCredits && filmDetails && (
+          <MainFilmInfo
+            filmDetails={filmDetails}
+            closeModal={closeModal}
+            filmCredits={filmCredits}
+            handleAddToWatchlist={handleAddToWatchlist}
+            handleRemoveFromWatchlist={handleRemoveFromWatchlist}
+            watchlistButton={watchlistButton}
+            watchedButton={watchedButton}
+          />
+        )}
+        <div className="overflow-x-auto w-full z-10 flex justify-center mt-10">
+          <FilmImagesDisplay
+            toggleImageModal={toggleImageModal}
+            toggleModal={toggleModal}
+            setModalImageData={setModalImageData}
+            images={filmImages.backdrops}
+          />
+        </div>
+        <FilmNotesContainer
+          filmNotes={filmNotes}
           toggleModal={toggleModal}
-          setModalImageData={setModalImageData}
-          images={filmImages.backdrops}
+          toggleNotesModal={toggleNotesModal}
+          filmId={filmId}
         />
       </div>
-      <FilmNotesContainer
-        filmNotes={filmNotes}
-        toggleModal={toggleModal}
-        toggleNotesModal={toggleNotesModal}
-        filmId={filmId}
-      />
     </section>
   );
 };

@@ -50,22 +50,24 @@ const FilmSearch = () => {
   // }, [searchResults]);
 
   return (
-    <section className="relative m-4 flex flex-col items-center gap-8">
-      <FilmSearchHeader
-        searchValue={searchValue || ""}
-        handleAISearch={handleAISearch}
-        aiResults={aiResults}
-        setLoading={setLoading}
-      />
-      {loading ? (
-        <Loading />
-      ) : (
-        <FilmSearchResultsList
-          searchResults={searchResults}
+    <section className="relative m-4 mt-24 flex justify-center">
+      <div>
+        <FilmSearchHeader
+          searchValue={searchValue || ""}
+          handleAISearch={handleAISearch}
           aiResults={aiResults}
-          loading={loading}
+          setLoading={setLoading}
         />
-      )}
+        {loading ? (
+          <Loading />
+        ) : (
+          <FilmSearchResultsList
+            searchResults={searchResults}
+            aiResults={aiResults}
+            loading={loading}
+          />
+        )}
+      </div>
     </section>
   );
 };

@@ -21,7 +21,7 @@ const FilmSearchResultsList = ({
 
   return (
     <div
-      className={`flex flex-wrap justify-center gap-4 karla ${
+      className={`flex flex-wrap justify-center gap-4 karla max-w-[900px] ${
         searchResults?.length > 0 || aiResults?.films?.length > 0
           ? "opacity-100"
           : "opacity-0"

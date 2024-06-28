@@ -30,7 +30,7 @@ const Members = () => {
   };
 
   return (
-    <section className="m-4">
+    <section className="m-4 mt-32">
       <MembersSearchHeader
         inputValue={inputValue}
         setInputValue={setInputValue}

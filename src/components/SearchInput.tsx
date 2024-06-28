@@ -24,7 +24,7 @@ const SearchInput = ({ placeholder }: { placeholder: string }) => {
       className="relative"
     >
       <input
-        className="border border-[#FBF7F4] bg-transparent rounded-lg px-4 py-2 outline-none karla hover:bg-white/10 focus:bg-white/20 w-full"
+        className="border border-[#FBF7F4] bg-transparent rounded-lg px-4 py-1 outline-none karla hover:bg-white/10 focus:bg-white/20 w-full"
         placeholder={placeholder}
         onChange={(e) => setSearchValue(e.target.value)}
         value={searchValue}
