@@ -31,7 +31,7 @@ import CreditBtn from "./CreditBtn";
 //   );
 // };
 
-const CreditsList = ({ credits }) => {
+const CreditsList = ({ credits }: CreditsListProps) => {
   return (
     <div className="flex flex-wrap px-2 pt-4 text-sm">
       {credits &&

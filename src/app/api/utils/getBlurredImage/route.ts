@@ -12,9 +12,8 @@ const fetchImage = async (url: string) => {
 };
 
 export async function POST(req: Request) {
-  console.log("test");
   const { imageUrl } = await req.json();
-  console.log("imageUrl:", imageUrl);
+
   try {
     const image = await fetchImage(imageUrl);
     const { base64 } = await getPlaiceholder(image);

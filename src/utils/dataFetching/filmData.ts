@@ -174,8 +174,6 @@ export const fetchFilmPageData = async (filmId: number) => {
       return null;
     }
 
-    console.log("details.backdrop_path:", details.backdrop_path);
-
     const imageBlurResponse = await fetch("/api/utils/getBlurredImage", {
       method: "POST",
       headers: {

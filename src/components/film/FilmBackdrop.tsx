@@ -12,10 +12,6 @@ const FilmBackdrop = ({
   const [dominantColor, setDominantColor] = React.useState<string>("");
   const imageRef = React.useRef<HTMLImageElement>(null);
 
-  useEffect(() => {
-    console.log("blurredBackdrop", blurredBackdrop);
-  }, [blurredBackdrop]);
-
   function darkenColor(color, percent) {
     const [red, green, blue] = color;
     return [
