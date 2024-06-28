@@ -174,10 +174,27 @@ export const fetchFilmPageData = async (filmId: number) => {
       return null;
     }
 
+    console.log("details.backdrop_path:", details.backdrop_path);
+
+    const imageBlurResponse = await fetch("/api/utils/getBlurredImage", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        imageUrl: "https://image.tmdb.org/t/p/original" + details.backdrop_path,
+      }),
+    });
+
+    const data = await imageBlurResponse.json();
+
+    const blurredBackdrop = data.base64;
+
     return {
       details,
       credits,
       images,
+      blurredBackdrop,
     };
   } catch (error) {
     console.error(error);

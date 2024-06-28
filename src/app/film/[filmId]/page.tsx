@@ -45,6 +45,7 @@ const FilmDetail = () => {
   const [filmCredits, setFilmCredits] = useState({} as FilmCredits);
   const [filmImages, setFilmImages] = useState({} as FilmImages);
   const [filmNotes, setFilmNotes] = useState([] as FilmNotes[]);
+  const [blurredBackdrop, setBlurredBackdrop] = useState("");
 
   const [loading, setLoading] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
@@ -138,6 +139,8 @@ const FilmDetail = () => {
           setFilmDetails(data.details);
           setFilmCredits(data.credits);
           setFilmImages(data.images);
+          setBlurredBackdrop(data.blurredBackdrop);
+          // set blurred backdrop
         }
 
         // change loading state to false
@@ -214,6 +217,7 @@ const FilmDetail = () => {
       {filmDetails.backdrop_path ? (
         <FilmBackdrop
           backdropImage={`https://image.tmdb.org/t/p/original${filmDetails.backdrop_path}`}
+          blurredBackdrop={blurredBackdrop}
         />
       ) : (
         <EmptyBackdrop />

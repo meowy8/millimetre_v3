@@ -2,9 +2,19 @@ import Image from "next/image";
 import React, { useEffect } from "react";
 import ColorThief from "colorthief";
 
-const FilmBackdrop = ({ backdropImage }: { backdropImage: string }) => {
+const FilmBackdrop = ({
+  backdropImage,
+  blurredBackdrop,
+}: {
+  backdropImage: string;
+  blurredBackdrop: string;
+}) => {
   const [dominantColor, setDominantColor] = React.useState<string>("");
   const imageRef = React.useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    console.log("blurredBackdrop", blurredBackdrop);
+  }, [blurredBackdrop]);
 
   function darkenColor(color, percent) {
     const [red, green, blue] = color;
@@ -56,6 +66,8 @@ const FilmBackdrop = ({ backdropImage }: { backdropImage: string }) => {
           height={1080}
           priority={true}
           className="w-full h-full object-cover rounded-3xl mt-16 shadow-black shadow-lg"
+          placeholder="blur"
+          blurDataURL={blurredBackdrop || backdropImage}
         />
         {/* <div
           className="absolute bottom-0 w-full h-24 md:h-56 rounded-b-3xl opacity-100 transition-all duration-[2s] ease-in-out"
