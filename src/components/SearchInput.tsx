@@ -21,11 +21,11 @@ const SearchInput = ({ placeholder }: { placeholder: string }) => {
       id="searchForm"
       onSubmit={handleSubmit}
       action="submit"
-      className="relative"
+      className="relative w-full"
     >
       <input
-        className="border border-[#FBF7F4] bg-transparent rounded-lg px-4 py-1 outline-none karla hover:bg-white/10 focus:bg-white/20 w-full"
         placeholder={placeholder}
+        className="border border-[#FBF7F4] bg-transparent rounded-lg px-4 py-1 outline-none karla hover:bg-white/10 focus:bg-white/20 w-full"
         onChange={(e) => setSearchValue(e.target.value)}
         value={searchValue}
       />

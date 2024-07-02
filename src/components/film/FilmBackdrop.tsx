@@ -24,7 +24,7 @@ const FilmBackdrop = ({
   const handleImageLoad = () => {
     const colorThief = new ColorThief();
     const color = colorThief.getColor(imageRef.current);
-    const darkenedColor = darkenColor(color, 0.1);
+    const darkenedColor = darkenColor(color, 0.55);
 
     setDominantColor(`rgb(${darkenedColor})`);
   };
@@ -72,11 +72,11 @@ const FilmBackdrop = ({
           }}
         ></div> */}
         <div className="flex justify-center">
-          <div className="bg-[#0B0618] w-screen lg:w-[1000px] h-[30%] absolute top-[90%] blur-xl"></div>
+          <div className="bg-[#0B0618] w-full lg:w-[1000px] h-[30%] absolute top-[90%] blur-xl"></div>
         </div>
       </div>
       <div
-        className="absolute top-0 w-full h-72 -z-10 transition-all duration-[2s] ease-in-out"
+        className="absolute top-0 w-full h-96 -z-10 transition-all duration-[2s] ease-in-out"
         style={{
           backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0) 5%, ${dominantColor} 160%)`,
         }}

@@ -4,11 +4,13 @@ import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import FormInput from "../FormInput";
 import { hashPassword } from "@/utils/auth";
+import Loading from "../Loading";
 
 const SignInForm = () => {
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
   const [error, setError] = React.useState<string>("");
+  const [signingIn, setSigningIn] = React.useState<boolean>(false);
 
   const router = useRouter();
 
@@ -16,36 +18,49 @@ const SignInForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // sign in
-    const res = await signIn("credentials", {
-      redirect: false,
-      email,
-      password,
-    });
+    setSigningIn(true);
 
-    // check if error and set error message
-    if (res?.error) {
-      // console.log(res.error);
-      setError(res.error);
-      return;
-    } else {
-      router.push(`/`);
+    try {
+      // sign in
+      const result = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
+
+      // handle successful sign-in (e.g., redirect)
+      // console.log("Signed in successfully:", result);
+      router.push("/");
+    } catch (error) {
+      // handle errors from signIn
+      console.error("Sign in error:", error);
+      setError(error as string); // assuming error is a string
+    } finally {
+      setSigningIn(false);
     }
   };
 
   const logInAsDemoUser = async () => {
-    const res = await signIn("credentials", {
-      redirect: false,
-      email: "demo@demo.com",
-      password: "password123*",
-    });
+    setSigningIn(true);
 
-    if (res?.error) {
-      // console.log(res.error);
-      setError(res.error);
-      return;
-    } else {
-      router.push(`/`);
+    try {
+      const res = await signIn("credentials", {
+        redirect: false,
+        email: "demo@demo.com",
+        password: "password123*",
+      });
+
+      if (res?.error) {
+        // console.log(res.error);
+        setError(res.error);
+        return;
+      } else {
+        router.push(`/`);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSigningIn(false);
     }
   };
 
@@ -80,16 +95,22 @@ const SignInForm = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <div className="flex justify-center w-32">
-          <GeneralBtn text="Sign In" />
-        </div>
+        {signingIn ? (
+          <Loading />
+        ) : (
+          <button className="bg-[#001F24] px-4 py-2 mt-4 border border-[#184249] rounded-md hover:bg-[#184249]">
+            Sign In
+          </button>
+        )}
       </form>
-      <button
-        onClick={logInAsDemoUser}
-        className="karla bg-[#314b83] px-4 py-2 mt-4 border border-[#496fc0] rounded-md"
-      >
-        Demo Account
-      </button>
+      {!signingIn && (
+        <button
+          onClick={logInAsDemoUser}
+          className="karla bg-[#314b83] px-4 py-2 mt-4 border border-[#496fc0] rounded-md hover:bg-[#496fc0]"
+        >
+          Sign In as Demo User
+        </button>
+      )}
     </div>
   );
 };

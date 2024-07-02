@@ -1,7 +1,10 @@
 import React from "react";
 import SearchInput from "../SearchInput";
 import SparkleIcon from "../icons/SparkleIcon";
-import AISearchInput from "../AISearch";
+import AISearch from "../AISearch";
+import session from "express-session";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const FilmSearchHeader = ({
   searchValue,
@@ -16,21 +19,30 @@ const FilmSearchHeader = ({
 }) => {
   const [smartSearch, setSmartSearch] = React.useState(false);
 
+  const router = useRouter();
+
+  const { data: session } = useSession();
+
+  const handleSmartSearch = () => {
+    if (!session) {
+      return router.push("/signin");
+    }
+
+    setSmartSearch(!smartSearch);
+  };
+
   return (
-    <div className="w-full max-w-[400px]">
+    <div className="md:w-2/5">
       <div className="w-full flex flex-col items-start mb-8 gap-4">
         {!smartSearch ? (
           <SearchInput placeholder={"Search for a film"} />
         ) : (
-          <AISearchInput
-            handleAISearch={handleAISearch}
-            setLoading={setLoading}
-          />
+          <AISearch handleAISearch={handleAISearch} setLoading={setLoading} />
         )}
         <div className="flex justify-between w-full">
           {!smartSearch ? (
             <button
-              onClick={() => setSmartSearch(!smartSearch)}
+              onClick={handleSmartSearch}
               className="flex gap-2 items-center karla text-sm p-2 border-2 border-[#184249] bg-[#001F24] rounded-md hover:bg-[#184249] hover:text-white"
             >
               Search with AI

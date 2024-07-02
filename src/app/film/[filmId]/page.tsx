@@ -234,7 +234,7 @@ const FilmDetail = () => {
             watchedButton={watchedButton}
           />
         )}
-        <div className="overflow-x-auto w-full z-10 flex justify-center mt-10">
+        <div className="overflow-x-auto w-full z-10 flex justify-center mt-20">
           <FilmImagesDisplay
             toggleImageModal={toggleImageModal}
             toggleModal={toggleModal}

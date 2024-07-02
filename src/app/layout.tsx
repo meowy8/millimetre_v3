@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import AuthProvider from "@/components/providers/AuthProvider";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import Loading from "@/components/Loading";
 import Link from "next/link";
 
@@ -31,8 +31,8 @@ export default function RootLayout({
           <Navbar />
           <main className="mx-auto min-h-screen bg-[#0B0618]">{children}</main>
         </AuthProvider>
-        <footer className="h-[50px] flex justify-center items-center">
-          <p className="text-white font-thin text-sm">
+        <footer className="h-[50px] flex justify-center items-center mt-10">
+          <p className="text-white font-extralight text-sm">
             Film data provided by{" "}
             <Link
               target="_blank"

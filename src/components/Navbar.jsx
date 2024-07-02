@@ -90,12 +90,15 @@ const Navbar = () => {
               </Link>
             )}
             {session && (
-              <button onClick={handleSignOut} className="hover:opacity-90">
+              <button
+                onClick={handleSignOut}
+                className="hover:opacity-90 w-max"
+              >
                 Sign Out
               </button>
             )}
             {!session && (
-              <Link href={"/signin"} className="hover:opacity-90 flex">
+              <Link href={"/signin"} className="hover:opacity-90 w-max">
                 Sign In
               </Link>
             )}

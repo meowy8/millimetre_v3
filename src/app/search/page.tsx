@@ -50,8 +50,8 @@ const FilmSearch = () => {
   // }, [searchResults]);
 
   return (
-    <section className="relative m-4 mt-24 flex justify-center">
-      <div>
+    <section className="relative mx-10 mt-28 flex justify-center">
+      <div className="flex flex-col md:flex-row justify-center w-full max-w-[1280px] gap-8">
         <FilmSearchHeader
           searchValue={searchValue || ""}
           handleAISearch={handleAISearch}

@@ -150,3 +150,27 @@ export const checkSignUp = async (userData: CheckSignUp) => {
   });
   return response;
 };
+
+export const incrementAISearchCount = async (username: string) => {
+  const response = await fetch("/api/utils/userAISearch", {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username }),
+  });
+
+  console.log("response", response);
+
+  if (!response.ok) {
+    throw new Error("Failed to increment AISearchCount");
+  }
+
+  return response.json();
+};
+
+export const getUserAISearchCount = async (username: string) => {
+  const response = await fetch(`/api/utils/userAISearch?username=${username}`, {
+    method: "GET",
+  });
+  const data = await response.json();
+  return data;
+};

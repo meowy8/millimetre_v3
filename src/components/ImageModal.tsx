@@ -1,6 +1,7 @@
 import { ImageModalType } from "@/types/propTypes";
 import Image from "next/image";
 import React from "react";
+import Loading from "./Loading";
 
 const ImageModal = ({
   toggleModal,
@@ -21,6 +22,7 @@ const ImageModal = ({
         height={modalImageData.height}
         className="rounded-md object-cover cursor-pointer"
         onClick={handleClick}
+        priority
       />
     </div>
   );

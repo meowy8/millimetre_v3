@@ -21,13 +21,12 @@ const FilmSearchResultsList = ({
 
   return (
     <div
-      className={`flex flex-wrap justify-center gap-4 karla max-w-[900px] ${
-        searchResults?.length > 0 || aiResults?.films?.length > 0
-          ? "opacity-100"
-          : "opacity-0"
+      className={`flex flex-wrap justify-center gap-4 karla w-full ${
+        !loading ? "opacity-100" : "opacity-0"
       } transition-all duration-500`}
     >
-      {searchResults?.length > 0 &&
+      {loading && <Loading />}
+      {searchResults?.length > 0 ? (
         searchResults.map((film) => (
           <Link
             href={`/film/${film.id}`}
@@ -43,7 +42,10 @@ const FilmSearchResultsList = ({
               <EmptyFilmPoster />
             )}
           </Link>
-        ))}
+        ))
+      ) : (
+        <p className="p-10">No films found</p>
+      )}
       {aiResults?.films?.length > 0 && (
         <div className="w-full flex flex-col rounded-md border border-[#FBF7F4] overflow-hidden">
           {aiResults.films.map((film: any, index: number) => (

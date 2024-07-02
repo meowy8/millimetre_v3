@@ -14,7 +14,7 @@ const ProfileDetailsContainer = ({
   recentlyWatched: FilmNotes[];
 }) => {
   return (
-    <div className="relative bottom-24 md:bottom-44 m-6 flex flex-col justify-between gap-24 lg:bottom-44 lg:flex-row">
+    <div className="relative bottom-24 md:bottom-44 m-6 flex flex-col justify-between gap-24 lg:bottom-44 lg:flex-row max-w-[900px] w-full">
       <ProfileDetails user={user} recentlyWatched={recentlyWatched} />
       <UserNotesContainer userNotes={userNotes} user={user} />
     </div>

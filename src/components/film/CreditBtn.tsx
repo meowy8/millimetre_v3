@@ -12,7 +12,9 @@ const CreditBtn = ({ credit }: { credit: Credits }) => {
       key={credit.credit_id}
       className="relative text-md mr-2 mb-2 karla border border-[#184249] px-2 py-1 bg-[#001F24] rounded-md hover:bg-[#184249] flex flex-col items-center"
     >
-      {showTooltip && <CreditsTooltip role={credit.character || credit.job} />}
+      {showTooltip && (credit.character || credit.job) && (
+        <CreditsTooltip role={credit.character || credit.job} />
+      )}
       {credit.name}
     </button>
   );

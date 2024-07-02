@@ -13,34 +13,40 @@ const handler = NextAuth({
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
-        const client = await connectDB();
+        try {
+          console.log("credentials", credentials);
+          const client = await connectDB();
 
-        // find user with email
-        const user = await User.findOne({ email: credentials.email })
-          .select("+password")
-          .select("+_id");
-        // console.log("credentials", credentials);
-        // console.log("user", user);
+          // find user with email
+          const user = await User.findOne({ email: credentials.email })
+            .select("+password")
+            .select("+_id");
+          // console.log("credentials", credentials);
+          // console.log("user", user);
 
-        // if user not found
-        if (!user) {
-          throw new Error("User not found");
+          // if user not found
+          if (!user) {
+            throw new Error("User not found");
+          }
+
+          // verify password
+          const isMatch = await verifyPassword(
+            credentials.password,
+            user.password
+          );
+          // console.log("isMatch", isMatch);
+
+          if (!isMatch) {
+            throw new Error("Incorrect password");
+          }
+
+          console.log("user from authorize", user);
+
+          return user;
+        } catch (error) {
+          console.log("error", error);
+          throw new Error(error);
         }
-
-        // verify password
-        const isMatch = await verifyPassword(
-          credentials.password,
-          user.password
-        );
-        // console.log("isMatch", isMatch);
-
-        if (!isMatch) {
-          throw new Error("Incorrect password");
-        }
-
-        // console.log("user from authorize", user);
-
-        return user;
       },
     }),
   ],
