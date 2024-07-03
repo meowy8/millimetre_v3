@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/test/route.ts", "src/models/User.ts", "src/app/api/auth/login/route.js", "src/app/api/s3-upload/route.js", "src/utils/aiSearch.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/test/route.ts", "src/models/User.ts", "src/app/api/auth/login/route.js", "src/app/api/s3-upload/route.js", "src/utils/aiSearch.js", "src/components/film/FilmBackdrop.jsx", "src/components/user/UserBackdrop.jsx"],
   "exclude": ["node_modules"]
 }

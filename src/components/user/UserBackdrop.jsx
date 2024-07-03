@@ -2,9 +2,9 @@ import Image from "next/image";
 import React, { useEffect } from "react";
 import ColorThief from "colorthief";
 
-const UserBackdrop = ({ userBackdrop }: { userBackdrop: string }) => {
-  const [dominantColor, setDominantColor] = React.useState<string>("");
-  const imageRef = React.useRef<HTMLImageElement>(null);
+const UserBackdrop = ({ userBackdrop }) => {
+  const [dominantColor, setDominantColor] = React.useState < string > "";
+  const imageRef = React.useRef < HTMLImageElement > null;
 
   function darkenColor(color, percent) {
     const [red, green, blue] = color;
