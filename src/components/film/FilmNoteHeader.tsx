@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import SmallFilmPoster from "./SmallFilmPoster";
 import { TMDBFilmDetails } from "@/types/filmTypes";
+import MediumFilmPoster from "./MediumFilmPoster";
 
 const FilmNoteHeader = ({
   filmData,
@@ -20,7 +21,7 @@ const FilmNoteHeader = ({
       </p>
       {filmData.poster_path && (
         <Link href={`/film/${filmId}`} className="hover:opacity-80">
-          <SmallFilmPoster
+          <MediumFilmPoster
             posterPath={filmData.poster_path}
             title={filmData.title}
           />

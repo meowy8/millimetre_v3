@@ -15,10 +15,11 @@ const SidebarNavBtn = ({
   const handleClick = () => {
     closeSidebar();
   };
+
   return (
     <Link
       href={urlPath}
-      className="flex items-center gap-4 bg-[#001F24] border border-[#184249] rounded-sm px-4 py-2 hover:bg-[#184249]"
+      className="flex items-center gap-4 bg-[#001F24] border border-[#184249] rounded-md px-4 py-2 hover:bg-[#184249]"
       onClick={handleClick}
     >
       {icon}

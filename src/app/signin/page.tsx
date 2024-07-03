@@ -19,7 +19,7 @@ const SignIn = () => {
   };
 
   return (
-    <section className="">
+    <section className="mt-24 flex flex-col justify-center items-center">
       <Modal showModal={signedUp}>
         <CreateAccountForm
           email={email}
@@ -28,10 +28,10 @@ const SignIn = () => {
           toggleCreateAccountModal={() => setSignedUp(false)}
         />
       </Modal>
-      <div className="lg:hidden">
+      <div className="lg:hidden w-full">
         <SignInToggle section={section} changeSection={changeSection} />
       </div>
-      <div className="lg:hidden">
+      <div className="lg:hidden max-w-96 w-full">
         <MobileSignInForms
           {...{
             email,
@@ -45,7 +45,7 @@ const SignIn = () => {
           }}
         />
       </div>
-      <div className="hidden lg:flex justify-between">
+      <div className="hidden lg:flex justify-between max-w-[1000px] w-full">
         <DesktopSignInForms
           {...{
             email,

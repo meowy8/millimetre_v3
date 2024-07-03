@@ -3,11 +3,14 @@ import FilmBackdrop from "@/components/film/FilmBackdrop";
 import EmptyBackdrop from "@/components/film/EmptyBackdrop";
 import React, { useEffect } from "react";
 import { useParams } from "next/navigation";
-import Loading from "@/components/loading";
+import Loading from "@/components/Loading";
 import { useRouter } from "next/navigation";
 import { fetchUserData } from "@/utils/dataFetching/userData";
 import { fetchUserNoteData } from "@/utils/dataFetching/noteData";
 import ProfileDetailsContainer from "@/components/containers/ProfileDetailsContainer";
+import UserBackdrop from "@/components/user/UserBackdrop";
+import LargeUserAvatar from "@/components/user/LargeUserAvatar";
+import UserBanner from "@/components/user/UserBanner";
 
 const Profile = () => {
   const [user, setUser] = React.useState({} as any);
@@ -109,11 +112,7 @@ const Profile = () => {
         isVisible ? "opacity-100" : "opacity-0"
       } transition-opacity duration-500 ease-in-out`}
     >
-      {userBackdrop ? (
-        <FilmBackdrop backdropImage={userBackdrop} />
-      ) : (
-        <EmptyBackdrop />
-      )}
+      <UserBanner user={user} userBackdrop={userBackdrop} />
       <ProfileDetailsContainer
         user={user}
         userNotes={userNotes}

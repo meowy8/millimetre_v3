@@ -50,7 +50,7 @@ const Settings = () => {
   };
 
   return (
-    <section className="">
+    <section className="mt-24 max-w-[1000px] mx-auto">
       <h1 className="text-3xl karla m-2 mb-8">Settings</h1>
       <div className="lg:hidden">
         <SettingsToggle changeSection={changeSection} section={section} />

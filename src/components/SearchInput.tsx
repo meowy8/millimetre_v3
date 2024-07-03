@@ -3,7 +3,13 @@ import React from "react";
 import SearchIcon from "./icons/SearchIcon";
 import { useRouter } from "next/navigation";
 
-const SearchInput = ({ placeholder }: { placeholder: string }) => {
+const SearchInput = ({
+  placeholder,
+  setPage,
+}: {
+  placeholder: string;
+  setPage: Function;
+}) => {
   const [searchValue, setSearchValue] = React.useState("");
 
   const router = useRouter();
@@ -13,14 +19,20 @@ const SearchInput = ({ placeholder }: { placeholder: string }) => {
     e.preventDefault();
     if (!searchValue) return;
 
-    router.push(`/search/${searchValue.replace(/\s/g, "-")}`);
+    setPage(1);
+    router.push(`/search?searchValue=${searchValue.replace(/\s/g, "-")}`);
   };
 
   return (
-    <form onSubmit={handleSubmit} action="submit" className="relative">
+    <form
+      id="searchForm"
+      onSubmit={handleSubmit}
+      action="submit"
+      className="relative w-full"
+    >
       <input
-        className="border border-[#FBF7F4] bg-transparent rounded-lg px-4 py-2 outline-none karla hover:bg-white/10 focus:bg-white/20 w-full"
         placeholder={placeholder}
+        className="border border-[#FBF7F4] bg-transparent rounded-lg px-4 py-1 outline-none karla hover:bg-white/10 focus:bg-white/20 w-full"
         onChange={(e) => setSearchValue(e.target.value)}
         value={searchValue}
       />

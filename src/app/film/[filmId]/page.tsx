@@ -19,7 +19,7 @@ import {
   FilmNotes,
   FilmType,
 } from "@/types/filmTypes";
-import Loading from "@/components/loading";
+import Loading from "@/components/Loading";
 import { ModalImageDataType } from "@/types/propTypes";
 import { useSession } from "next-auth/react";
 import {
@@ -29,6 +29,7 @@ import {
 } from "@/utils/dataFetching/userData";
 import EmptyBackdrop from "@/components/film/EmptyBackdrop";
 import { fetchUserNoteData } from "@/utils/dataFetching/noteData";
+import FilmProductionDetails from "@/components/film/FilmProductionDetails";
 
 const FilmDetail = () => {
   // image modal state
@@ -44,6 +45,7 @@ const FilmDetail = () => {
   const [filmCredits, setFilmCredits] = useState({} as FilmCredits);
   const [filmImages, setFilmImages] = useState({} as FilmImages);
   const [filmNotes, setFilmNotes] = useState([] as FilmNotes[]);
+  const [blurredBackdrop, setBlurredBackdrop] = useState("");
 
   const [loading, setLoading] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
@@ -137,6 +139,8 @@ const FilmDetail = () => {
           setFilmDetails(data.details);
           setFilmCredits(data.credits);
           setFilmImages(data.images);
+          setBlurredBackdrop(data.blurredBackdrop);
+          // set blurred backdrop
         }
 
         // change loading state to false
@@ -213,35 +217,38 @@ const FilmDetail = () => {
       {filmDetails.backdrop_path ? (
         <FilmBackdrop
           backdropImage={`https://image.tmdb.org/t/p/original${filmDetails.backdrop_path}`}
+          blurredBackdrop={blurredBackdrop}
         />
       ) : (
         <EmptyBackdrop />
       )}
-      {filmCredits && filmDetails && (
-        <MainFilmInfo
-          filmDetails={filmDetails}
-          closeModal={closeModal}
-          filmCredits={filmCredits}
-          handleAddToWatchlist={handleAddToWatchlist}
-          handleRemoveFromWatchlist={handleRemoveFromWatchlist}
-          watchlistButton={watchlistButton}
-          watchedButton={watchedButton}
-        />
-      )}
-      <div className="overflow-x-auto w-full relative bottom-20 z-10">
-        <FilmImagesDisplay
-          toggleImageModal={toggleImageModal}
+      <div className="relative overflow-x-hidden overflow-y-hidden flex flex-col items-center w-full bottom-20">
+        {filmCredits && filmDetails && (
+          <MainFilmInfo
+            filmDetails={filmDetails}
+            closeModal={closeModal}
+            filmCredits={filmCredits}
+            handleAddToWatchlist={handleAddToWatchlist}
+            handleRemoveFromWatchlist={handleRemoveFromWatchlist}
+            watchlistButton={watchlistButton}
+            watchedButton={watchedButton}
+          />
+        )}
+        <div className="overflow-x-auto w-full z-10 flex justify-center my-12">
+          <FilmImagesDisplay
+            toggleImageModal={toggleImageModal}
+            toggleModal={toggleModal}
+            setModalImageData={setModalImageData}
+            images={filmImages.backdrops}
+          />
+        </div>
+        <FilmNotesContainer
+          filmNotes={filmNotes}
           toggleModal={toggleModal}
-          setModalImageData={setModalImageData}
-          images={filmImages.backdrops}
+          toggleNotesModal={toggleNotesModal}
+          filmId={filmId}
         />
       </div>
-      <FilmNotesContainer
-        filmNotes={filmNotes}
-        toggleModal={toggleModal}
-        toggleNotesModal={toggleNotesModal}
-        filmId={filmId}
-      />
     </section>
   );
 };

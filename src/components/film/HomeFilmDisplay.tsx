@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import FilmCard from "./FilmCard";
 import { fetchFilmsByPopularityRange } from "@/utils/dataFetching/filmData";
 import { TMDBFilmDetails } from "@/types/filmTypes";
+import Loading from "../Loading";
 
 const HomeFilmDisplay = () => {
   const [displayedFilms, setDisplayedFilms] = React.useState([]);
@@ -17,7 +18,7 @@ const HomeFilmDisplay = () => {
 
   return (
     <section className="relative flex flex-wrap max-w-[1000px] mx-auto justify-center mt-8 gap-4 z-10">
-      {displayedFilms &&
+      {displayedFilms?.length > 0 ? (
         displayedFilms.map((film: TMDBFilmDetails) => (
           <div
             key={film.id}
@@ -30,7 +31,10 @@ const HomeFilmDisplay = () => {
               releaseDate={film.release_date}
             />
           </div>
-        ))}
+        ))
+      ) : (
+        <Loading />
+      )}
     </section>
   );
 };

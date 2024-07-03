@@ -41,7 +41,7 @@ const FilmNotes = () => {
   };
 
   return (
-    <section className="m-4 flex flex-col gap-8">
+    <section className="mt-24 px-4 mx-auto w-full max-w-[1000px]">
       <Modal showModal={showModal}>
         {showNotesModal && (
           <AddFilmNote
@@ -64,13 +64,11 @@ const FilmNotes = () => {
           <GeneralBtn text={"Recent"} />
         </div>
       </div> */}
-      <div>
-        <FilmNotesList
-          filmNotes={filmNotes}
-          toggleModal={toggleModal}
-          toggleNotesModal={toggleNotesModal}
-        />
-      </div>
+      <FilmNotesList
+        filmNotes={filmNotes}
+        toggleModal={toggleModal}
+        toggleNotesModal={toggleNotesModal}
+      />
     </section>
   );
 };

@@ -5,7 +5,7 @@ import Modal from "../Modal";
 import FilmSearchModal from "../film/FilmSearchModal";
 import SmallFilmPoster from "../film/SmallFilmPoster";
 import { fetchUserData, updateUser } from "@/utils/dataFetching/userData";
-import Loading from "../loading";
+import Loading from "../Loading";
 import { FavouriteFilms, User } from "@/types/userTypes";
 import { FilmType, TMDBFilmDetails } from "@/types/filmTypes";
 
@@ -269,7 +269,7 @@ const AccountSettingsForm = ({
           </label>
           <div>
             <span>Change Favourite Films</span>
-            <div className="flex gap-4">
+            <div className="flex gap-2">
               {favFilmSlots.map((film, index) => (
                 <button
                   key={index}

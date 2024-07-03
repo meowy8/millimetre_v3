@@ -20,24 +20,25 @@ const FilmNotesContainer = ({
   };
 
   return (
-    <div className="flex flex-col gap-8 my-20 lg:my-8 w-full z-10">
-      <div className="flex justify-end mx-10 gap-10 items-center">
+    <div className="flex flex-col my-20 mx-4 lg:my-14 w-full max-w-[900px] z-10">
+      <div className="flex justify-end gap-4 items-center m-2">
         <button
           onClick={handleClick}
-          className="karla border border-[#184249] bg-[#001F24] rounded-md hover:bg-[#184249] px-4 py-2"
+          className="karla border border-[#184249] bg-[#001F24] rounded-md hover:bg-[#184249] px-4 py-2 text-sm"
         >
-          + Add a new note
+          +
         </button>
         {true && (
           <Link
             href={`/film/notes/${filmId}`}
-            className="karla font-bold text-lg hover:underline"
+            className="karla bg-[#001F24] rounded-md hover:bg-[#184249] px-4 py-2 border border-[#184249] text-sm"
           >
             View All Notes
           </Link>
         )}
       </div>
-      <div className="flex justify-center w-full">
+      <hr className="w-full opacity-50 mt-1 mb-4" />
+      <div className="flex justify-center w-full ">
         <FilmNotesList
           filmNotes={filmNotes}
           toggleNotesModal={toggleNotesModal}

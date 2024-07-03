@@ -13,6 +13,7 @@ import { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import LogoutIcon from "../icons/LogoutIcon";
+import MediumSearchIcon from "../icons/MediumSearchIcon";
 
 const Sidebar = () => {
   const [showSidebar, setShowSidebar] = useState<boolean>(false);
@@ -75,7 +76,7 @@ const Sidebar = () => {
             closeSidebar={closeSidebar}
             showSidebar={showSidebar}
           />
-          <SidebarInputContainer />
+          <SidebarInputContainer closeSidebar={closeSidebar} />
         </div>
         <div className="flex flex-col gap-1">
           <SidebarNavSection
@@ -88,6 +89,13 @@ const Sidebar = () => {
                 key={2}
                 closeSidebar={closeSidebar}
                 urlPath={`/`}
+              />,
+              <SidebarNavBtn
+                icon={<MediumSearchIcon />}
+                name="Search"
+                key={3}
+                closeSidebar={closeSidebar}
+                urlPath={`/search`}
               />,
             ]}
           />

@@ -1,5 +1,7 @@
 "use client";
 import MediumFilmPoster from "@/components/film/MediumFilmPoster";
+import SmallFilmPoster from "@/components/film/SmallFilmPoster";
+import Loading from "@/components/Loading";
 import { FilmType } from "@/types/filmTypes";
 import { User } from "@/types/userTypes";
 import {
@@ -12,14 +14,22 @@ import React, { useEffect } from "react";
 
 const Watchlist = () => {
   const [watchlist, setWatchlist] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+
   const params = useParams();
   const { username } = params;
 
   // fetch user watchlist
   useEffect(() => {
     (async () => {
-      const data = await fetchUserWatchlist(username);
-      setWatchlist(data);
+      try {
+        setLoading(true);
+        const data = await fetchUserWatchlist(username);
+        setWatchlist(data);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
     })();
   }, [username]);
 
@@ -28,7 +38,7 @@ const Watchlist = () => {
   // }, [watchlist]);
 
   return (
-    <div>
+    <section className="mt-24 px-4 mx-auto w-full max-w-[1000px]">
       <h1 className="text-xl karla flex flex-col">
         Watchlist for{" "}
         <Link
@@ -39,18 +49,19 @@ const Watchlist = () => {
         </Link>
       </h1>
       <hr />
-      <div className="flex flex-wrap gap-4 mt-6">
+      <div className="flex flex-wrap justify-center gap-4 mt-6">
+        {loading && <Loading />}
         {watchlist.map((film: FilmType) => (
           <Link
             key={film.filmId}
             href={`/film/${film.filmId}`}
             className="border rounded-lg hover:opacity-90"
           >
-            <MediumFilmPoster posterPath={film.posterPath} title={film.title} />
+            <SmallFilmPoster posterPath={film.posterPath} title={film.title} />
           </Link>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 

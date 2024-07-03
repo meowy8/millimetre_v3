@@ -19,7 +19,7 @@ const FilmSearchModal = ({
 
   // fetch search results
   const fetchFilmTitles = async (searchTerm: string) => {
-    const data = await fetchFilmSearch(searchTerm);
+    const data = await fetchFilmSearch(searchTerm, 1);
     setSearchResults(data.results);
     // console.log("searchResults", searchResults);
   };

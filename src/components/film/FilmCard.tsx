@@ -13,6 +13,7 @@ const FilmCard = ({
     <Link
       href={`/film/${filmId}`}
       className="rounded-lg shadow-lg overflow-hidden"
+      rel="preload"
     >
       <div className="relative">
         <div className="absolute bottom-0 w-full h-1/3 bg-gradient-to-t from-black to-transparent pointer-events-none"></div>
@@ -24,13 +25,15 @@ const FilmCard = ({
             {releaseDate.split("-")[0]}
           </span>
         </div>
-        <Image
-          src={`https://image.tmdb.org/t/p/w500${backdropPath}`}
-          alt="film poster"
-          width={500}
-          height={281}
-          className="w-full h-full object-cover"
-        />
+        {backdropPath && (
+          <Image
+            src={`https://image.tmdb.org/t/p/w500${backdropPath}`}
+            alt="film poster"
+            width={500}
+            height={281}
+            className="w-full h-full object-cover"
+          />
+        )}
       </div>
     </Link>
   );

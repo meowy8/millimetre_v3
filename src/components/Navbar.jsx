@@ -20,15 +20,15 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-[#0B0618] rounded-b-md shadow-xl fixed top-0 left-0 right-0 z-50 flex justify-center">
-      <div className="flex justify-between items-center px-6 py-4 w-full mx-2">
+    <nav className="hover:bg-[#0B0618] transition-all duration-500 ease-in-out rounded-b-md shadow-xl fixed top-0 left-0 right-0 z-50 flex justify-center backdrop-blur-sm">
+      <div className="flex justify-between items-center px-4 py-2 w-full mx-2">
         <Link
           href={"/"}
           className="oranienbaumRegular text-[#dd4040] text-4xl relative"
         >
           mm
         </Link>
-        <div className="flex gap-4 lg:hidden ">
+        <div className="flex gap-4 lg:hidden justify-center items-center">
           {session?.user ? (
             <Link href={`/user/profile/${session?.user.name}`}>
               <div className="w-10 h-10">
@@ -78,6 +78,9 @@ const Navbar = () => {
             <Link href={"/"} className="hover:opacity-90">
               Home
             </Link>
+            <Link href={"/search/"} className="hover:opacity-90">
+              Search
+            </Link>
             <Link href={"/members/memberSearch"} className="hover:opacity-90">
               Members
             </Link>
@@ -87,12 +90,15 @@ const Navbar = () => {
               </Link>
             )}
             {session && (
-              <button onClick={handleSignOut} className="hover:opacity-90">
+              <button
+                onClick={handleSignOut}
+                className="hover:opacity-90 w-max"
+              >
                 Sign Out
               </button>
             )}
             {!session && (
-              <Link href={"/signin"} className="hover:opacity-90 flex">
+              <Link href={"/signin"} className="hover:opacity-90 w-max">
                 Sign In
               </Link>
             )}

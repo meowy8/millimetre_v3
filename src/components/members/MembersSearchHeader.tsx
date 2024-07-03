@@ -10,7 +10,7 @@ const MembersSearchHeader = ({
   inputValue: string;
 }) => {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 max-w-[700px] mx-auto">
       {/* <select
         name="filter"
         id="filter"
@@ -20,7 +20,7 @@ const MembersSearchHeader = ({
         <option value="name">Name</option>
         <option value="fav-film">Favourite Film</option>
       </select> */}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="w-full">
         <input
           type="text"
           placeholder="Search for a member..."

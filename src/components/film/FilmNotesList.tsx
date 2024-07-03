@@ -13,13 +13,13 @@ const FilmNotesList = ({
   };
 
   return (
-    <section className="flex flex-col gap-4 lg:flex-row flex-wrap z-10">
+    <section className="flex flex-col items-center gap-4 z-10 max-w-[700px] w-full mt-10">
       {filmNotes && filmNotes.length > 0 ? (
         filmNotes.map((note) => {
           return <FilmNote key={note._id} note={note} />;
         })
       ) : (
-        <span className="karla ml-2">
+        <span className="karla mt-10 text-center">
           There are no notes for this film.{" "}
           <button onClick={handleClick} className="underline">
             Be the first to add a note

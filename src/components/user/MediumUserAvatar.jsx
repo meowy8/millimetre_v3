@@ -6,7 +6,7 @@ const MediumUserAvatar = ({ profileImage }) => {
     <div className="w-24 h-24">
       <Image
         src={profileImage}
-        alt="note"
+        alt="profile image"
         width={100}
         height={200}
         className="rounded-full object-cover w-full h-full"

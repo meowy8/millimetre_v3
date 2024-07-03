@@ -32,10 +32,10 @@ const UserNotes = () => {
   }, [username]);
 
   return (
-    <section>
+    <section className="mt-24 px-4 mx-auto w-full max-w-[1000px]">
       <div className="flex items-end gap-4">
         <Link href={`/user/profile/${username}`}>
-          <MediumUserAvatar profileImage={profileImage} />
+          {profileImage && <MediumUserAvatar profileImage={profileImage} />}
         </Link>
         <p className="karla text-xl">
           Notes by{" "}
@@ -45,7 +45,7 @@ const UserNotes = () => {
         </p>
       </div>
       <hr className="my-4" />
-      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center">
+      <section className="flex flex-col gap-4">
         {userNotes && userNotes.length > 0 ? (
           userNotes.map((note: FilmNotes) => {
             return <FilmNote key={note._id} note={note} />;

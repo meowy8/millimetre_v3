@@ -70,6 +70,10 @@ const userSchema = new mongoose.Schema(
         ref: "Note",
       },
     ],
+    aiSearchCount: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,

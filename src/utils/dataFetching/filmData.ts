@@ -69,7 +69,7 @@ export const fetchFilmImages = async (filmId: number) => {
 };
 
 // fetches film search results with query from TMDB
-export const fetchFilmSearch = async (query: string) => {
+export const fetchFilmSearch = async (query: string, page: number) => {
   const options = {
     method: "GET",
     headers: {
@@ -77,10 +77,11 @@ export const fetchFilmSearch = async (query: string) => {
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`,
     },
   };
+  // console.log("page from fetch", page);
 
   try {
     const response = await fetch(
-      `https://api.themoviedb.org/3/search/movie?query=${query}&language=en-US&page=1`,
+      `https://api.themoviedb.org/3/search/movie?query=${query}&language=en-US&page=${page}`,
       options
     );
     const filmSearchData = await response.json();
@@ -174,10 +175,25 @@ export const fetchFilmPageData = async (filmId: number) => {
       return null;
     }
 
+    const imageBlurResponse = await fetch("/api/utils/getBlurredImage", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        imageUrl: "https://image.tmdb.org/t/p/original" + details.backdrop_path,
+      }),
+    });
+
+    const data = await imageBlurResponse.json();
+
+    const blurredBackdrop = data.base64;
+
     return {
       details,
       credits,
       images,
+      blurredBackdrop,
     };
   } catch (error) {
     console.error(error);
