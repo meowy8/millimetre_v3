@@ -50,6 +50,7 @@ const UserBackdrop = ({ userBackdrop }: { userBackdrop: string }) => {
         alt="user backdrop"
         width={700}
         height={700}
+        priority
         className="object-cover w-full h-full"
       />
       <div

@@ -35,7 +35,7 @@ const UserNotes = () => {
     <section className="mt-24 px-4 mx-auto w-full max-w-[1000px]">
       <div className="flex items-end gap-4">
         <Link href={`/user/profile/${username}`}>
-          <MediumUserAvatar profileImage={profileImage} />
+          {profileImage && <MediumUserAvatar profileImage={profileImage} />}
         </Link>
         <p className="karla text-xl">
           Notes by{" "}

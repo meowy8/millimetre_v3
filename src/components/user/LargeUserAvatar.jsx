@@ -8,6 +8,7 @@ const LargeUserAvatar = ({ user }) => {
       alt="note"
       width={150}
       height={150}
+      priority
       className="rounded-full border border-black object-cover md:w-36 md:h-36 w-24 h-24"
     />
   );
