@@ -4,8 +4,8 @@ import React from "react";
 
 const NotFound = () => {
   return (
-    <div className="flex flex-col gap-4">
-      <p className="text-4xl font-bold karla">
+    <section className="flex flex-col gap-4 mt-24 mx-10">
+      <p className="text-2xl font-bold karla">
         Sorry this page does not exist!
       </p>
       <div className="flex">
@@ -13,7 +13,7 @@ const NotFound = () => {
           <GeneralBtn text={"Go Home"} />
         </Link>
       </div>
-    </div>
+    </section>
   );
 };
 
