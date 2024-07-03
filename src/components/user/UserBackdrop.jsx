@@ -16,31 +16,32 @@ const UserBackdrop = ({ userBackdrop }) => {
   }
 
   const handleImageLoad = () => {
-    const colorThief = new ColorThief();
-    const color = colorThief.getColor(imageRef.current);
-    const darkenedColor = darkenColor(color, 0.5);
+    if (!imageRef.current) return;
 
-    setDominantColor(`rgb(${darkenedColor})`);
+    try {
+      const colorThief = new ColorThief();
+      const color = colorThief.getColor(imageRef.current);
+
+      if (color) {
+        const darkenedColor = darkenColor(color, 0.5);
+        setDominantColor(`rgb(${darkenedColor.join(",")})`);
+      } else {
+        setDominantColor("#0B0618");
+      }
+    } catch (error) {
+      console.error("Error getting dominant color:", error);
+      setDominantColor("#0B0618");
+    }
   };
 
-  useEffect(() => {
-    if (!userBackdrop) return;
-    const currentImage = imageRef.current;
+  // useEffect(() => {
+  //   const currentImage = imageRef.current;
 
-    if (imageRef.current && imageRef.current.complete) {
-      handleImageLoad();
-    } else {
-      imageRef.current?.addEventListener("load", handleImageLoad);
-    }
-
-    // Clean up event listener on unmount
-    return () => {
-      if (currentImage) {
-        // Check if image element still exists
-        currentImage.removeEventListener("load", handleImageLoad);
-      }
-    };
-  }, [userBackdrop]);
+  //   // Clean up event listener on unmount
+  //   return () => {
+  //     currentImage?.removeEventListener("load", handleImageLoad);
+  //   };
+  // }, []);
 
   return (
     <div className="-z-0 rounded-xl overflow-hidden max-w-[900px] w-full">
@@ -52,6 +53,7 @@ const UserBackdrop = ({ userBackdrop }) => {
         height={700}
         priority
         className="object-cover w-full h-full"
+        onLoad={handleImageLoad}
       />
       <div
         className="opacity-0 translate-y-[-100%] md:opacity-100 md:translate-y-0 absolute top-0 w-full h-96 -z-10 transition-all duration-[2s] ease-in-out left-0"

@@ -18,40 +18,33 @@ const FilmBackdrop = ({ backdropImage, blurredBackdrop }) => {
   const handleImageLoad = () => {
     if (!imageRef.current) return;
 
-    const colorThief = new ColorThief();
-    const color = colorThief.getColor(imageRef.current);
+    try {
+      const colorThief = new ColorThief();
+      const color = colorThief.getColor(imageRef.current);
 
-    if (color) {
-      const darkenedColor = darkenColor(color, 0.5);
-      setDominantColor(`rgb(${darkenedColor})`);
-    } else {
+      if (color) {
+        const darkenedColor = darkenColor(color, 0.5);
+        setDominantColor(`rgb(${darkenedColor.join(",")})`);
+      } else {
+        setDominantColor("#0B0618");
+      }
+    } catch (error) {
+      console.error("Error getting dominant color:", error);
       setDominantColor("#0B0618");
     }
   };
 
-  useEffect(() => {
-    if (!backdropImage) return;
-    const currentImage = imageRef.current;
+  // useEffect(() => {
+  //   const currentImage = imageRef.current;
 
-    if (imageRef.current && imageRef.current.complete) {
-      handleImageLoad();
-    } else {
-      imageRef.current?.addEventListener("load", handleImageLoad);
-    }
-
-    // Clean up event listener on unmount
-    return () => {
-      if (currentImage) {
-        // Check if image element still exists
-        currentImage.removeEventListener("load", handleImageLoad);
-      }
-    };
-  }, [backdropImage]);
+  //   // Clean up event listener on unmount
+  //   return () => {
+  //     currentImage?.removeEventListener("load", handleImageLoad);
+  //   };
+  // }, []);
 
   return (
     <div className="relative -z-0 w-full ">
-      {/* <div className="bg-[#0B0618] w-[10%] h-[750px] absolute bottom-0 -left-10 blur-md"></div>
-      <div className="bg-[#0B0618] w-[10%] h-[750px] absolute bottom-0 -right-5 lg:-right-10 blur-md"></div> */}
       <div className="relative lg:max-w-[900px] md:max-w-[90%] w-full mx-auto">
         <Image
           ref={imageRef}
@@ -64,13 +57,8 @@ const FilmBackdrop = ({ backdropImage, blurredBackdrop }) => {
           className="w-full h-full object-cover rounded-xl mt-16"
           placeholder="blur"
           blurDataURL={blurredBackdrop || backdropImage}
+          onLoad={handleImageLoad}
         />
-        {/* <div
-          className="absolute bottom-0 w-full h-24 md:h-56 rounded-b-3xl opacity-100 transition-all duration-[2s] ease-in-out"
-          style={{
-            backgroundImage: `linear-gradient(0deg, ${dominantColor} 0%, rgba(0, 0, 0, 0) 100%)`,
-          }}
-        ></div> */}
         <div className="bg-gradient-to-t from-[#0B0618] to-transparent w-full h-1/3 absolute bottom-0 rounded-lg"></div>
       </div>
       <div
@@ -78,9 +66,7 @@ const FilmBackdrop = ({ backdropImage, blurredBackdrop }) => {
         style={{
           backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0) 5%, ${dominantColor} 160%)`,
         }}
-      >
-        {/* <div className="absolute w-full h-[20%] bottom-0 -z-10 opacity-100 transition-all duration-[2s] ease-in-out bg-gradient-to-t from-[#0B0618] to-transparent"></div> */}
-      </div>
+      ></div>
     </div>
   );
 };
