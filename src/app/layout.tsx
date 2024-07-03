@@ -31,8 +31,8 @@ export default function RootLayout({
           <Navbar />
           <main className="mx-auto min-h-screen bg-[#0B0618]">{children}</main>
         </AuthProvider>
-        <footer className="h-[50px] flex justify-center items-center mt-10">
-          <p className="text-white font-extralight text-sm">
+        <footer className="h-[80px] flex justify-center items-center mt-10">
+          <p className="text-white font-extralight text-xs">
             Film data provided by{" "}
             <Link
               target="_blank"

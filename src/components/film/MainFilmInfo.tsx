@@ -7,6 +7,7 @@ import FilmProductionDetails from "./FilmProductionDetails";
 import { Credits, FilmCredits, TMDBFilmDetails } from "@/types/filmTypes";
 import EmptyFilmPoster from "./EmptyFilmPoster";
 import CreditsList from "./CreditsList";
+import LargeEmptyFilmPoster from "./LargeEmptyFilmPoster";
 
 const MainFilmInfo = ({
   filmDetails,
@@ -32,7 +33,7 @@ const MainFilmInfo = ({
           {filmDetails.poster_path ? (
             <LargeFilmPoster posterPath={filmDetails.poster_path} />
           ) : (
-            <EmptyFilmPoster />
+            <LargeEmptyFilmPoster />
           )}
           <FilmDescription
             title={filmDetails.title}

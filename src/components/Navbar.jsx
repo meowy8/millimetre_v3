@@ -28,7 +28,7 @@ const Navbar = () => {
         >
           mm
         </Link>
-        <div className="flex gap-4 lg:hidden ">
+        <div className="flex gap-4 lg:hidden justify-center items-center">
           {session?.user ? (
             <Link href={`/user/profile/${session?.user.name}`}>
               <div className="w-10 h-10">

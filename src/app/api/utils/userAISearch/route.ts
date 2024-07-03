@@ -16,7 +16,12 @@ export async function PATCH(req: Request) {
   }
 
   if (user.aiSearchCount >= 5) {
-    return NextResponse.json({ message: "Max search count reached" });
+    return NextResponse.json(
+      {
+        message: "Max search count reached",
+      },
+      { status: 400 }
+    );
   }
 
   // increment AISearchCount
@@ -27,7 +32,10 @@ export async function PATCH(req: Request) {
 
   // check if increment was successful
   if (!updateSearchCount) {
-    return NextResponse.json({ message: "Failed to increment AISearchCount" });
+    return NextResponse.json({
+      message: "Failed to increment AISearchCount",
+      status: 500,
+    });
   }
 
   return NextResponse.json({ message: "Success", result: user.aiSearchCount });

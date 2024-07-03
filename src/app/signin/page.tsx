@@ -31,7 +31,7 @@ const SignIn = () => {
       <div className="lg:hidden w-full">
         <SignInToggle section={section} changeSection={changeSection} />
       </div>
-      <div className="lg:hidden">
+      <div className="lg:hidden max-w-96 w-full">
         <MobileSignInForms
           {...{
             email,

@@ -25,15 +25,15 @@ const FilmCard = ({
             {releaseDate.split("-")[0]}
           </span>
         </div>
-        <Image
-          src={`https://image.tmdb.org/t/p/w500${backdropPath}`}
-          alt="film poster"
-          width={500}
-          height={281}
-          className="w-full h-full object-cover"
-          placeholder="blur"
-          blurDataURL={`https://image.tmdb.org/t/p/w500${backdropPath}`}
-        />
+        {backdropPath && (
+          <Image
+            src={`https://image.tmdb.org/t/p/w500${backdropPath}`}
+            alt="film poster"
+            width={500}
+            height={281}
+            className="w-full h-full object-cover"
+          />
+        )}
       </div>
     </Link>
   );

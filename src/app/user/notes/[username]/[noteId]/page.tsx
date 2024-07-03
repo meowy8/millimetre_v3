@@ -32,7 +32,7 @@ const Note = () => {
   // }, [noteData]);
 
   return (
-    <section className="m-4">
+    <section className="mt-24 px-4 mx-auto w-full max-w-[1000px]">
       <FullFilmNote noteData={noteData} />
     </section>
   );

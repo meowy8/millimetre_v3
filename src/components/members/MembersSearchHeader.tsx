@@ -10,7 +10,7 @@ const MembersSearchHeader = ({
   inputValue: string;
 }) => {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 max-w-[700px] mx-auto">
       {/* <select
         name="filter"
         id="filter"

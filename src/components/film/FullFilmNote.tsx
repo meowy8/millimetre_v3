@@ -12,6 +12,7 @@ import Modal from "../Modal";
 import { deleteNote } from "@/utils/dataFetching/noteData";
 import CloseModalBtn from "../buttons/CloseModalBtn";
 import { useRouter } from "next/navigation";
+import BinIcon from "../icons/BinIcon";
 
 const FullFilmNote = ({ noteData }: { noteData: FilmNotes }) => {
   const [deleteNoteBtn, setDeleteNoteBtn] = React.useState(false);
@@ -46,7 +47,7 @@ const FullFilmNote = ({ noteData }: { noteData: FilmNotes }) => {
   }, [session, noteData.username]);
 
   return (
-    <div className="relative max-w-[1000px] mx-auto karla flex flex-col gap-4">
+    <div className="relative mx-auto karla flex flex-col gap-4">
       <Modal showModal={showModal}>
         <div className="flex flex-col gap-4 bg-[#001F24] p-8 rounded-md border border-[#137150]">
           <div className="flex gap-4">
@@ -75,55 +76,57 @@ const FullFilmNote = ({ noteData }: { noteData: FilmNotes }) => {
       ) : (
         <EmptyBackdrop />
       )} */}
-      <div className="mt-10 flex justify-between z-10">
-        <div className="flex flex-col rounded-t-lg border-t-2 border-x-2 border-[#3a1c42]">
-          <div className="flex flex-col lg:flex-row lg:items-center bg-[#3a1c42] p-4 gap-4">
-            <div className="flex lg:flex-col gap-4 justify-between">
-              <Link href={`/user/profile/${noteData.username}`}>
-                <MediumUserAvatar profileImage={noteData.profileImage} />
-              </Link>
-              <span className="italic font-light text-sm mt-2">
-                {new Date(noteData.createdAt as string).toDateString()}
+      <div className="mt-10 flex gap-10 z-10">
+        <div className="flex flex-col rounded-lg border-2 border-x-2 border-[#184249] bg-[#1c3b40] overflow-hidden">
+          <div className="flex flex-col lg:flex-row justify-between lg:items-center p-4 gap-4 rounded-lg ">
+            <div>
+              <div className="flex lg:flex-col gap-4 justify-between">
+                <Link href={`/user/profile/${noteData.username}`}>
+                  <MediumUserAvatar profileImage={noteData.profileImage} />
+                </Link>
+                <span className="italic font-light text-sm mt-2">
+                  {new Date(noteData.createdAt as string).toDateString()}
+                </span>
+              </div>
+              <span className="mr-8">
+                Note by{" "}
+                <Link
+                  href={"/user/profile/cadaverinbloom"}
+                  className="font-bold text-lg underline hover:text-white"
+                >
+                  {noteData.username}
+                </Link>{" "}
+                for{" "}
+                <Link
+                  href={`/film/${noteData.filmId}`}
+                  className="outfit text-2xl underline hover:text-white"
+                >
+                  {noteData.title}
+                </Link>
               </span>
             </div>
-            <span className="mr-8">
-              Note by{" "}
-              <Link
-                href={"/user/profile/cadaverinbloom"}
-                className="font-bold text-lg text-[#9081ff] hover:text-white"
-              >
-                {noteData.username}
-              </Link>{" "}
-              for{" "}
-              <Link
-                href={`/film/${noteData.filmId}`}
-                className="outfit text-2xl text-[#9081ff] hover:text-white"
-              >
-                {noteData.title}
-              </Link>
-            </span>
+            <Link href={`/film/${noteData.filmId}`}>
+              {noteData.posterPath ? (
+                <MediumFilmPoster
+                  posterPath={noteData.posterPath}
+                  title={noteData.title}
+                />
+              ) : (
+                <EmptyFilmPoster />
+              )}
+            </Link>
           </div>
-          <p className="text-lg p-4 karla font-light bg-[#3a1c42]/10 h-full">
+          <p className="text-lg p-4 karla font-light bg-[#001F24] h-full break-all">
             {noteData.content}
           </p>
         </div>
         <div className="hidden md:flex flex-col">
-          <Link href={`/film/${noteData.filmId}`}>
-            {noteData.posterPath ? (
-              <MediumFilmPoster
-                posterPath={noteData.posterPath}
-                title={noteData.title}
-              />
-            ) : (
-              <EmptyFilmPoster />
-            )}
-          </Link>
           {deleteNoteBtn && (
             <button
               onClick={handleClick}
-              className="bg-red-700 p-2 rounded mt-10 hover:bg-red-800"
+              className="bg-red-700 p-2 rounded hover:bg-red-800 text-[40px]"
             >
-              Delete Note
+              <BinIcon />
             </button>
           )}
         </div>

@@ -65,13 +65,13 @@ const SignInForm = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center mx-4 lg:w-96">
       <h1 className="karla text-3xl m-10">Sign In</h1>
       <span className="karla text-md mb-2">Already have an account?</span>
       <span className="karla mb-4 text-lg">Sign in with your email</span>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-6 items-center w-96 karla"
+        className="flex flex-col gap-6 items-center w-full karla"
       >
         <div className="w-full">
           {error === "User not found" && (
@@ -95,22 +95,25 @@ const SignInForm = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        {signingIn ? (
-          <Loading />
-        ) : (
-          <button className="bg-[#001F24] px-4 py-2 mt-4 border border-[#184249] rounded-md hover:bg-[#184249]">
-            Sign In
-          </button>
-        )}
+        <div className="flex flex-wrap justify-between gap-1 w-full">
+          {signingIn ? (
+            <Loading />
+          ) : (
+            <button className="bg-[#001F24] px-4 py-2 mt-4 border border-[#184249] rounded-md hover:bg-[#184249]">
+              Sign In
+            </button>
+          )}
+          {!signingIn && (
+            <button
+              type="button"
+              onClick={logInAsDemoUser}
+              className="karla bg-[#314b83] px-4 py-2 mt-4 border border-[#496fc0] rounded-md hover:bg-[#496fc0]"
+            >
+              Sign In as Demo User
+            </button>
+          )}
+        </div>
       </form>
-      {!signingIn && (
-        <button
-          onClick={logInAsDemoUser}
-          className="karla bg-[#314b83] px-4 py-2 mt-4 border border-[#496fc0] rounded-md hover:bg-[#496fc0]"
-        >
-          Sign In as Demo User
-        </button>
-      )}
     </div>
   );
 };

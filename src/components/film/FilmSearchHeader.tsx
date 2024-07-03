@@ -11,11 +11,13 @@ const FilmSearchHeader = ({
   handleAISearch,
   aiResults,
   setLoading,
+  setPage,
 }: {
   searchValue: string;
   handleAISearch: Function;
   aiResults: any;
   setLoading: Function;
+  setPage: Function;
 }) => {
   const [smartSearch, setSmartSearch] = React.useState(false);
 
@@ -35,7 +37,7 @@ const FilmSearchHeader = ({
     <div className="md:w-2/5">
       <div className="w-full flex flex-col items-start mb-8 gap-4">
         {!smartSearch ? (
-          <SearchInput placeholder={"Search for a film"} />
+          <SearchInput placeholder={"Search for a film"} setPage={setPage} />
         ) : (
           <AISearch handleAISearch={handleAISearch} setLoading={setLoading} />
         )}
@@ -65,14 +67,14 @@ const FilmSearchHeader = ({
           </button> */}
         </div>
       </div>
-      {!aiResults && (
+      {/* {!aiResults && (
         <div className="flex flex-col w-full">
           <span className="karla">Results for...</span>
           <span className="outfit text-3xl">
             {searchValue.replace(/-/g, " ")}
           </span>
         </div>
-      )}
+      )} */}
       {/* <div className="w-full">
         <GeneralBtn text={"Show archived"} />
       </div> */}

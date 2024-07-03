@@ -8,7 +8,7 @@ const FavFilmsDisplay = ({ user }: { user: User }) => {
   return (
     <>
       {user.favouriteFilms && user.favouriteFilms.length > 0 ? (
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-2">
           {user.favouriteFilms.map((film) => {
             return (
               <Link
@@ -29,9 +29,11 @@ const FavFilmsDisplay = ({ user }: { user: User }) => {
           })}
         </div>
       ) : (
-        <span className="text-sm font-extralight ml-2">
-          No favourite films yet
-        </span>
+        <div className="flex justify-center items-center h-[150px]">
+          <span className="text-sm font-extralight ml-2 karla">
+            No favourite films yet
+          </span>
+        </div>
       )}
     </>
   );

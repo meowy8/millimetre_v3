@@ -12,9 +12,9 @@ export interface AddFilmNoteProps {
 }
 
 export interface CreditsListProps {
-  showDetails: boolean;
   credits: Credits[];
-  setShowDetails: React.Dispatch<React.SetStateAction<boolean>>;
+  // showDetails: boolean;
+  // setShowDetails: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface FilmImageProps {

@@ -13,7 +13,7 @@ const RecentFilmsDisplay = ({
   return (
     <>
       {recentlyWatched && recentlyWatched.length > 0 ? (
-        <div className="grid grid-cols-3 gap-4 justify-center">
+        <div className="grid grid-cols-3 gap-2 justify-center">
           {recentlyWatched.map((film) => (
             <Link
               href={`/film/${film.filmId}`}
@@ -32,9 +32,11 @@ const RecentFilmsDisplay = ({
           ))}
         </div>
       ) : (
-        <span className="text-sm font-extralight ml-2">
-          No recently watched films
-        </span>
+        <div className="flex justify-center items-center h-[150px]">
+          <span className="text-sm font-extralight ml-2 karla">
+            No recently watched films
+          </span>
+        </div>
       )}
     </>
   );

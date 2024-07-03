@@ -28,10 +28,10 @@ const AISearch = ({
       );
 
       handleAISearch(response);
+      response && setSearchesLeft((prev) => prev - 1);
     } catch (error) {
       console.log(error);
     } finally {
-      setSearchesLeft((prev) => prev - 1);
       setLoading(false);
     }
 
@@ -46,7 +46,7 @@ const AISearch = ({
         session?.user?.name as string
       );
 
-      const sum = 3 - parseInt(response.aiSearchCount);
+      const sum = 5 - parseInt(response.aiSearchCount);
       setSearchesLeft(sum);
     })();
   }, [session?.user?.name, searchesLeft]);
@@ -82,8 +82,14 @@ const AISearch = ({
         />
       </div>
       <button
+        disabled={searchesLeft <= 0}
         type="submit"
-        className="items-center karla text-sm py-2 px-4 border-2 border-[#184249] bg-[#001F24] rounded-md hover:bg-[#184249] hover:text-white md:w-32 w-full"
+        className={
+          "items-center karla text-sm py-2 px-4 border-2 border-[#184249] bg-[#001F24] rounded-md   md:w-32 w-full" +
+          (searchesLeft <= 0
+            ? " opacity-50 cursor-not-allowed"
+            : "hover:bg-[#184249] hover:text-white")
+        }
       >
         Go
       </button>

@@ -76,13 +76,10 @@ const SignUpForm = ({
   };
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center mx-4 lg:w-96">
       <h1 className="karla text-3xl m-10">Sign Up</h1>
       <span className="karla mb-4 text-lg">Sign up with your email</span>
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-6 items-center w-96"
-      >
+      <form onSubmit={handleSubmit} className="flex flex-col gap-6 w-full">
         <div className="flex flex-col w-full">
           {duplicateEmail && (
             <span className="text-red-500 text-sm karla">

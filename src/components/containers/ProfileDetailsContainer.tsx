@@ -3,6 +3,8 @@ import UserNotesContainer from "./UserNotesContainer";
 import ProfileDetails from "../user/ProfileDetails";
 import { User } from "@/types/userTypes";
 import { FilmNotes } from "@/types/filmTypes";
+import Link from "next/link";
+import ProfileHeader from "../user/ProfileHeader";
 
 const ProfileDetailsContainer = ({
   user,
@@ -14,9 +16,13 @@ const ProfileDetailsContainer = ({
   recentlyWatched: FilmNotes[];
 }) => {
   return (
-    <div className="relative bottom-24 md:bottom-44 m-6 flex flex-col justify-between gap-24 lg:bottom-44 lg:flex-row max-w-[900px] w-full">
-      <ProfileDetails user={user} recentlyWatched={recentlyWatched} />
-      <UserNotesContainer userNotes={userNotes} user={user} />
+    <div className="relative mx-6 mt-4 flex flex-col max-w-[900px] w-full">
+      <ProfileHeader user={user} />
+      <ProfileDetails
+        user={user}
+        recentlyWatched={recentlyWatched}
+        userNotes={userNotes}
+      />
     </div>
   );
 };

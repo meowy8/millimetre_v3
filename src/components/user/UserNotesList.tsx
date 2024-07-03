@@ -4,15 +4,15 @@ import FilmNote from "../film/FilmNote";
 
 const UserNotesList = ({ userNotes }: { userNotes: FilmNotes[] }) => {
   return (
-    <section className="flex flex-col gap-4 lg:flex-row flex-wrap lg:justify-end items-center">
+    <section className="flex flex-col gap-4 justify-center h-full w-full">
       {userNotes && userNotes.length > 0 ? (
-        userNotes.map((note) => {
-          return <FilmNote key={note._id} note={note} />;
-        })
+        <FilmNote note={userNotes[0]} />
       ) : (
-        <span className="karla ml-2 w-full font-extralight text-sm">
-          User has no notes
-        </span>
+        <div className="w-full flex justify-center">
+          <span className="karla ml-2 font-extralight text-sm">
+            User has no notes
+          </span>
+        </div>
       )}
     </section>
   );

@@ -38,7 +38,11 @@ import { Credits, FilmCredits } from "@/types/filmTypes";
 //   );
 // };
 
-const FilmProductionDetails = ({ filmCredits }) => {
+const FilmProductionDetails = ({
+  filmCredits,
+}: {
+  filmCredits: FilmCredits;
+}) => {
   const [creditsSection, setCreditsSection] = React.useState<string>("cast");
 
   const handleSection = (creditsSection: string) => {
@@ -50,18 +54,28 @@ const FilmProductionDetails = ({ filmCredits }) => {
       <div className="flex gap-8 text-lg font-semibold">
         <button
           onClick={() => handleSection("cast")}
-          className={` ${creditsSection === "cast" ? "font-black" : ""}`}
+          className={`relative ${
+            creditsSection === "cast" ? "text-[#dd4040]" : ""
+          }`}
         >
           Cast
+          {creditsSection === "cast" && (
+            <hr className="absolute z-10 -bottom-2 w-full border-[#dd4040] border-y-2" />
+          )}
         </button>
         <button
           onClick={() => handleSection("crew")}
-          className={creditsSection === "crew" ? "font-black" : ""}
+          className={`relative ${
+            creditsSection === "crew" ? "text-[#dd4040]" : ""
+          }`}
         >
           Crew
+          {creditsSection === "crew" && (
+            <hr className="absolute z-10 -bottom-2 w-full border-[#dd4040] border-y-2" />
+          )}
         </button>
       </div>
-      <hr />
+      <hr className="w-full opacity-50 mt-1 mb-4" />
       <CreditsList
         credits={
           creditsSection === "cast" ? filmCredits.cast : filmCredits.crew

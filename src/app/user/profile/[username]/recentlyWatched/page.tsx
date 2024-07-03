@@ -29,7 +29,7 @@ const RecentlyWatched = () => {
   // }, [recentlyWatched]);
 
   return (
-    <div>
+    <section className="mt-24 px-4 mx-auto w-full max-w-[1000px]">
       <h1 className="text-xl karla flex flex-col">
         <span className="outfit text-2xl mr-2">{username}&apos;s</span> recently
         watched
@@ -40,7 +40,7 @@ const RecentlyWatched = () => {
           recentlyWatched.map((film: FilmNotes) => (
             <div
               key={film._id}
-              className="flex bg-[#001F24] w-full rounded-md "
+              className="flex bg-[#001F24] w-full rounded-md border-4 border-black"
             >
               <div className="w-full m-4">
                 <div className="flex justify-between w-full">
@@ -80,7 +80,7 @@ const RecentlyWatched = () => {
           <p className="text-center">No films added yet</p>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -69,7 +69,7 @@ export const fetchFilmImages = async (filmId: number) => {
 };
 
 // fetches film search results with query from TMDB
-export const fetchFilmSearch = async (query: string) => {
+export const fetchFilmSearch = async (query: string, page: number) => {
   const options = {
     method: "GET",
     headers: {
@@ -77,10 +77,11 @@ export const fetchFilmSearch = async (query: string) => {
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`,
     },
   };
+  console.log("page from fetch", page);
 
   try {
     const response = await fetch(
-      `https://api.themoviedb.org/3/search/movie?query=${query}&language=en-US&page=1`,
+      `https://api.themoviedb.org/3/search/movie?query=${query}&language=en-US&page=${page}`,
       options
     );
     const filmSearchData = await response.json();
