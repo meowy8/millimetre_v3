@@ -77,7 +77,7 @@ export const fetchFilmSearch = async (query: string, page: number) => {
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`,
     },
   };
-  console.log("page from fetch", page);
+  // console.log("page from fetch", page);
 
   try {
     const response = await fetch(
@@ -85,7 +85,7 @@ export const fetchFilmSearch = async (query: string, page: number) => {
       options
     );
     const filmSearchData = await response.json();
-    console.log("filmSearchData:", filmSearchData);
+    // console.log("filmSearchData:", filmSearchData);
     return filmSearchData;
   } catch (error) {
     console.log(error);

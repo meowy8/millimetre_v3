@@ -20,9 +20,9 @@ const FilmSearch = () => {
   const searchParams = useSearchParams();
   const searchValue = searchParams.get("searchValue");
 
-  useEffect(() => {
-    console.log("page", page);
-  }, [page]);
+  // useEffect(() => {
+  //   console.log("page", page);
+  // }, [page]);
 
   // fetch search results
   useEffect(() => {
