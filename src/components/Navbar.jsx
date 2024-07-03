@@ -8,6 +8,7 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import SmallUserAvatar from "./user/SmallUserAvatar";
 import { useRouter } from "next/navigation";
+import NavSearch from "./NavSearch";
 
 const Navbar = () => {
   const router = useRouter();
@@ -103,7 +104,7 @@ const Navbar = () => {
               </Link>
             )}
           </div>
-          <SearchInput placeholder={"Search for a film..."} />
+          <NavSearch placeholder={"Search for a film..."} />
         </div>
       </div>
     </nav>

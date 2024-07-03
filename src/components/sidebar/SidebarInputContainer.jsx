@@ -1,5 +1,6 @@
 import React from "react";
 import SearchInput from "../SearchInput";
+import NavSearch from "../NavSearch";
 
 const SidebarInputContainer = ({ closeSidebar }) => {
   return (
@@ -7,7 +8,7 @@ const SidebarInputContainer = ({ closeSidebar }) => {
       onSubmit={closeSidebar}
       className="flex items-center justify-center mx-4"
     >
-      <SearchInput placeholder={"Search for a film"} />
+      <NavSearch placeholder={"Search for a film"} />
     </div>
   );
 };

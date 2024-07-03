@@ -3,13 +3,7 @@ import React from "react";
 import SearchIcon from "./icons/SearchIcon";
 import { useRouter } from "next/navigation";
 
-const SearchInput = ({
-  placeholder,
-  setPage,
-}: {
-  placeholder: string;
-  setPage: Function;
-}) => {
+const NavSearch = ({ placeholder }: { placeholder: string }) => {
   const [searchValue, setSearchValue] = React.useState("");
 
   const router = useRouter();
@@ -18,8 +12,6 @@ const SearchInput = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!searchValue) return;
-
-    setPage(1);
 
     router.push(`/search?searchValue=${searchValue.replace(/\s/g, "-")}`);
   };
@@ -44,4 +36,4 @@ const SearchInput = ({
   );
 };
 
-export default SearchInput;
+export default NavSearch;
