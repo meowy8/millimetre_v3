@@ -16,11 +16,17 @@ const FilmBackdrop = ({ backdropImage, blurredBackdrop }) => {
   }
 
   const handleImageLoad = () => {
+    if (!imageRef.current) return;
+
     const colorThief = new ColorThief();
     const color = colorThief.getColor(imageRef.current);
-    const darkenedColor = darkenColor(color, 0.5);
 
-    setDominantColor(`rgb(${darkenedColor})`);
+    if (color) {
+      const darkenedColor = darkenColor(color, 0.5);
+      setDominantColor(`rgb(${darkenedColor})`);
+    } else {
+      setDominantColor("#0B0618");
+    }
   };
 
   useEffect(() => {
