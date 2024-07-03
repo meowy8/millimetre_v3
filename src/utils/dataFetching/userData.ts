@@ -158,7 +158,7 @@ export const incrementAISearchCount = async (username: string) => {
     body: JSON.stringify({ username }),
   });
 
-  console.log("response", response);
+  // console.log("response", response);
 
   if (!response.ok) {
     throw new Error("Failed to increment AISearchCount");

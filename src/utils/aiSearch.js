@@ -3,7 +3,7 @@ import { incrementAISearchCount } from "./dataFetching/userData";
 export const aiSearch = async (searchWords, username) => {
   try {
     const incrementSuccess = await incrementAISearchCount(username);
-    console.log("incrementSuccess", incrementSuccess);
+    // console.log("incrementSuccess", incrementSuccess);
 
     const response = await fetch("/api/ai", {
       method: "POST",
