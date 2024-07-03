@@ -22,7 +22,6 @@ export default function Home() {
           backdropImage={"/images/homePageBackdrop.jpeg"}
         />
         <div className="flex flex-col justify-between items-center lg:flex-row relative bottom-10 lg:bottom-24 w-full max-w-[800px] mx-auto mt-10">
-          {/* <div className="bg-[#0B0618]/30 h-[100px] bottom-56 md:bottom-64 absolute blur-lg lg:bottom-0"></div> */}
           <h1 className="oranienbaumRegular mx-4 text-2xl lg:static bottom-24 drop-shadow-lg lg:w-1/2 ">
             <span className="block">
               Welcome to <span className="text-5xl">millimetre</span>,

@@ -29,7 +29,11 @@ export default function RootLayout({
       >
         <AuthProvider>
           <Navbar />
-          <main className="mx-auto min-h-screen bg-[#0B0618]">{children}</main>
+          <Suspense fallback={<Loading />}>
+            <main className="mx-auto min-h-screen bg-[#0B0618]">
+              {children}
+            </main>
+          </Suspense>
         </AuthProvider>
         <footer className="h-[80px] flex justify-center items-center mt-10">
           <p className="text-white font-extralight text-xs">
